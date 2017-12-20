@@ -1,6 +1,5 @@
 // @flow
 /* eslint-disable no-console */
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {Font, AppLoading} from "expo";
 
@@ -23,7 +22,6 @@ export default class App extends React.Component<{}, AppState> {
     }
 
     render(): React.Node {
-        const {onNavigationStateChange} = this;
         const {ready} = this.state;
         if (!ready) {
             return <AppLoading />;

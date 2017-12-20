@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react";
 import PropTypes from "prop-types";
-import {StyleSheet, SafeAreaView} from "react-native";
+import {SafeAreaView} from "react-native";
 
 import Text from "./Text";
 
@@ -26,7 +26,3 @@ export default class NavigationBar extends React.Component<NavigationBarProps> {
         );
     }
 }
-
-const styles = StyleSheet.create({
-
-});

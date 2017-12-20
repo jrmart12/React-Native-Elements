@@ -9,6 +9,11 @@ type Color = string;
 
 type Theme = {
     palette: {
+        black: Color,
+        gray: Color,
+        lightGray: Color,
+        lighterGray: Color,
+        white: Color
     },
     typography: {
         body: Typography,
@@ -32,6 +37,11 @@ type Theme = {
 
 const theme: Theme = {
     palette: {
+        black: "black",
+        gray: "#999999",
+        lightGray: "#CCCCCC",
+        lighterGray: "#F3F3F3",
+        white: "white"
     },
     typography: {
         body: {

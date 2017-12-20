@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react";
-import {StyleSheet, View} from "react-native";
+import {View} from "react-native";
 
 export default class Comp extends React.Component<{}> {
 
@@ -10,7 +10,3 @@ export default class Comp extends React.Component<{}> {
         );
     }
 }
-
-const styles = StyleSheet.create({
-
-});
