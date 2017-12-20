@@ -1,4 +1,5 @@
 // @flow
+import * as React from "react";
 import type { StyleObj } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import type {
     // eslint-disable-next-line no-unused-vars
@@ -15,4 +16,8 @@ export type ScreenParams<P> = ScreenProps<{}, { params: P }>;
 
 export type BaseProps = {
     style?: StyleObj
+};
+
+export type ChildrenProps = {
+    children?: React.ChildrenArray<React.Element<*>>
 };

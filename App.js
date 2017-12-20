@@ -15,12 +15,9 @@ export default class App extends React.Component<{}, AppState> {
     async componentWillMount(): Promise<void> {
         this.setState({ ready: false });
         await Font.loadAsync({
-            "SFProText-Medium": require("./fonts/SF-Pro-Text-Medium.otf"),
-            "SFProText-Heavy": require("./fonts/SF-Pro-Text-Heavy.otf"),
             "SFProText-Bold": require("./fonts/SF-Pro-Text-Bold.otf"),
             "SFProText-Semibold": require("./fonts/SF-Pro-Text-Semibold.otf"),
-            "SFProText-Regular": require("./fonts/SF-Pro-Text-Regular.otf"),
-            "SFProText-Light": require("./fonts/SF-Pro-Text-Light.otf")
+            "SFProText-Regular": require("./fonts/SF-Pro-Text-Regular.otf")
         });
         this.setState({ ready: true });
     }
