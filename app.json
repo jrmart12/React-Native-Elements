@@ -1,0 +1,23 @@
+{
+    "expo": {
+        "name": "react-native-elements",
+        "description": "UI elements, multi-screen implemented in React Native, now in one handy kit",
+        "sdkVersion": "23.0.0",
+        "orientation": "portrait",
+        "privacy": "public",
+        "icon": "./app.png",
+        "primaryColor": "#00AAFF",
+        "splash": {
+            "image": "./splash.png",
+            "resizeMode": "cover",
+            "backgroundColor": "#ffffff"
+        },
+        "packagerOpts": {
+            "assetExts": ["otf"]
+        },
+        "androidStatusBar": {
+            "backgroundColor": "#ffffff",
+            "barStyle": "dark-content"
+        }
+    }
+}
