@@ -28,12 +28,7 @@ export default class App extends React.Component<{}, AppState> {
         if (!ready) {
             return <AppLoading />;
         } else {
-            return <FoodNavigator {...{onNavigationStateChange}} />;
+            return <FoodNavigator />;
         }
-    }
-
-    @autobind
-    onNavigationStateChange() {
-        return undefined;
     }
 }
