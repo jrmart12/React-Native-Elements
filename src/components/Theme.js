@@ -1,4 +1,8 @@
 // @flow
+import * as React from "react";
+import {inject} from "mobx-react/native";
+import type {ThemeProps} from "./Types";
+
 type Typography = {
     fontFamily: string,
     fontSize: number,
@@ -36,6 +40,13 @@ export type Theme = {
     }
 };
 
+type ElementConfig<P: {}, C> = $Diff<$Diff<P, $PropertyType<C, "defaultProps">>, ThemeProps>;
+
+export function withTheme<P: {}, C: React.ComponentType<P>>(Comp: C): React.ComponentType<ElementConfig<P, C>>
+{
+    return inject("theme")(Comp);
+}
+
 export const primaryColors = {
     music: "#00A5FF",
     food: "#73C700",
@@ -44,7 +55,7 @@ export const primaryColors = {
     photography: "#FD4176"
 };
 
-export const createTheme = (primary: $Keys<typeof primaryColors>): Theme => ({
+export const createTheme = (primary: $Values<typeof primaryColors>): Theme => ({
     palette: {
         primary,
         black: "black",

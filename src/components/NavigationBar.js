@@ -1,21 +1,19 @@
 // @flow
 import * as React from "react";
 import {SafeAreaView} from "react-native";
-import {inject} from "mobx-react/native";
 
 import Text from "./Text";
-
+import {withTheme} from "./Theme";
 import type {ThemeProps, NavigationProps} from "./Types";
 
 type NavigationBarType = "opaque" | "transparent" | "tinted";
 
 type NavigationBarProps = ThemeProps & NavigationProps<> & {
     title: string,
-    type?: NavigationBarType
+    type: NavigationBarType
 };
 
-@inject("theme")
-export default class NavigationBar extends React.Component<NavigationBarProps> {
+class NavigationBar extends React.Component<NavigationBarProps> {
 
     static defaultProps = {
         type: "opaque"
@@ -30,3 +28,5 @@ export default class NavigationBar extends React.Component<NavigationBarProps> {
         );
     }
 }
+
+export default withTheme(NavigationBar);

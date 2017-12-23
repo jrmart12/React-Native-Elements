@@ -1,9 +1,9 @@
 // @flow
 import * as React from "react";
 import {StyleSheet, View, TouchableWithoutFeedback} from "react-native";
-import {inject} from "mobx-react/native";
 import {Feather as Icon} from "@expo/vector-icons";
 
+import {withTheme} from "./Theme";
 import type {ThemeProps, NavigationProps} from "./Types";
 
 type Tab = {
@@ -17,8 +17,7 @@ type TabBarProps = ThemeProps & NavigationProps<> & {
     activeKey: string
 };
 
-@inject("theme")
-export default class TabBar extends React.Component<TabBarProps> {
+class TabBar extends React.Component<TabBarProps> {
 
     render(): React.Node {
         const {tabs, navigation, activeKey, theme} = this.props;
@@ -30,7 +29,7 @@ export default class TabBar extends React.Component<TabBarProps> {
                         <View style={styles.tab}>
                             <Icon
                                 name={tab.icon}
-                                color={activeKey === tab.key ? theme.palette.primary : theme.palette.grey}
+                                color={activeKey === tab.key ? theme.palette.primary : theme.palette.gray}
                             />
                         </View>
                     </TouchableWithoutFeedback>
@@ -49,3 +48,5 @@ const styles = StyleSheet.create({
 
     }
 });
+
+export default withTheme(TabBar);

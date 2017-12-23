@@ -8,9 +8,10 @@ import type {ScreenProps} from "../components/Types";
 export default class Recipes extends React.Component<ScreenProps<>> {
 
     render(): React.Node {
+        const {navigation} = this.props;
         return (
             <Container>
-                <NavigationBar title="Title" />
+                <NavigationBar title="Recipes" {...{navigation}} />
                 <ScrollView>
                 {
                     _.map(API.food.categories, (category, key) => <Card {...category} {...{ key }} />)
