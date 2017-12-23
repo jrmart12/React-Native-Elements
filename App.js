@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import autobind from "autobind-decorator";
 import * as React from "react";
+import {StatusBar} from "react-native";
 import {Provider} from "mobx-react/native";
 import {Font, AppLoading} from "expo";
 import {Feather} from "@expo/vector-icons";
@@ -18,6 +19,7 @@ type AppState = {
 export default class App extends React.Component<AppProps, AppState> {
 
     async componentWillMount(): Promise<void> {
+        StatusBar.setBarStyle("light-content");
         this.setState({ ready: false });
         const fonts = Font.loadAsync({
             "SFProText-Bold": require("./fonts/SF-Pro-Text-Bold.otf"),
