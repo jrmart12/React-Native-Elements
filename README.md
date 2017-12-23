@@ -1,8 +1,8 @@
 ## React Native Fiber v1.0.0
 
-[![CircleCI](https://circleci.com/gh/wcandillon/react-native-fiber.svg?style=svg&circle-token=eeaf45885197146a7bad4e4ea3d834fef498b609)](https://circleci.com/gh/wcandillon/react-native-fiber)
+[![CircleCI](https://circleci.com/gh/wcandillon/react-native-elements.svg?style=svg&circle-token=e5daa9a9ed152dba4bb50c5192c259c63f7855cf)](https://circleci.com/gh/wcandillon/react-native-elements)
 
-[Try it on Expo](https://expo.io/@wcandillon/react-native-fiber-firebase)
+[Try it on Expo](https://expo.io/@wcandillon/react-native-elements)
 
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
