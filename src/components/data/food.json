@@ -1,0 +1,14 @@
+{
+    "categories": {
+        "breakfast": {
+            "id": "breakfast",
+            "title": "Breakfast",
+            "subtitle": "Start your day right"
+        },
+        "vegetarian": {
+            "id": "vegetarian",
+            "title": "Vegetarian",
+            "subtitle": "Power vegetables"
+        }
+    }
+}

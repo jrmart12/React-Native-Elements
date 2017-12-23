@@ -1,7 +1,8 @@
 // @flow
+import * as _ from "lodash";
 import * as React from "react";
-
-import {Container, NavigationBar} from "../components";
+import {ScrollView} from "react-native";
+import {Container, NavigationBar, Card, API} from "../components";
 import type {ScreenProps} from "../components/Types";
 
 export default class Recipes extends React.Component<ScreenProps<>> {
@@ -10,6 +11,11 @@ export default class Recipes extends React.Component<ScreenProps<>> {
         return (
             <Container>
                 <NavigationBar title="Title" />
+                <ScrollView>
+                {
+                    _.map(API.food.categories, (category, key) => <Card {...category} {...{ key }} />)
+                }
+                </ScrollView>
             </Container>
         );
     }

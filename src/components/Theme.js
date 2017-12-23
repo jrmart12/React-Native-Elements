@@ -7,8 +7,9 @@ type Typography = {
 
 type Color = string;
 
-type Theme = {
+export type Theme = {
     palette: {
+        primary: Color,
         black: Color,
         gray: Color,
         lightGray: Color,
@@ -35,8 +36,17 @@ type Theme = {
     }
 };
 
-const theme: Theme = {
+export const primaryColors = {
+    music: "#00A5FF",
+    food: "#73C700",
+    travel: "#FF9300",
+    social: "#A237F3",
+    photography: "#FD4176"
+};
+
+export const createTheme = (primary: $Keys<typeof primaryColors>): Theme => ({
     palette: {
+        primary,
         black: "black",
         gray: "#999999",
         lightGray: "#CCCCCC",
@@ -97,6 +107,4 @@ const theme: Theme = {
         large: 48,
         xLarge: 64
     }
-};
-
-export { theme as Theme };
+});

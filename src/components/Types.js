@@ -5,6 +5,7 @@ import type {
     // eslint-disable-next-line no-unused-vars
     NavigationNavigatorProps, NavigationScreenProp, NavigationState
 } from "react-navigation/src/TypeDefinition";
+import type {Theme} from "./Theme";
 
 export type ScreenProps<O: {} = {}, S: {} = NavigationState> = NavigationNavigatorProps<O, S>;
 
@@ -14,10 +15,14 @@ export type NavigationProps<S: {} = NavigationState> = {
 
 export type ScreenParams<P> = ScreenProps<{}, { params: P }>;
 
-export type BaseProps = {
+export type StyleProps = {
     style?: StyleObj
 };
 
 export type ChildrenProps = {
     children?: React.ChildrenArray<React.Element<*>>
+};
+
+export type ThemeProps = {
+    theme: Theme
 };
