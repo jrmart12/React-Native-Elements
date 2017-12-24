@@ -1,13 +1,22 @@
 // @flow
 import * as React from "react";
-import {View} from "react-native";
-// import {TabBar} from "../components";
+import {TabBar} from "../components";
 
-export default class Comp extends React.Component<{}> {
+import type {NavigationProps} from "../components/Types";
+
+const tabs = [
+    { key: "Recipes", label: "Recipes", icon: "home" },
+    { key: "Restaurants", label: "Restaurants", icon: "map" }
+];
+
+type FoodTabProps = NavigationProps<>;
+
+export default class FoodTab extends React.Component<FoodTabProps> {
 
     render(): React.Node {
+        const {navigation} = this.props;
         return (
-            <View />
+            <TabBar {...{tabs, navigation}} />
         );
     }
 }

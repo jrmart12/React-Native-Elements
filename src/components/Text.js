@@ -1,12 +1,13 @@
 // @flow
 import * as React from "react";
-import {Text as RNText} from "react-native";
+import {Text as RNText, StyleSheet} from "react-native";
 
 import {withTheme} from "./Theme";
-import type {ThemeProps, StyleProps} from "./Types";
+import type {ThemeProps, Typographies} from "./Theme";
+import type {StyleProps} from "./Types";
 
 type TypographyProps = ThemeProps & StyleProps & {
-    type: "body" | "callout" | "caption" | "footnote" | "headline" | "subhead" | "title1" | "title2" | "title3",
+    type: $Keys<Typographies>,
     children: string
 };
 
@@ -18,10 +19,17 @@ class Text extends React.Component<TypographyProps> {
 
     render(): React.Node {
         const {type, style, children, theme} = this.props;
-        const defaultStyle = [theme.typography[type]];
-        defaultStyle.push(style);
-        return <RNText style={defaultStyle}>{children}</RNText>;
+        const computedStyle = [theme.typography[type]];
+        computedStyle.push(styles.default);
+        computedStyle.push(style);
+        return <RNText style={computedStyle}>{children}</RNText>;
     }
 }
+
+const styles = StyleSheet.create({
+    default: {
+        backgroundColor: "transparent"
+    }
+});
 
 export default withTheme(Text);

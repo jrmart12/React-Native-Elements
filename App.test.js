@@ -10,9 +10,9 @@ import renderer from "react-test-renderer";
 
 it("renders without crashing", () => {
   const rendered = renderer.create((
-          <Provider theme={createTheme(primaryColors.food)}>
-              <FoodNavigator />
-          </Provider>
+      <Provider theme={createTheme(primaryColors.food)}>
+          <FoodNavigator />
+      </Provider>
   )).toJSON();
   expect(rendered).toBeTruthy();
 });

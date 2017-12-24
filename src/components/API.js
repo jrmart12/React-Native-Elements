@@ -1,14 +1,20 @@
 // @flow
 const food = require("./data/food");
 
+export type Picture = {
+    uri: string,
+    preview: string
+};
+
 export type Category = {
     id: string,
     title: string,
-    subtitle: string
+    subtitle: string,
+    picture: Picture
 };
 
 export type Food = {
-    categories: { [category: string]: Category }
+    categories: Category[]
 };
 
 export default class API {

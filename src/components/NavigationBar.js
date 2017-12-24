@@ -1,14 +1,33 @@
 // @flow
 import * as React from "react";
-import {SafeAreaView} from "react-native";
+import {SafeAreaView, View} from "react-native";
 
 import Text from "./Text";
-import {withTheme} from "./Theme";
-import type {ThemeProps, NavigationProps} from "./Types";
+import {withStyles} from "./Theme";
+
+import type {Theme, Styles, StyleProps} from "./Theme";
+import type {NavigationProps} from "./Types";
+
+type StyleNames = "root" | "text" | "content";
+
+const styles = (theme: Theme): Styles<StyleNames> => ({
+    root: {
+        backgroundColor: theme.palette.primary
+    },
+    content: {
+        height: theme.constants.barHeight,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    text: {
+        color: "white"
+    }
+});
 
 type NavigationBarType = "opaque" | "transparent" | "tinted";
 
-type NavigationBarProps = ThemeProps & NavigationProps<> & {
+type NavigationBarProps = StyleProps<StyleNames> & NavigationProps<> & {
     title: string,
     type: NavigationBarType
 };
@@ -20,13 +39,17 @@ class NavigationBar extends React.Component<NavigationBarProps> {
     };
 
     render(): React.Node {
-        const {title, theme} = this.props;
+        const {title, styles} = this.props;
         return (
-            <SafeAreaView style={{ backgroundColor: theme.palette.primary }}>
-                <Text>{title}</Text>
+            <SafeAreaView style={styles.root}>
+                <View style={styles.content}>
+                    <View />
+                    <Text type="headline" style={styles.text}>{title}</Text>
+                    <View />
+                </View>
             </SafeAreaView>
         );
     }
 }
 
-export default withTheme(NavigationBar);
+export default withStyles(styles, NavigationBar);

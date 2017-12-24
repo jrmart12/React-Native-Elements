@@ -1,22 +1,28 @@
 // @flow
-import * as _ from "lodash";
+import autobind from "autobind-decorator";
 import * as React from "react";
-import {ScrollView} from "react-native";
-import {Container, NavigationBar, Card, API} from "../components";
+
+import {Container, NavigationBar, Card, List, API} from "../components";
+
+import type {Category} from "../components/API";
 import type {ScreenProps} from "../components/Types";
 
 export default class Recipes extends React.Component<ScreenProps<>> {
 
+    @autobind
+    renderItem(item: Category): React.Node {
+        return <Card {...item} />;
+    }
+
     render(): React.Node {
+        const {renderItem} = this;
         const {navigation} = this.props;
+        const data = API.food.categories;
+        const title = "Recipes";
         return (
             <Container>
-                <NavigationBar title="Recipes" {...{navigation}} />
-                <ScrollView>
-                {
-                    _.map(API.food.categories, (category, key) => <Card {...category} {...{ key }} />)
-                }
-                </ScrollView>
+                <NavigationBar {...{navigation, title}} />
+                <List {...{data, renderItem, title}} />
             </Container>
         );
     }
