@@ -18,5 +18,45 @@
                 "preview": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAAAXNSR0IArs4c6QAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAsTAAALEwEAmpwYAAABWWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS40LjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgpMwidZAAAEIUlEQVQ4ER2TyW9bVRTGf35+nud4ips0iZPGadImIU0aNU3VpoAqFlBaoIBEJTZs2LECiVUXiL8ANuyQEBsQoC7KsKhAFU2hc0UTt0kcjxk8z479nv246rk60pWu9N1zvkF39fJZ7bufVwGFDy6tsBK6QDK6w0+1r2i3p4jHFI7MaKg6iWzGgs9hIZaM8uW7HzI/ucjBrsKtm7f55cFv5ANFpHSuKMA00TAmTaMzGNgwPcDuDCEbXAyO+chn/ZjrFpbDBoI9CaplMqUK6f0KsfQuD/eestmfxOOxo3uBZnYx5JcZ7x9kq1whLk5YPkZTNeC0GtloaLwxobHYN00xq3CvmOLWdgrysReD4IaAM4CktyJ7XF5KjSaHvFac2AhrNlTFSqLcwm2oU2/pQbzvJYIcDkcwOKriowpHx8bRjw5TqeTQ2gqKTo+qqsjlWhd6LabcLzM9MMvf8bs83F6nl7OjDgRx9IV4adyCbITrqSh5tU0Lo6CjS081CmqCaGqPdqNNrlZAJ1mtWq/Z4szRWWx2G6v5x4yErDSbVg6F+wiFneT3IfqkTabQBoeDsNeDxWzGoFbZqTTIpTIEInV8mgv9q8sL1xKZGgl9gqI3ybm5QUbHXciWBsFBRXQds2WXUuaAenSdlSUVn6eF0zmMyeknYoUrZ+fReht4fJrYxCAzOmZiIyrjdfaL8TVK1RyxeJbN53bmTts4NXeOkXck3B9dwObRBK95tv/b4c/HQU5MTXExcobJ9lE+/+Zj9J6gdC0pRg6FwhiNPlI7aywvLLEwP4dkUohMjHFqcYlyuY6338FgIIBOCFBtJNm6H6XnGMKw26a7oZKK15F0xhaVAngDQaqdGqln4m73MX9yhLHxQyTWt+kqGmaTVXjugaDQSaukJxbbQ2WTyv4e1XCWrcnfGX4tiJTPFTCaQ3SEctWqQBbV6KRJxxIk1kpCnC63bz1iKx5HLah0hSM6rSbff71FT4FM7gnJchPbUD8luYLUXnPicVtpCenr2TxvnT5Jv/Mw9++k2GsW8YWG+OLTH8nFu8xGXkFfMTI3McHVK0tsNkS6jqjcuFPk2xsH3NwsIVUQ+ZNlDhAGFjUzPYNe8bLTWmdktoCs17hyeYmLFxcYjRzBqA0QUI5xfvh1zk1beP/t93jz7ACxTJuwsJRcEyBWwYbdZH4B2GvJKBUTsqnKSdsnzB5e4ZHxHlU1KggfEZaZQN4zMeoaJ+Rx4Pe7cbs6INbW/CCSLrJeyBJyWmBokudrMXaze7gen2FZusSMMLy9T+avuz+wn08LpsHWcVIrFnmWy7L67zaJdIfBIY12V0aWDIK/Vg2l1WDx2HH++fUOMXmDE9njGLt69jsxnh5cZ7L2GbUbdlLTGfyVHquxP1h9DoMeC5quTkc5wCTp+R9IYM+gfl6k9wAAAABJRU5ErkJggg=="
             }
         }
-    ]
+    ],
+    "recipes": {
+        "breakfast": [
+            {
+                "id": "morning-smoothies",
+                "title": "Morning Smoothies",
+                "people": 1,
+                "minutes": 5,
+                "picture": {
+                    "uri": "https://firebasestorage.googleapis.com/v0/b/react-native-e.appspot.com/o/e7954c83f52ec1c2c1bed2ec7826bab77aa8cb6f.png?alt=media&token=26fe6995-d857-4cf2-a14e-de8cd8d3ff74",
+                    "preview": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAFCAYAAAB8ZH1oAAAAAXNSR0IArs4c6QAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAsTAAALEwEAmpwYAAABWWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS40LjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgpMwidZAAAA1klEQVQIHQXBu07CUACA4b/lhOYYA+E2QCwohnINJMYEHoDRzYGBR/ABGFzYfAxG34CExYCjYWHoSMOgJVw0DUiwobR+n1J+HgSdaoaUVJhZG5z1N5xV9OotWf8H7X1I5SaH6BUkd8k1EdXB3y8peAuS6TIn7YOsEWLk5ui/WojM14RYVEfKX66FQqXbQ8YijF+euNom0MMGb7ZNSK72/dZ9nrge59O0iB53BAcH155SajTZqglMVyA8c4fr/xF4Aal6G82oEb6QXC7mHI4bis0HBq1H/gE9YkZxqp99qwAAAABJRU5ErkJggg=="
+                },
+                "instructions": [
+                    "Place the grapes, spinach, ice, and coconut milk in a blender.",
+                    "Blend until smooth and frothy."
+                ],
+                "ingredients": [
+                    {
+                        "checked": true,
+                        "name": "Seedless green grapes",
+                        "quantity": "1 cup"
+                    },
+                    {
+                        "checked": true,
+                        "name": "Baby spinach",
+                        "quantity": "1 cup"
+                    },
+                    {
+                        "checked": false,
+                        "name": "Ice",
+                        "quantity": "1/2 cup"
+                    },
+                    {
+                        "checked": false,
+                        "name": "Coconut milk",
+                        "quantity": "1/4 cup"
+                    }
+                ]
+            }
+        ]
+    }
 }

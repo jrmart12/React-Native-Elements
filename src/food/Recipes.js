@@ -2,28 +2,28 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import {Container, NavigationBar, Card, List, API} from "../components";
+import {Card, Feed} from "../components";
 
-import type {Category} from "../components/API";
-import type {ScreenProps} from "../components/Types";
+import FoodAPI from "./api";
+import type {Category} from "./api";
+
+import type {ScreenProps} from "../components/Navigation";
 
 export default class Recipes extends React.Component<ScreenProps<>> {
 
     @autobind
-    renderItem(item: Category): React.Node {
-        return <Card {...item} />;
+    renderItem(category: Category): React.Node {
+        const {navigation} = this.props;
+        return <Card {...category} onPress={() => navigation.navigate("Category", { categoryId: category.id })} />;
     }
 
     render(): React.Node {
         const {renderItem} = this;
         const {navigation} = this.props;
-        const data = API.food.categories;
+        const data = FoodAPI.categories;
         const title = "Recipes";
         return (
-            <Container>
-                <NavigationBar {...{navigation, title}} />
-                <List {...{data, renderItem, title}} />
-            </Container>
+            <Feed {...{data, renderItem, title, navigation}} />
         );
     }
 }

@@ -2,9 +2,11 @@
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
-import type {ChildrenProps} from "./Types";
+type ContainerProps = {
+    children: React.Node
+};
 
-export default class Container extends React.Component<ChildrenProps> {
+export default class Container extends React.Component<ContainerProps> {
 
     render(): React.Node {
         return (

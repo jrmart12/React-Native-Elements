@@ -1,15 +1,15 @@
 // @flow
 import * as _ from "lodash";
 import * as React from "react";
-import {Image, Animated, StyleSheet, View, Platform} from "react-native";
+import {Image as RNImage, Animated, StyleSheet, View, Platform} from "react-native";
 import {BlurView, FileSystem} from "expo";
 import SHA1 from "crypto-js/sha1";
 import {observable, computed} from "mobx";
 import {observer} from "mobx-react/native";
 
-import type {StyleProps} from "./Types";
+import type {StyleProps} from "./theme";
 
-type SmartImageProps = StyleProps & {
+type ImageProps = StyleProps & {
     preview?: string,
     uri: string
 };
@@ -21,7 +21,7 @@ const propsToCopy = [
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
 @observer
-export default class SmartImage extends React.Component<SmartImageProps> {
+export default class Image extends React.Component<ImageProps> {
 
     @observable _uri: string;
     @observable _intensity: Animated.Value = new Animated.Value(100);
@@ -34,18 +34,22 @@ export default class SmartImage extends React.Component<SmartImageProps> {
 
     async componentWillMount(): Promise<void> {
         const {preview, uri} = this.props;
-        const entry = await getCacheEntry(uri);
-        if (!entry.exists) {
-            if (preview) {
-                this.uri = preview;
+        try {
+            const entry = await getCacheEntry(uri);
+            if (!entry.exists) {
+                if (preview && Platform.OS === "ios") {
+                    this.uri = preview;
+                }
+                if (uri.startsWith("file://")) {
+                    await FileSystem.copyAsync({ from: uri, to: entry.path });
+                } else {
+                    await FileSystem.downloadAsync(uri, entry.path);
+                }
             }
-            if (uri.startsWith("file://")) {
-                await FileSystem.copyAsync({ from: uri, to: entry.path });
-            } else {
-                await FileSystem.downloadAsync(uri, entry.path);
-            }
+            this.uri = entry.path;
+        } catch(e) {
+            this.uri = uri;
         }
-        this.uri = entry.path;
     }
 
     onLoadEnd(uri: string) {
@@ -68,7 +72,7 @@ export default class SmartImage extends React.Component<SmartImageProps> {
             <View {...{style}}>
                 {
                     uri && (
-                        <Image
+                        <RNImage
                             source={{ uri }}
                             resizeMode="cover"
                             style={computedStyle}

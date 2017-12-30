@@ -1,6 +1,8 @@
 // @flow
 import * as React from "react";
-import type { StyleObj } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+
+import TabBar from "./TabBar";
+import type {Tabs} from "./TabBar";
 
 import type {
     // eslint-disable-next-line no-unused-vars
@@ -15,10 +17,16 @@ export type NavigationProps<S: {} = NavigationState> = {
 
 export type ScreenParams<P> = ScreenProps<{}, { params: P }>;
 
-export type StyleProps = {
-    style?: StyleObj
+export const StackNavigatorOptions = {
+    headerMode: "none",
+    cardStyle: {
+        backgroundColor: "white"
+    }
 };
 
-export type ChildrenProps = {
-    children?: React.ChildrenArray<React.Element<*>>
-};
+export const TabNavigatorOptions = (tabs: Tabs) => ({
+    animationEnabled: false,
+    // eslint-disable-next-line react/display-name
+    tabBarComponent: ({ navigation }: NavigationProps<>) => <TabBar {...{navigation, tabs}} />,
+    tabBarPosition: "bottom"
+});

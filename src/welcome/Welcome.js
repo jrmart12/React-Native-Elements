@@ -4,7 +4,7 @@ import * as React from "react";
 import {View, TouchableWithoutFeedback} from "react-native";
 
 import {Text} from "../components";
-import type {ScreenProps} from "../components/Types";
+import type {ScreenProps} from "../components/Navigation";
 
 export default class Welcome extends React.Component<ScreenProps<>> {
 

@@ -1,20 +1,21 @@
 // @flow
 import * as React from "react";
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, TouchableWithoutFeedback} from "react-native";
 import {LinearGradient} from "expo";
 
-import SmartImage from "./SmartImage";
+import Image from "./Image";
 import Text from "./Text";
-import {StyleGuide} from "./Theme";
+import {StyleGuide} from "./theme";
 
-import type {Picture} from "./API";
+import type {Picture} from "./Model";
 
 type CardProps = {
     title: string,
     subtitle?: string,
     description?: string,
     picture: Picture,
-    height?: number
+    height?: number,
+    onPress: () => mixed
 };
 
 export default class Card extends React.Component<CardProps> {
@@ -24,28 +25,30 @@ export default class Card extends React.Component<CardProps> {
     };
 
     render(): React.Node {
-        const {picture, height, title, subtitle, description} = this.props;
+        const {picture, height, title, subtitle, description, onPress} = this.props;
         return (
-            <View style={styles.card}>
-                <SmartImage style={[styles.image, { height }]} {...picture} />
-                <View style={styles.content}>
-                    <LinearGradient colors={topGradient} style={styles.gradient}>
+            <TouchableWithoutFeedback {...{ onPress }}>
+                <View style={styles.card}>
+                    <Image style={[styles.image, { height }]} {...picture} />
+                    <View style={styles.content}>
+                        <LinearGradient colors={topGradient} style={styles.gradient}>
+                            {
+                                subtitle && (
+                                    <Text type="headline" style={styles.subtitle}>{subtitle.toUpperCase()}</Text>
+                                )
+                            }
+                            <Text type="title2" color="white">{title}</Text>
+                        </LinearGradient>
                         {
-                            subtitle && (
-                                <Text type="headline" style={styles.subtitle}>{subtitle.toUpperCase()}</Text>
+                            description && (
+                                <LinearGradient colors={bottomGradient} style={styles.gradient}>
+                                    <Text color="white">{description}</Text>
+                                </LinearGradient>
                             )
                         }
-                        <Text type="title2" style={styles.title}>{title}</Text>
-                    </LinearGradient>
-                    {
-                        description && (
-                            <LinearGradient colors={bottomGradient} style={styles.gradient}>
-                                <Text>{description}</Text>
-                            </LinearGradient>
-                        )
-                    }
+                    </View>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
         );
     }
 }
@@ -54,13 +57,13 @@ const topGradient = ["rgba(0,0,0,0.8)", "transparent"];
 const bottomGradient = ["transparent", "rgba(0,0,0,0.8)"];
 const styles = StyleSheet.create({
     card: {
-        borderRadius: 8,
-        marginBottom: StyleGuide.spacing.small,
+        ...StyleGuide.styles.borderRadius,
+        marginTop: StyleGuide.spacing.small,
         marginHorizontal: StyleGuide.spacing.small,
-        backgroundColor: StyleGuide.palette.gray
+        backgroundColor: StyleGuide.palette.darkGray
     },
     image: {
-        borderRadius: 8
+        ...StyleGuide.styles.borderRadius
     },
     content: {
         ...StyleSheet.absoluteFillObject,
@@ -68,13 +71,10 @@ const styles = StyleSheet.create({
     },
     gradient: {
         padding: StyleGuide.spacing.small,
-        borderRadius: 8
+        ...StyleGuide.styles.borderRadius
     },
     subtitle: {
         color: "rgba(255, 255, 255, 0.7)",
         fontSize: 15
-    },
-    title: {
-        color: "white"
     }
 });

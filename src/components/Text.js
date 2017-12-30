@@ -1,28 +1,34 @@
 // @flow
 import * as React from "react";
-import {Text as RNText, StyleSheet} from "react-native";
+import {Text, StyleSheet} from "react-native";
 
-import {withTheme} from "./Theme";
-import type {ThemeProps, Typographies} from "./Theme";
-import type {StyleProps} from "./Types";
+import {StyleGuide, withTheme} from "./theme";
 
-type TypographyProps = ThemeProps & StyleProps & {
+import type {Typographies, ThemeProps} from "./theme";
+import type {StyleProps} from "./theme";
+
+type TypographyProps = StyleProps & ThemeProps & {
     type: $Keys<Typographies>,
-    children: string
+    color: string,
+    children: string,
+    primary?: boolean
 };
 
-class Text extends React.Component<TypographyProps> {
+class TextComp extends React.Component<TypographyProps> {
 
     static defaultProps = {
-        type: "body"
+        type: "body",
+        color: StyleGuide.palette.black
     };
 
     render(): React.Node {
-        const {type, style, children, theme} = this.props;
-        const computedStyle = [theme.typography[type]];
+        const {theme, type, style, children, primary} = this.props;
+        const typography = StyleGuide.typography[type];
+        const color = primary ? theme.palette.primary : (typography.color ? typography.color : this.props.color);
+        const computedStyle = [typography, { color }];
         computedStyle.push(styles.default);
         computedStyle.push(style);
-        return <RNText style={computedStyle}>{children}</RNText>;
+        return <Text style={computedStyle}>{children}</Text>;
     }
 }
 
@@ -32,4 +38,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default withTheme(Text);
+export default withTheme(TextComp);

@@ -2,7 +2,7 @@
 import React from "react";
 import {Provider} from "mobx-react/native";
 
-import {createTheme, primaryColors} from "./src/components";
+import {createTheme, Colors} from "./src/components";
 
 import {FoodNavigator} from "./src/food";
 
@@ -10,7 +10,7 @@ import renderer from "react-test-renderer";
 
 it("renders without crashing", () => {
   const rendered = renderer.create((
-      <Provider theme={createTheme(primaryColors.food)}>
+      <Provider theme={createTheme(Colors.food)}>
           <FoodNavigator />
       </Provider>
   )).toJSON();

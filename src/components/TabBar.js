@@ -1,43 +1,46 @@
 // @flow
 import * as React from "react";
 import {StyleSheet, View, TouchableWithoutFeedback, SafeAreaView} from "react-native";
-import {Feather as Icon} from "@expo/vector-icons";
 
-import {withTheme, StyleGuide} from "./Theme";
-import type {ThemeProps} from "./Theme";
-import type {NavigationProps} from "./Types";
+import Icon from "./Icon";
+import {StyleGuide} from "./theme";
 
-type Tab = {
+import type {NavigationProps} from "./Navigation";
+import type {IconName} from "./Model";
+
+export type Tab = {
     key: string,
     label: string,
-    icon: string
+    icon: IconName
 };
 
-type TabBarProps = ThemeProps & NavigationProps<> & {
-    tabs: Tab[]
+export type Tabs = Tab[];
+
+type TabBarProps = NavigationProps<> & {
+    tabs: Tabs
 };
 
-class TabBar extends React.Component<TabBarProps> {
+export default class TabBar extends React.Component<TabBarProps> {
 
-    // TODO: Use React.ElementConfig instead when flow bin 0.62 is available
-    // https://flow.org/en/docs/react/types/#toc-react-elementconfig
-    static defaultProps = {};
+    navigate(key: string) {
+        const {tabs, navigation} = this.props;
+        const activeKey = tabs[navigation.state.index].key;
+        if (activeKey !== key) {
+            navigation.navigate(key);
+        }
+    }
 
     render(): React.Node {
-        const {tabs, navigation, theme} = this.props;
+        const {tabs, navigation} = this.props;
         const activeKey = tabs[navigation.state.index].key;
         return (
-            <SafeAreaView style={theme.constants.defaultShadow}>
+            <SafeAreaView style={styles.root}>
                 <View style={styles.tabs}>
                 {
                     tabs.map(tab => (
-                        <TouchableWithoutFeedback key={tab.key} onPress={() => navigation.navigate(tab.key)}>
+                        <TouchableWithoutFeedback key={tab.key} onPress={() => this.navigate(tab.key)}>
                             <View style={styles.tab}>
-                                <Icon
-                                    size={theme.constants.iconSize}
-                                    name={tab.icon}
-                                    color={activeKey === tab.key ? theme.palette.primary : theme.palette.gray}
-                                />
+                                <Icon name={tab.icon} primary={activeKey === tab.key} />
                             </View>
                         </TouchableWithoutFeedback>
                     ))
@@ -49,11 +52,14 @@ class TabBar extends React.Component<TabBarProps> {
 }
 
 const styles = StyleSheet.create({
+    root: {
+        ...StyleGuide.styles.shadow
+    },
     tabs: {
         flexDirection: "row",
-        height: StyleGuide.constants.barHeight,
         justifyContent: "space-around",
-        alignItems: "stretch"
+        alignItems: "stretch",
+        ...StyleGuide.styles.barHeight
     },
     tab: {
         alignItems: "center",
@@ -61,5 +67,3 @@ const styles = StyleSheet.create({
         flex: 1
     }
 });
-
-export default withTheme(TabBar);

@@ -1,51 +1,40 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
-import {FlatList, StyleSheet} from "react-native";
+import {StyleSheet, View} from "react-native";
 
-import {StyleGuide} from "./Theme";
-
-type Item = {
-    id: string
-};
+import {StyleGuide} from "./theme";
 
 type ListProps<T> = {
-    data: T[],
-    renderItem: T => React.Node
+    rows: T[],
+    renderRow: (T, number) => React.Node
 };
 
-export default class List<T: Item> extends React.Component<ListProps<T>> {
-
-    @autobind
-    keyExtractor(item: T): string {
-        return item.id;
-    }
-
-    @autobind
-    renderItem({ item }: { item: T }): React.Node {
-        const {renderItem} = this.props;
-        return renderItem(item);
-    }
+export default class List<T> extends React.Component<ListProps<T>> {
 
     render(): React.Node {
-        const {keyExtractor, renderItem} = this;
-        const {data} = this.props;
+        const {rows, renderRow} = this.props;
         return (
-            <FlatList
-                style={styles.list}
-                contentContainerStyle={styles.container}
-                showsVerticalScrollIndicator={false}
-                {...{ data, keyExtractor, renderItem }}
-            />
+            <View style={styles.container}>
+            {
+                rows.map((row, index) => (
+                    <View key={index} style={index !== (rows.length - 1) ? styles.separator : {}}>
+                    {
+                        renderRow(row, index)
+                    }
+                    </View>
+                ))
+            }
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    list: {
-        backgroundColor: StyleGuide.palette.lighterGray
-    },
     container: {
-        paddingVertical: StyleGuide.spacing.small
+        backgroundColor: "white",
+        ...StyleGuide.styles.borderRadius
+    },
+    separator: {
+        ...StyleGuide.styles.separator
     }
 });

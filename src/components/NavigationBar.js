@@ -1,55 +1,78 @@
 // @flow
 import * as React from "react";
-import {SafeAreaView, View} from "react-native";
+import autobind from "autobind-decorator";
+import {SafeAreaView, View, Animated, StyleSheet} from "react-native";
 
+import LeftAction from "./LeftAction";
 import Text from "./Text";
-import {withStyles} from "./Theme";
+import {withTheme, StyleGuide} from "./theme";
 
-import type {Theme, Styles, StyleProps} from "./Theme";
-import type {NavigationProps} from "./Types";
+import type {StyleObj as Style} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+import type {ThemeProps} from "./theme";
+import type {NavigationProps} from "./Navigation";
 
-type StyleNames = "root" | "text" | "content";
+type NavigationBarType = "opaque";
 
-const styles = (theme: Theme): Styles<StyleNames> => ({
-    root: {
-        backgroundColor: theme.palette.primary
-    },
-    content: {
-        height: theme.constants.barHeight,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center"
-    },
-    text: {
-        color: "white"
-    }
-});
-
-type NavigationBarType = "opaque" | "transparent" | "tinted";
-
-type NavigationBarProps = StyleProps<StyleNames> & NavigationProps<> & {
+type NavigationBarProps = ThemeProps & NavigationProps<*> & {
     title: string,
-    type: NavigationBarType
+    type: NavigationBarType,
+    titleStyle?: Style,
+    back?: string
 };
 
 class NavigationBar extends React.Component<NavigationBarProps> {
 
     static defaultProps = {
-        type: "opaque"
+        type: "opaque",
+        title: ""
     };
 
+    @autobind
+    goBack() {
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
+
     render(): React.Node {
-        const {title, styles} = this.props;
+        const {type, title, theme, back, titleStyle} = this.props;
+        const containerStyle = {
+            backgroundColor: type === "opaque" ? theme.palette.primary : "transparent"
+        };
         return (
-            <SafeAreaView style={styles.root}>
+            <SafeAreaView style={containerStyle}>
                 <View style={styles.content}>
-                    <View />
-                    <Text type="headline" style={styles.text}>{title}</Text>
-                    <View />
+                    <View style={styles.block}>
+                    {back && <LeftAction onPress={this.goBack} name="chevron-left" label={back} />}
+                    </View>
+                    <View style={styles.block}>
+                        <AnimatedText type="headline" color="white" style={[styles.text, titleStyle]}>
+                        {title}
+                        </AnimatedText>
+                    </View>
+                    <View style={styles.block} />
                 </View>
             </SafeAreaView>
         );
     }
 }
 
-export default withStyles(styles, NavigationBar);
+const styles = StyleSheet.create({
+    content: {
+        ...StyleGuide.styles.barHeight,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    text: {
+        textAlign: "center"
+    },
+    block: {
+        width: "33%"
+    },
+    header: {
+        padding: StyleGuide.spacing.small
+    }
+});
+
+const AnimatedText = Animated.createAnimatedComponent(Text);
+export default withTheme(NavigationBar);

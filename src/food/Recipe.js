@@ -1,0 +1,71 @@
+// @flow
+import autobind from "autobind-decorator";
+import * as React from "react";
+import {View, StyleSheet} from "react-native";
+
+import {
+    Container, Header, NavigationBar, DetailsBar, Content, List, Button, ActionSheet, StyleGuide
+} from "../components";
+
+import FoodAPI from "./api";
+import {Ingredient, Step} from "./components";
+
+import type {ScreenParams} from "../components/Navigation";
+
+export default class RecipeComp extends React.Component<ScreenParams<{ categoryId: string, recipeId: string }>> {
+
+    ingredientList: ActionSheet;
+
+    render(): React.Node {
+        const {navigation} = this.props;
+        const {categoryId, recipeId} = navigation.state.params;
+        const category = FoodAPI.categories.filter(category => categoryId === category.id)[0];
+        const recipe = FoodAPI.recipes[category.id].filter(recipe => recipe.id === recipeId)[0];
+        const people = `${recipe.people} ${recipe.people > 1 ? "people" : "person"}`;
+        const minutes = `${recipe.minutes} minutes`;
+        const icon = recipe.people > 1 ? "user" : "users";
+        return (
+            <Container>
+                <Header title={recipe.title} picture={recipe.picture}>
+                    <NavigationBar type="transparent" back={category.title} {...{navigation}} />
+                </Header>
+                <DetailsBar details={[{ icon, caption: people }, { icon: "clock", caption: minutes }]} />
+                <Content gutter={true}>
+                    <Button primary={true} label="See Ingredients" onPress={this.toggleIngredientList} />
+                    <List rows={recipe.instructions} renderRow={(step, index) => <Step {...{step, index}} />} />
+                </Content>
+                <ActionSheet title="Ingredients" ref={this.setIngredientListRef}>
+                    {
+                        recipe.ingredients.map((ingredient, key) => <Ingredient {...{ingredient, key}} />)
+                    }
+                    <View style={styles.gutter}>
+                        <Button primary={true} label="Add to Reminder" onPress={this.notImplementedYet} />
+                    </View>
+                </ActionSheet>
+            </Container>
+        );
+    }
+
+    @autobind
+    toggleIngredientList() {
+        this.ingredientList.toggle();
+    }
+
+    @autobind
+    setIngredientListRef(ingredientList: ActionSheet | null) {
+        if(ingredientList) {
+            this.ingredientList = ingredientList;
+        }
+    }
+
+    @autobind
+    notImplementedYet() {
+        alert("Not Implemented yet ¯\\_(ツ)_/¯");
+    }
+}
+
+const styles = StyleSheet.create({
+    gutter: {
+        padding: StyleGuide.spacing.small
+    }
+})
