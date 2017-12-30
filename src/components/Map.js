@@ -1,7 +1,7 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {StyleSheet, View} from "react-native";
+import {View} from "react-native";
 import {LinearGradient, MapView} from "expo";
 
 import {withTheme} from "./theme";
@@ -13,13 +13,15 @@ const mapStyle = require("../components/mapStyle");
 
 type MapProps = ThemeProps & {
     coordinate: Location,
-    markers: Marker[]
+    markers: Marker[],
+    height: number
 };
 
 class Map extends React.Component<MapProps> {
 
     static defaultProps = {
-        markers: []
+        markers: [],
+        height: 320
     };
 
     map: MapView;
@@ -41,12 +43,12 @@ class Map extends React.Component<MapProps> {
     }
 
     render(): React.Node {
-        const {markers, theme} = this.props;
+        const {markers, height, theme} = this.props;
         return (
-            <View style={styles.map}>
+            <View style={{ height }}>
                 <MapView
                     ref={this.setMapRef}
-                    style={styles.map}
+                    style={{ height }}
                     provider="google"
                     customMapStyle={mapStyle}
                 >
@@ -68,11 +70,5 @@ class Map extends React.Component<MapProps> {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    map: {
-        height: 320
-    }
-});
 
 export default withTheme(Map);

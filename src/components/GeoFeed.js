@@ -1,7 +1,6 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
-import {FlatList, StyleSheet, View, Animated} from "react-native";
+import {ScrollView, StyleSheet, View, Animated} from "react-native";
 import {observable} from "mobx";
 import {observer} from "mobx-react/native";
 
@@ -23,20 +22,10 @@ type GeoFeedProps<T: Marker> = ThemeProps & NavigationProps<*> & {
 @observer
 class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
 
+    // TODO: fix me
     static defaultProps = {};
 
     @observable scrollAnimation = new Animated.Value(0);
-
-    @autobind
-    keyExtractor(marker: Marker): string {
-        return marker.id;
-    }
-
-    @autobind
-    renderItem({ item }: { item: T }): React.Node {
-        const {renderItem} = this.props;
-        return <View style={{ position: "relative", top: -100 }}>{renderItem(item)}</View>;
-    }
 
     listHeaderComponent(): React.Node {
         const {scrollAnimation} = this;
@@ -46,8 +35,8 @@ class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
             outputRange: [-1, 0, 0]
         });
         return (
-            <Animated.View style={{ transform: [{ translateY }]}}>
-                <View style={[{backgroundColor: theme.palette.primary}, styles.header]}>
+            <Animated.View style={{ transform: [{ translateY }] }}>
+                <View style={[{ backgroundColor: theme.palette.primary }, styles.header]}>
                     <Text type="title1" style={styles.headerText}>{title}</Text>
                 </View>
                 <Map
@@ -59,8 +48,8 @@ class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
     }
 
     render(): React.Node {
-        const {keyExtractor, renderItem, scrollAnimation} = this;
-        const {markers, title, navigation} = this.props;
+        const {scrollAnimation} = this;
+        const {markers, renderItem, title, navigation} = this.props;
         const textTranslation = scrollAnimation.interpolate({
             inputRange: [0, 55, 56, 57],
             outputRange: [55, 55, 0, 0]
@@ -79,21 +68,26 @@ class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
         return (
             <View style={styles.root}>
                 <NavigationBar {...{ navigation, title, titleStyle}} />
-                <AnimatedFlatList
+                <AnimatedScrollView
                     style={styles.list}
                     contentContainerStyle={styles.container}
                     showsVerticalScrollIndicator={false}
-                    ListHeaderComponent={this.listHeaderComponent()}
                     scrollEventThrottle={1}
-                    data={markers}
-                    {...{ keyExtractor, renderItem, onScroll }}
-                />
+                    {...{ onScroll }}
+                >
+                    {this.listHeaderComponent()}
+                    {
+                        markers.map(marker => (
+                            <View key={marker.id} style={styles.item}>{renderItem(marker)}</View>
+                        ))
+                    }
+                </AnimatedScrollView>
             </View>
         );
     }
 }
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 const styles = StyleSheet.create({
     root: {
         flex: 1
@@ -108,6 +102,10 @@ const styles = StyleSheet.create({
     },
     headerText: {
         color: "white"
+    },
+    item: {
+        position: "relative",
+        top: -100
     }
 });
 

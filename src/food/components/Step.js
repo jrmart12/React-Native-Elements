@@ -16,7 +16,7 @@ export default class Step extends React.Component<StepProps> {
         return (
             <View style={styles.container}>
                 <Text style={styles.step}>{`${index}`}</Text>
-                <Text>{step}</Text>
+                <Text style={styles.text}>{step}</Text>
             </View>
         );
     }
@@ -31,4 +31,7 @@ const styles = StyleSheet.create({
         marginRight: StyleGuide.spacing.small,
         color: StyleGuide.palette.darkGray
     },
+    text: {
+        marginRight: StyleGuide.spacing.small
+    }
 });

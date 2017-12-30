@@ -1,6 +1,10 @@
 // @flow
+import autobind from "autobind-decorator";
+import moment from "moment";
 import * as React from "react";
 import {View} from "react-native";
+import {observable, action} from "mobx";
+import {observer} from "mobx-react/native";
 import {default as RNDatePicker} from "react-native-datepicker";
 
 import {withStyles, StyleGuide} from "./theme";
@@ -33,10 +37,14 @@ const styles = (theme: Theme): StyleSheet<StyleNames> => ({
     }
 });
 
+@observer
 class DatePicker extends React.Component<StylesProps<StyleNames>> {
 
     // TODO: FIX ME
     static defaultProps = {};
+
+    @observable date: string = moment().format("MMMM Do");
+    @autobind @action onDateChange(date: string) { this.date = date; }
 
     render(): React.Node {
         const {styles} = this.props;
@@ -50,6 +58,8 @@ class DatePicker extends React.Component<StylesProps<StyleNames>> {
                     cancelBtnText="Cancel"
                     format="MMMM Do"
                     showIcon={false}
+                    date={this.date}
+                    onDateChange={this.onDateChange}
                 />
             </View>
         );

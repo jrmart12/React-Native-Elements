@@ -42,7 +42,7 @@ export default class RestaurantComp extends React.Component<ScreenParams<{ resta
                 </Header>
                 <DetailsBar {...{details}} />
                 <Content>
-                    <Map markers={[restaurant]} {...{coordinate}} />
+                    <Map height={250} markers={[restaurant]} {...{coordinate}} />
                     <View style={styles.description}>
                         <Button primary={true} label="Make reservation" onPress={this.makeReservation} />
                         <BaseCard>

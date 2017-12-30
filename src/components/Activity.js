@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         justifyContent: "space-between",
-        margin: StyleGuide.spacing.small
+        marginHorizontal: StyleGuide.spacing.small,
+        marginBottom: StyleGuide.spacing.small
     },
     left: {
         justifyContent: "space-between"

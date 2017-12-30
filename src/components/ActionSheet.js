@@ -59,7 +59,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
             outputRange: [height, 0]
         });
         return (
-            <Modal visible={this.visible} transparent={true}>
+            <Modal visible={this.visible} transparent={true} onRequestClose={this.toggle}>
                 <View style={styles.modal}>
                     <Animated.View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: "black", opacity }}>
                         <TouchableOpacity style={styles.exit} onPress={this.toggle} />

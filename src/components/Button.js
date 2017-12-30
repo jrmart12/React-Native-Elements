@@ -32,9 +32,11 @@ class Button extends React.Component<ButtonProps> {
         const shadow = primary ? StyleGuide.styles.shadow : {};
         const Btn = disabled ? View : (Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback);
         return (
-            <Btn style={[styles.button, { backgroundColor, opacity, ...shadow }, style]} {...{onPress}}>
+            <Btn {...{onPress}}>
+                <View style={[styles.button, { backgroundColor, opacity, ...shadow }, style]} >
                 {icon && <Icon name={icon} {...{color}} style={styles.icon} />}
                 {label && <Text type="headline" {...{color}}>{label}</Text>}
+                </View>
             </Btn>
         );
     }
