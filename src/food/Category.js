@@ -6,9 +6,9 @@ import {Card, Feed} from "../components";
 import FoodAPI from "./api";
 
 import type {Recipe} from "./api";
-import type {ScreenParams} from "../components/Navigation";
+import type {NavigationProps} from "../components";
 
-export default class CategoryComp extends React.Component<ScreenParams<{ categoryId: string }>> {
+export default class CategoryComp extends React.Component<NavigationProps<{ categoryId: string }>> {
 
     @autobind
     renderItem(recipe: Recipe): React.Node {

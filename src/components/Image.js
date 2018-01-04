@@ -81,7 +81,7 @@ export default class Image extends React.Component<ImageProps> {
                     )
                 }
                 {
-                    Platform.OS === "ios" && <AnimatedBlurView tint="default" style={computedStyle} {...{intensity}} />
+                    Platform.OS === "ios" && <AnimatedBlurView tint="dark" style={computedStyle} {...{intensity}} />
                 }
             </View>
         );

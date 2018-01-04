@@ -24,9 +24,11 @@ class IconComp extends React.Component<IconProps> {
         const {theme, name, primary, secondary, color} = this.props;
         const iconColor = primary ? theme.palette.primary : (secondary ? theme.palette.secondary : color);
         return (
-            <Icon size={28} color={iconColor} {...{name}} />
+            <Icon size={DEFAULT_SIZE} color={iconColor} {...{name}} />
         );
     }
 }
+
+const DEFAULT_SIZE = 28;
 
 export default withTheme(IconComp);

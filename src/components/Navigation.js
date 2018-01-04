@@ -1,5 +1,6 @@
 // @flow
 import * as React from "react";
+import {NavigationActions} from "react-navigation"
 
 import TabBar from "./TabBar";
 import type {Tabs} from "./TabBar";
@@ -9,13 +10,20 @@ import type {
     NavigationNavigatorProps, NavigationScreenProp, NavigationState
 } from "react-navigation/src/TypeDefinition";
 
-export type ScreenProps<O: {} = {}, S: {} = NavigationState> = NavigationNavigatorProps<O, S>;
+export type NavigationProps<P: {} = {}> = NavigationNavigatorProps<{}, { params: P, index: number }>;
 
-export type NavigationProps<S: {} = NavigationState> = {
-    navigation: NavigationScreenProp<S>
-};
-
-export type ScreenParams<P> = ScreenProps<{}, { params: P }>;
+export class NavigationHelpers {
+    static reset(navigation: NavigationScreenProp<*>, routeName: string, key: string | null = null) {
+        const action = NavigationActions.reset({
+            index: 0,
+            key,
+            actions: [
+                NavigationActions.navigate({ routeName })
+            ]
+        });
+        navigation.dispatch(action);
+    }
+}
 
 export const StackNavigatorOptions = {
     headerMode: "none",

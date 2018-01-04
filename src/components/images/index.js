@@ -1,13 +1,13 @@
 // @flow
-// import {Asset} from "expo";
+import {Asset} from "expo";
 
 export default class Images {
 
-//    static pin = require("./pin.png");
+    static logo = require("../../../app.png");
 
     static downloadAsync(): Promise<*>[] {
         return [
-
+            Asset.loadAsync(Images.logo)
         ];
     }
 }

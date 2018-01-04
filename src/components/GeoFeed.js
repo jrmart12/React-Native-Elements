@@ -40,7 +40,7 @@ class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
                     <Text type="title1" style={styles.headerText}>{title}</Text>
                 </View>
                 <Map
-                    coordinate={{ latitude: 47.377035, longitude: 8.534628 }}
+                    coordinate={{ latitude: 47.377343, longitude: 8.535342 }}
                     markers={markers.map(marker => ({ id: marker.id, coordinate: marker.coordinate }))}
                 />
             </Animated.View>

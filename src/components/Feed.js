@@ -4,6 +4,7 @@ import * as React from "react";
 import {FlatList, StyleSheet, View, Animated} from "react-native";
 import {observable} from "mobx";
 import {observer} from "mobx-react/native";
+import {LinearGradient} from "expo";
 
 import NavigationBar from "./NavigationBar";
 import Text from "./Text";
@@ -11,6 +12,7 @@ import {withTheme, StyleGuide} from "./theme";
 
 import type {ThemeProps} from "./theme";
 import type {NavigationProps} from "./Navigation";
+import type {Action} from "./Model";
 
 type Item = {
     id: string
@@ -20,7 +22,9 @@ type FeedProps<T> = ThemeProps & NavigationProps<*> & {
     data: T[],
     renderItem: T => React.Node,
     title: string,
-    back?: string
+    header?: React.Node,
+    back?: string,
+    rightAction?: Action
 };
 
 @observer
@@ -43,14 +47,10 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
 
     render(): React.Node {
         const {keyExtractor, renderItem, scrollAnimation} = this;
-        const {data, title, navigation, theme, back} = this.props;
+        const {data, title, navigation, theme, back, rightAction, header} = this.props;
         const translateY = scrollAnimation.interpolate({
-            inputRange: [-1, 0, 1],
-            outputRange: [-1, 0, 0]
-        });
-        const textTranslation = scrollAnimation.interpolate({
-            inputRange: [0, 55, 56, 57],
-            outputRange: [55, 55, 0, 0]
+            inputRange: [55, 56, 57],
+            outputRange: [55, 0, 0]
         });
         const onScroll = Animated.event(
             [{
@@ -62,27 +62,35 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
             }],
             { useNativeDriver: true }
         );
-        const titleStyle = back ? {} : { transform: [{ translateY: textTranslation }]};
+        const titleStyle = back ? {} : { transform: [{ translateY }] };
+        const top = theme.palette.primary;
+        const bottom = theme.palette.lightGray;
         return (
-            <View style={styles.root}>
-            <NavigationBar
-                {...{ navigation, title, back, titleStyle}}
-             />
-            <AnimatedFlatList
-                style={styles.list}
-                contentContainerStyle={styles.container}
-                showsVerticalScrollIndicator={false}
-                ListHeaderComponent={(
-                    !back && (<Animated.View
-                        style={[{ transform: [{translateY}], backgroundColor: theme.palette.primary }, styles.header]}
-                    >
-                        <Text type="title1" style={styles.headerText}>{title}</Text>
-                    </Animated.View>)
-                )}
-                scrollEventThrottle={1}
-                {...{ data, keyExtractor, renderItem, onScroll }}
-            />
-            </View>
+            <LinearGradient
+                style={styles.root}
+                locations={[0, 0.5, 0.5, 1]}
+                colors={back ? [bottom, bottom, bottom, bottom] : [top, top, bottom, bottom]}
+            >
+                <NavigationBar
+                    {...{ navigation, title, back, titleStyle, rightAction}}
+                />
+                <AnimatedFlatList
+                    contentContainerStyle={styles.container}
+                    showsVerticalScrollIndicator={false}
+                    ListHeaderComponent={(
+                        !back && (
+                            <Animated.View style={{ backgroundColor: theme.palette.primary }}>
+                                <View style={styles.header}>
+                                    <Text type="title1" style={styles.headerText}>{title}</Text>
+                                </View>
+                                <View style={styles.extraHeader}>{header}</View>
+                            </Animated.View>
+                        )
+                    )}
+                    scrollEventThrottle={1}
+                    {...{data, keyExtractor, renderItem, onScroll}}
+                />
+            </LinearGradient>
         );
     }
 }
@@ -92,17 +100,19 @@ const styles = StyleSheet.create({
     root: {
         flex: 1
     },
-    list: {
-        backgroundColor: StyleGuide.palette.lightGray
-    },
     container: {
-        paddingBottom: StyleGuide.spacing.small
+        paddingBottom: StyleGuide.spacing.small,
+        backgroundColor: StyleGuide.palette.lightGray
     },
     header: {
         padding: StyleGuide.spacing.small
     },
     headerText: {
         color: "white"
+    },
+    extraHeader: {
+        backgroundColor: "white",
+        ...StyleGuide.styles.shadow
     }
 });
 

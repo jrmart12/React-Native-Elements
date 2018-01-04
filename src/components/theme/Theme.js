@@ -5,10 +5,6 @@ import {inject} from "mobx-react/native";
 import styleGuide from "./StyleGuide";
 import type {Palette, StyleGuide} from "./StyleGuide";
 
-export type Theme = {
-    palette: { primary: string, secondary: string } & Palette
-} & StyleGuide;
-
 // TODO: Use React.ElementConfig instead when flow bin 0.63 is available
 // https://flow.org/en/docs/react/types/#toc-react-elementconfig
 type RequiredProps<Props: {}, Comp> = $Diff<Props, $PropertyType<Comp, "defaultProps">>;
@@ -34,41 +30,51 @@ export function withStyles<StlNames: string, Props: {}, Comp: React.ComponentTyp
     return inject("theme")(({ theme, ...props }) => <C styles={styles(theme)} {...props} />);
 }
 
-type ThemeNames = "music" | "food" | "travel" | "social" | "photography";
-type ThemeColors = {
+export type ThemeName = "Music" | "Food" | "Travel" | "Social" | "Photography";
+export type ThemeColors = {
     primary: string,
     secondary: string
 };
 
-export const Colors: { [name: ThemeNames]: ThemeColors } = {
-    music: {
+export type Theme = {
+    palette: { primary: string, secondary: string } & Palette,
+    switchColors: ThemeColors => void
+} & StyleGuide;
+
+export const Colors: { [name: ThemeName]: ThemeColors } = {
+    Music: {
         primary: "#00A5FF",
         secondary: "#e3f7ff"
     },
-    food: {
+    Food: {
         primary: "#73C700",
         secondary: "#effae5"
     },
-    travel: {
+    Travel: {
         primary: "#FF9300",
         secondary: "#fff4e5"
     },
-    social: {
+    Social: {
         primary: "#A237F3",
         secondary: "#f7ebfe"
     },
-    photography: {
+    Photography: {
         primary: "#FD4176",
         secondary: "#ffebf1"
     }
 };
 
-export const createTheme = (colors: ThemeColors): Theme => ({
+export const createTheme = (): Theme => ({
     palette: {
-        ...colors,
+        primary: "white",
+        secondary: "#e6e6e6",
         ...styleGuide.palette
     },
     typography: { ...styleGuide.typography },
     spacing: { ...styleGuide.spacing },
-    styles: { ...styleGuide.styles }
+    styles: { ...styleGuide.styles },
+    switchColors: function(colors: ThemeColors) {
+        this.palette.primary = colors.primary;
+        this.palette.secondary = colors.secondary;
+    }
 });

@@ -10,10 +10,10 @@ import {
 
 import {RestaurantAddress, RadioGroup} from "./components";
 
-import type {ScreenParams} from "../components/Navigation";
+import type {NavigationProps} from "../components";
 import type {Restaurant} from "./api";
 
-export default class RestaurantComp extends React.Component<ScreenParams<{ restaurant: Restaurant }>> {
+export default class RestaurantComp extends React.Component<NavigationProps<{ restaurant: Restaurant }>> {
 
     reservation: ActionSheet;
 

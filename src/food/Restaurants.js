@@ -5,10 +5,10 @@ import * as React from "react";
 import {GeoFeed, Activity} from "../components";
 import FoodAPI from "./api";
 
-import type {ScreenProps} from "../components/Navigation";
+import type {NavigationProps} from "../components";
 import type {Restaurant} from "./api";
 
-export default class Restaurants extends React.Component<ScreenProps<>> {
+export default class Restaurants extends React.Component<NavigationProps<>> {
 
     @autobind
     renderItem(restaurant: Restaurant): React.Node {

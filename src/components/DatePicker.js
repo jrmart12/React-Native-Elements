@@ -20,6 +20,7 @@ const styles = (theme: Theme): StyleSheet<StyleNames> => ({
     },
     datePicker: {
         height: 44,
+        flex: 1
     },
     dateInput: {
         borderWidth: 0

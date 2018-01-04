@@ -2,27 +2,29 @@
 /* eslint-disable no-console */
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {StatusBar, Platform} from "react-native";
-import {useStrict} from "mobx";
+import {useStrict, observable, action} from "mobx";
 import {Provider} from "mobx-react/native";
+import {StackNavigator} from "react-navigation";
+import {observer} from "mobx-react/native";
 import {Font, AppLoading} from "expo";
 import {Feather} from "@expo/vector-icons";
 
-import {Images, createTheme, Colors} from "./src/components";
+import {Images, createTheme} from "./src/components";
+import {StackNavigatorOptions} from "./src/components/Navigation";
+
+import {Welcome} from "./src/welcome";
 import {FoodNavigator} from "./src/food";
+import {SocialNavigator} from "./src/social";
 
 useStrict(true);
 
-type AppProps = {};
+@observer
+export default class App extends React.Component<{}> {
 
-type AppState = {
-    ready: boolean
-};
-
-export default class App extends React.Component<AppProps, AppState> {
+    @observable isReady = false;
+    @action ready() { this.isReady = true; }
 
     async componentWillMount(): Promise<void> {
-        this.setState({ ready: false });
         const fonts = Font.loadAsync({
             "SFProText-Bold": require("./fonts/SF-Pro-Text-Bold.otf"),
             "SFProText-Semibold": require("./fonts/SF-Pro-Text-Semibold.otf"),
@@ -31,29 +33,28 @@ export default class App extends React.Component<AppProps, AppState> {
         const images = Images.downloadAsync();
         const icons = Font.loadAsync(Feather.font);
         await Promise.all([fonts, ...images, icons]);
-        this.setState({ ready: true });
+        this.ready();
     }
 
     @autobind
-    onNavigationStateChange() {
-        return undefined;
-    }
+    onNavigationStateChange() {}
 
     render(): React.Node {
-        const {onNavigationStateChange} = this;
-        const {ready} = this.state;
-        if (!ready) {
+        const {isReady, onNavigationStateChange} = this;
+        if (!isReady) {
             return <AppLoading />;
         } else {
-            StatusBar.setBarStyle("light-content");
-            if (Platform.OS === "android") {
-                StatusBar.setBackgroundColor(Colors.food.primary);
-            }
             return (
-                <Provider theme={createTheme(Colors.food)}>
-                    <FoodNavigator {...{onNavigationStateChange}} />
+                <Provider theme={createTheme()}>
+                    <MainNavigator {...{onNavigationStateChange}} />
                 </Provider>
             );
         }
     }
 }
+
+const MainNavigator = StackNavigator({
+    Welcome: { screen: Welcome },
+    Food: { screen: FoodNavigator },
+    Social: { screen: SocialNavigator }
+}, StackNavigatorOptions);

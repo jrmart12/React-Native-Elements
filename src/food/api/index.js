@@ -56,10 +56,9 @@ export type Food = {
     restaurants: Restaurant[]
 };
 
-// $FlowFixMe
- const foodAPI: Food = {
+ const api: Food = {
      categories: recipes.categories,
      recipes: recipes.recipes,
-     restaurants: restaurants
+     restaurants
  };
- export default foodAPI;
+ export default api;

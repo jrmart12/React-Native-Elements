@@ -5,11 +5,13 @@ import {SafeAreaView, View, Animated, StyleSheet} from "react-native";
 
 import LeftAction from "./LeftAction";
 import Text from "./Text";
+import IconButton from "./IconButton";
 import {withTheme, StyleGuide} from "./theme";
 
 import type {StyleObj as Style} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import type {ThemeProps} from "./theme";
 import type {NavigationProps} from "./Navigation";
+import type {Action} from "./Model";
 
 type NavigationBarType = "opaque";
 
@@ -17,7 +19,8 @@ type NavigationBarProps = ThemeProps & NavigationProps<*> & {
     title: string,
     type: NavigationBarType,
     titleStyle?: Style,
-    back?: string
+    back?: string,
+    rightAction?: Action
 };
 
 class NavigationBar extends React.Component<NavigationBarProps> {
@@ -34,7 +37,7 @@ class NavigationBar extends React.Component<NavigationBarProps> {
     }
 
     render(): React.Node {
-        const {type, title, theme, back, titleStyle} = this.props;
+        const {type, title, theme, back, titleStyle, rightAction} = this.props;
         const containerStyle = {
             backgroundColor: type === "opaque" ? theme.palette.primary : "transparent"
         };
@@ -49,7 +52,16 @@ class NavigationBar extends React.Component<NavigationBarProps> {
                         {title}
                         </AnimatedText>
                     </View>
-                    <View style={styles.block} />
+                    <View style={styles.rightBlock}>
+                    {
+                        rightAction && (
+                            <IconButton
+                                onPress={rightAction.onPress}
+                                name={rightAction.icon}
+                            />
+                        )
+                    }
+                    </View>
                 </View>
             </SafeAreaView>
         );
@@ -68,6 +80,12 @@ const styles = StyleSheet.create({
     },
     block: {
         width: "33%"
+    },
+    rightBlock: {
+        width: "33%",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        paddingRight: StyleGuide.spacing.small
     },
     header: {
         padding: StyleGuide.spacing.small

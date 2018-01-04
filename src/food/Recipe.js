@@ -10,9 +10,9 @@ import {
 import FoodAPI from "./api";
 import {Ingredient, Step} from "./components";
 
-import type {ScreenParams} from "../components/Navigation";
+import type {NavigationProps} from "../components/";
 
-export default class RecipeComp extends React.Component<ScreenParams<{ categoryId: string, recipeId: string }>> {
+export default class RecipeComp extends React.Component<NavigationProps<{ categoryId: string, recipeId: string }>> {
 
     ingredientList: ActionSheet;
 

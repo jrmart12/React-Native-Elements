@@ -4,18 +4,18 @@ import {StyleSheet, ScrollView} from "react-native";
 
 import {StyleGuide} from "./theme";
 
-type ContentProps = {
-    children: React.Node,
-    gutter?: boolean
+import type {StyleProps} from "./theme";
+
+type ContentProps = StyleProps & {
+    children: React.Node
 };
 
 export default class Content extends React.Component<ContentProps> {
 
     render(): React.Node {
-        const {children, gutter} = this.props;
-        const contentContainerStyle = { padding: gutter ? StyleGuide.spacing.small : 0 };
+        const {children, style} = this.props;
         return (
-            <ScrollView style={styles.container} {...{contentContainerStyle}}>
+            <ScrollView style={styles.container} contentContainerStyle={style}>
                 {children}
             </ScrollView>
         );

@@ -6,6 +6,7 @@ import {
 } from "react-native";
 import {observable, action} from "mobx";
 import {observer} from "mobx-react/native";
+import {Constants} from "expo";
 
 import Text from "./Text";
 import Icon from "./Icon";
@@ -102,7 +103,8 @@ const styles = StyleSheet.create({
     content: {
         backgroundColor: "white",
         borderTopLeftRadius: 8,
-        borderTopRightRadius: 8
+        borderTopRightRadius: 8,
+        maxHeight: height - Constants.statusBarHeight
     },
     left: {
         width: 100
