@@ -1,8 +1,8 @@
 // @flow
 import * as React from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet} from "react-native";
 
-import {StyleGuide, Text} from "../../components";
+import {StyleGuide, Text, BaseCard} from "../../components";
 import SocialAPI from "../api";
 
 import Header from "./Header";
@@ -19,22 +19,15 @@ export default class Message extends React.Component<MessageProps> {
         const {message, timestamp} = this.props;
         const user = SocialAPI.user(this.props.user);
         return (
-            <View style={styles.comment}>
+            <BaseCard>
                 <Header {...{user, timestamp}} />
                 <Text style={styles.text}>{message}</Text>
-            </View>
+            </BaseCard>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    comment: {
-        ...StyleGuide.styles.borderRadius,
-        ...StyleGuide.styles.shadow,
-        marginHorizontal: StyleGuide.spacing.small,
-        marginTop: StyleGuide.spacing.small,
-        backgroundColor: "white"
-    },
     text: {
         padding: StyleGuide.spacing.tiny
     }

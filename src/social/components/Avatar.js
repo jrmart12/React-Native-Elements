@@ -30,7 +30,7 @@ export default class Avatar extends React.Component<AvatarProps> {
         const ext = uri.substring(uri.lastIndexOf("."), uri.indexOf("?") === -1 ? undefined : uri.indexOf("?"));
         const path = FileSystem.cacheDirectory + SHA1(uri) + ext;
         const info = await FileSystem.getInfoAsync(path);
-        if (!info) {
+        if (!info.exists) {
             await FileSystem.downloadAsync(uri, path);
         }
         runInAction(() => this.uri = path);

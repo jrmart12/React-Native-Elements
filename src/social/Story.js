@@ -30,14 +30,18 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
                 <Image  {...story.picture} style={styles.image} />
                 <View style={styles.content}>
                     <LinearGradient colors={["black", "transparent"]} style={styles.gradient}>
-                        <SafeAreaView style={styles.top}>
-                            <View style={styles.topLeft}>
-                                <IconButton name="x" onPress={this.goBack} style={styles.goBack} />
-                                <Handle {...{user}} handleColor="white" />
+                        <SafeAreaView>
+                            <View style={styles.top}>
+                                <View style={styles.topLeft}>
+                                    <IconButton name="x" onPress={this.goBack} style={styles.goBack} />
+                                    <Handle {...{user}} handleColor="white" />
+                                </View>
+                                <TouchableOpacity onPress={this.toggleComments}>
+                                    <Comments
+                                        comments={story.comments.map(comment => comment.user)} showLabel={false}
+                                    />
+                                </TouchableOpacity>
                             </View>
-                            <TouchableOpacity onPress={this.toggleComments}>
-                                <Comments comments={story.comments.map(comment => comment.user)} showLabel={false} />
-                            </TouchableOpacity>
                         </SafeAreaView>
                     </LinearGradient>
                     <SafeAreaView style={styles.bottom}>
@@ -85,9 +89,10 @@ const styles = StyleSheet.create({
         height: 200
     },
     top: {
+        marginTop: StyleGuide.spacing.tiny,
+        marginHorizontal: StyleGuide.spacing.tiny,
         flexDirection: "row",
-        justifyContent: "space-between",
-        marginHorizontal: StyleGuide.spacing.tiny
+        justifyContent: "space-between"
     },
     topLeft: {
         flexDirection: "row"
@@ -98,6 +103,7 @@ const styles = StyleSheet.create({
     bottom: {
         flexDirection: "row",
         justifyContent: "flex-end",
+        marginBottom: StyleGuide.spacing.tiny,
         marginHorizontal: StyleGuide.spacing.tiny
     },
     comments: {

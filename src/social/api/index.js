@@ -5,6 +5,7 @@ import type {Picture} from "../../components/Model";
 const users = require("./users");
 const posts = require("./posts");
 const stories = require("./stories");
+const messages = require("./messages");
 
 export type User = {
     id: string,
@@ -22,6 +23,19 @@ export type Post = {
     comments: string[]
 };
 
+export type MessageThread = {
+    id: string,
+    user: string,
+    messages: Message[]
+};
+
+export type Message = {
+    id: string,
+    me: boolean,
+    message: string,
+    timestamp: number
+};
+
 export type Comment = {
     user: string,
     comment: string,
@@ -37,6 +51,7 @@ export type Story = {
 };
 
 export type Social = {
+    messages: MessageThread[],
     users: User[],
     posts: Post[],
     stories: Story[],
@@ -45,6 +60,7 @@ export type Social = {
 };
 
 const api: Social = {
+     messages,
      users,
      posts,
      stories: _.sortBy(stories, story => story.read, ["desc"]),

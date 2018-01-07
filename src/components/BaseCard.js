@@ -27,7 +27,9 @@ export default class BaseCard extends React.Component<BaseCardProps> {
 const styles = StyleSheet.create({
     card: {
         backgroundColor: "white",
-        padding: StyleGuide.spacing.small,
+        padding: StyleGuide.spacing.tiny,
+        marginHorizontal: StyleGuide.spacing.small,
+        marginTop: StyleGuide.spacing.small,
         ...StyleGuide.styles.borderRadius,
         ...StyleGuide.styles.shadow
     }

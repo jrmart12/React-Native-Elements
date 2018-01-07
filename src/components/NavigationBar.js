@@ -47,17 +47,22 @@ class NavigationBar extends React.Component<NavigationBarProps> {
                     <View style={styles.block}>
                     {back && <LeftAction onPress={this.goBack} name="chevron-left" label={back} />}
                     </View>
-                    <View style={styles.block}>
-                        <AnimatedText type="headline" color="white" style={[styles.text, titleStyle]}>
-                        {title}
-                        </AnimatedText>
-                    </View>
+                    {
+                        title !== "" && (
+                            <View style={styles.block}>
+                                <AnimatedText type="headline" color="white" style={[styles.text, titleStyle]}>
+                                {title}
+                                </AnimatedText>
+                            </View>
+                        )
+                    }
                     <View style={styles.rightBlock}>
                     {
                         rightAction && (
                             <IconButton
                                 onPress={rightAction.onPress}
                                 name={rightAction.icon}
+                                style={styles.rightAction}
                             />
                         )
                     }
@@ -72,23 +77,24 @@ const styles = StyleSheet.create({
     content: {
         ...StyleGuide.styles.barHeight,
         flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center"
     },
     text: {
         textAlign: "center"
     },
     block: {
-        width: "33%"
+        flex: 1
     },
     rightBlock: {
-        width: "33%",
+        flex: 1,
         flexDirection: "row",
-        justifyContent: "flex-end",
-        paddingRight: StyleGuide.spacing.small
+        justifyContent: "flex-end"
     },
     header: {
         padding: StyleGuide.spacing.small
+    },
+    rightAction: {
+        marginRight: StyleGuide.spacing.small
     }
 });
 

@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     container: {
+        flexGrow: 1,
         paddingBottom: StyleGuide.spacing.small,
         backgroundColor: StyleGuide.palette.lightGray
     },

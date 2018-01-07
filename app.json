@@ -2,7 +2,7 @@
     "expo": {
         "name": "react-native-elements",
         "description": "UI elements, multi-screen implemented in React Native, now in one handy kit",
-        "sdkVersion": "23.0.0",
+        "sdkVersion": "24.0.0",
         "orientation": "portrait",
         "privacy": "public",
         "icon": "./app.png",

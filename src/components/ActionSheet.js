@@ -14,7 +14,11 @@ import {StyleGuide} from "./theme";
 
 type ActionSheetProps = {
     title: string,
-    children: React.Node
+    children: React.Node,
+    rightAction?: {
+        label: string,
+        onPress: () => void
+    }
 };
 
 @observer
@@ -50,7 +54,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
     }
 
     render(): React.Node {
-        const {title, children} = this.props;
+        const {title, children, rightAction} = this.props;
         const opacity = this.animation.interpolate({
             inputRange: [0, 1],
             outputRange: [0, 0.5]
@@ -72,7 +76,15 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
                                     <Icon name="chevron-down" primary={true} />
                                 </TouchableOpacity>
                                 <Text style={styles.center} type="headline" primary={true}>{title}</Text>
-                                <View style={styles.right} />
+                                <View style={styles.right}>
+                                {
+                                    rightAction && (
+                                        <TouchableOpacity onPress={rightAction.onPress}>
+                                            <Text type="headline" primary={true}>{rightAction.label}</Text>
+                                        </TouchableOpacity>
+                                    )
+                                }
+                                </View>
                             </View>
                         </TouchableWithoutFeedback>
                         {children}
@@ -112,7 +124,9 @@ const styles = StyleSheet.create({
     center: {
     },
     right: {
-        width: 100
+        width: 100,
+        flexDirection: "row",
+        justifyContent: "flex-end"
     },
     exit: {
         flex: 1

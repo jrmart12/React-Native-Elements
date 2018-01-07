@@ -2,7 +2,7 @@
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
-import {StyleGuide, Image, Text} from "../../components";
+import {StyleGuide, Image, Text, BaseCard} from "../../components";
 
 import SocialAPI from "../api";
 
@@ -19,7 +19,7 @@ export default class PostComp extends React.Component<{ post: Post }> {
         const user = SocialAPI.user(post.user);
         const {timestamp, comments} = post;
         return (
-            <View style={styles.post}>
+            <BaseCard style={styles.card}>
                 <Header {...{user, timestamp}} />
                 {
                     post.picture && <Image style={styles.image} {...post.picture} />
@@ -29,18 +29,14 @@ export default class PostComp extends React.Component<{ post: Post }> {
                     <Comments {...{ comments }} />
                     <LikeButton />
                 </View>
-            </View>
+            </BaseCard>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    post: {
-        ...StyleGuide.styles.borderRadius,
-        ...StyleGuide.styles.shadow,
-        marginTop: StyleGuide.spacing.small,
-        marginHorizontal: StyleGuide.spacing.small,
-        backgroundColor: "white"
+    card: {
+        padding: 0
     },
     caption: {
         padding: StyleGuide.spacing.tiny

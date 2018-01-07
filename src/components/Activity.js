@@ -31,8 +31,8 @@ export default class Activity extends React.Component<ActivityProps> {
                         <Text type="footnote">{subtitle}</Text>
                     </View>
                     <View style={styles.rating}>
-                        <Ratings {...{ratings}} />
-                        <Text type="footnote" style={styles.reviews}>{`${reviews} reviews`}</Text>
+                        <Ratings {...{ratings}} style={styles.stars} />
+                        <Text type="footnote">{`${reviews} reviews`}</Text>
                     </View>
                 </View>
                 <Image {...picture} style={styles.picture} />
@@ -44,19 +44,19 @@ export default class Activity extends React.Component<ActivityProps> {
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        justifyContent: "space-between",
-        marginHorizontal: StyleGuide.spacing.small,
-        marginBottom: StyleGuide.spacing.small
+        alignItems: "center"
     },
     left: {
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        flex: 1
     },
     rating: {
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        flexWrap: "wrap"
     },
-    reviews: {
-        marginLeft: StyleGuide.spacing.tiny
+    stars: {
+        marginRight: StyleGuide.spacing.tiny
     },
     picture: {
         width: 100,

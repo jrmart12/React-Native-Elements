@@ -3,8 +3,9 @@ import {TabNavigator, StackNavigator} from "react-navigation";
 
 import {TabNavigatorOptions, StackNavigatorOptions} from "../components/Navigation";
 
-import Timeline from "./Timeline";
 import Story from "./Story";
+import Timeline from "./Timeline";
+import Messages from "./Messages";
 import Profile from "./Profile";
 
 const tabs = [
@@ -15,6 +16,7 @@ const tabs = [
 
 const SocialTabNavigator = TabNavigator({
     Timeline: { screen: Timeline },
+    Messages: { screen: Messages },
     Profile: { screen: Profile }
 }, TabNavigatorOptions(tabs));
 

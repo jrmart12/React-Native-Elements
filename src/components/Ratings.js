@@ -5,9 +5,9 @@ import {FontAwesome as Icon} from "@expo/vector-icons";
 
 import {withTheme} from "./theme";
 
-import type {ThemeProps} from "./theme";
+import type {ThemeProps, StyleProps} from "./theme";
 
-type RatingCompProps = ThemeProps & {
+type RatingCompProps = ThemeProps & StyleProps & {
     name: string,
     ratings: number,
     total: number
@@ -28,7 +28,7 @@ class RatingComp extends React.Component<RatingCompProps> {
         const halfStar = ratings % 1 !== 0;
         const style = styles.icon;
         return (
-            <View style={styles.row}>
+            <View style={[styles.row, this.props.style]}>
                 {
                     repeat(total).map(key => <Icon color={secondary} {...{size, style, name, key}} />)
                 }

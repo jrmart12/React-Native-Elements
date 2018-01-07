@@ -36,5 +36,6 @@ export const TabNavigatorOptions = (tabs: Tabs) => ({
     animationEnabled: false,
     // eslint-disable-next-line react/display-name
     tabBarComponent: ({ navigation }: NavigationProps<>) => <TabBar {...{navigation, tabs}} />,
-    tabBarPosition: "bottom"
+    tabBarPosition: "bottom",
+    swipeEnabled: false
 });

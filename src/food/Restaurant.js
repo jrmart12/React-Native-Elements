@@ -44,7 +44,12 @@ export default class RestaurantComp extends React.Component<NavigationProps<{ re
                 <Content>
                     <Map height={250} markers={[restaurant]} {...{coordinate}} />
                     <View style={styles.description}>
-                        <Button primary={true} label="Make reservation" onPress={this.makeReservation} />
+                        <Button
+                            primary={true}
+                            label="Make reservation"
+                            onPress={this.makeReservation}
+                            style={styles.makeReservation}
+                        />
                         <BaseCard>
                             <Text>{description}</Text>
                         </BaseCard>
@@ -80,9 +85,11 @@ const styles = StyleSheet.create({
     gutter: {
         padding: StyleGuide.spacing.small
     },
+    makeReservation: {
+        marginHorizontal: StyleGuide.spacing.small
+    },
     description: {
         position: "relative",
         top: -100,
-        padding: StyleGuide.spacing.small
     }
 });

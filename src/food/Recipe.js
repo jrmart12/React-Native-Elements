@@ -30,7 +30,7 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
                     <NavigationBar type="transparent" back={category.title} {...{navigation}} />
                 </Header>
                 <DetailsBar details={[{ icon, caption: people }, { icon: "clock", caption: minutes }]} />
-                <Content gutter={true}>
+                <Content style={styles.gutter}>
                     <Button primary={true} label="See Ingredients" onPress={this.toggleIngredientList} />
                     <List rows={recipe.instructions} renderRow={(step, index) => <Step {...{step, index}} />} />
                 </Content>
