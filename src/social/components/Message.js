@@ -7,19 +7,22 @@ import SocialAPI from "../api";
 
 import Header from "./Header";
 
-type MessageProps = {
+import type {OptionalNavigationProps} from "../../components/Navigation";
+
+type MessageProps = OptionalNavigationProps & {
     user: string,
     message: string,
-    timestamp: number
+    timestamp: number,
+    id?: string
 };
 
 export default class Message extends React.Component<MessageProps> {
 
     render(): React.Node {
-        const {message, timestamp} = this.props;
+        const {message, timestamp, navigation, id} = this.props;
         const user = SocialAPI.user(this.props.user);
         return (
-            <BaseCard>
+            <BaseCard onPress={() => navigation && navigation.navigate("Message", { id })}>
                 <Header {...{user, timestamp}} />
                 <Text style={styles.text}>{message}</Text>
             </BaseCard>

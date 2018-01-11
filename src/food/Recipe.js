@@ -4,7 +4,7 @@ import * as React from "react";
 import {View, StyleSheet} from "react-native";
 
 import {
-    Container, Header, NavigationBar, DetailsBar, Content, List, Button, ActionSheet, StyleGuide
+    Container, Header, NavigationBar, DetailsBar, Content, List, Button, ActionSheet, StyleGuide, notImplementedYet
 } from "../components";
 
 import FoodAPI from "./api";
@@ -39,7 +39,7 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
                         recipe.ingredients.map((ingredient, key) => <Ingredient {...{ingredient, key}} />)
                     }
                     <View style={styles.gutter}>
-                        <Button primary={true} label="Add to Reminder" onPress={this.notImplementedYet} />
+                        <Button primary={true} label="Add to Reminder" onPress={notImplementedYet} />
                     </View>
                 </ActionSheet>
             </Container>
@@ -56,11 +56,6 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
         if(ingredientList) {
             this.ingredientList = ingredientList;
         }
-    }
-
-    @autobind
-    notImplementedYet() {
-        alert("Not Implemented yet ¯\\_(ツ)_/¯");
     }
 }
 

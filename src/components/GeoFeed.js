@@ -22,9 +22,6 @@ type GeoFeedProps<T: Marker> = ThemeProps & NavigationProps<*> & {
 @observer
 class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
 
-    // TODO: fix me
-    static defaultProps = {};
-
     @observable scrollAnimation = new Animated.Value(0);
 
     listHeaderComponent(): React.Node {

@@ -13,7 +13,7 @@ import type {ThemeProps} from "./theme";
 import type {NavigationProps} from "./Navigation";
 import type {Action} from "./Model";
 
-type NavigationBarType = "opaque";
+type NavigationBarType = "opaque" | "transparent";
 
 type NavigationBarProps = ThemeProps & NavigationProps<*> & {
     title: string,

@@ -15,16 +15,17 @@ export default class Messages extends React.Component<NavigationProps<>> {
 
     @autobind
     renderItem(thread: MessageThread): React.Node {
-        const {user} = thread;
+        const {navigation} = this.props;
+        const {user, id} = thread;
         const {timestamp, message} = _.last(thread.messages);
-        return <Message {...{ user, message, timestamp}} />;
+        return <Message {...{ user, message, timestamp, id, navigation}} />;
     }
 
     render(): React.Node {
         const {renderItem} = this;
         const {navigation} = this.props;
         const data = SocialAPI.messages;
-        const title = "Timeline";
+        const title = "Messages";
         return (
             <Feed {...{data, renderItem, title, navigation}} />
         );

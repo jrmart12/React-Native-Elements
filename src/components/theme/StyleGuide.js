@@ -106,7 +106,7 @@ const styleGuide: StyleGuide = {
         },
         callout: {
             fontSize: 16,
-            lineHeight: 16 * 1.618,
+            lineHeight: 20,
             fontFamily: "SFProText-Regular"
         },
         caption: {
@@ -142,7 +142,7 @@ const styleGuide: StyleGuide = {
         },
         title3: {
             fontSize: 22,
-            lineHeight: 22 * 1.618,
+            lineHeight: 26,
             fontFamily: "SFProText-Bold"
         }
     },
@@ -166,7 +166,7 @@ const styleGuide: StyleGuide = {
             borderColor: "#ebebeb"
         },
         button: {
-            height: 44,
+            height: 45,
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "row",

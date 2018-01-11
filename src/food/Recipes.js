@@ -20,7 +20,7 @@ export default class Recipes extends React.Component<NavigationProps<>> {
     @autobind
     onPress() {
         const {navigation} = this.props;
-        NavigationHelpers.reset(navigation, "Welcome");
+        NavigationHelpers.logout(navigation);
     }
 
     render(): React.Node {

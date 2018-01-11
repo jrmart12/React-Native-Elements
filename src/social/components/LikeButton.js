@@ -12,9 +12,6 @@ import type {ThemeProps} from "../../components/theme";
 @observer
 class LikeButton extends React.Component<ThemeProps> {
 
-    // TODO: fixme
-    static defaultProps = {};
-
     @observable liked = false;
     @autobind @action onPress() { this.liked = !this.liked; }
 

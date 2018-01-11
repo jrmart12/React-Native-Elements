@@ -3,7 +3,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {View, StyleSheet} from "react-native";
 
-import {Feed, ActionSheet} from "../components";
+import {Feed, ActionSheet, notImplementedYet} from "../components";
 
 import SocialAPI from "./api";
 import {Post, Stories, NewMessage} from "./components";
@@ -31,6 +31,7 @@ export default class Timeline extends React.Component<NavigationProps<>> {
             this.newPost = newPost;
         }
     }
+
     render(): React.Node {
         const {renderItem, onPress} = this;
         const {navigation} = this.props;
@@ -42,7 +43,7 @@ export default class Timeline extends React.Component<NavigationProps<>> {
         };
         const postAction = {
             label: "Post",
-            onPress: () => alert("Not implemented yet 🤷🏻‍♂️")
+            onPress: notImplementedYet
         };
         return (
             <View style={styles.container}>

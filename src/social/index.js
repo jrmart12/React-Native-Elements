@@ -6,6 +6,7 @@ import {TabNavigatorOptions, StackNavigatorOptions} from "../components/Navigati
 import Story from "./Story";
 import Timeline from "./Timeline";
 import Messages from "./Messages";
+import Message from "./Message";
 import Profile from "./Profile";
 
 const tabs = [
@@ -22,5 +23,6 @@ const SocialTabNavigator = TabNavigator({
 
 export const SocialNavigator = StackNavigator({
     Home: { screen: SocialTabNavigator },
-    Story: { screen: Story }
+    Story: { screen: Story },
+    Message: { screen: Message }
 }, StackNavigatorOptions);

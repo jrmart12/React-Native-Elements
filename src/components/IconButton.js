@@ -1,39 +1,49 @@
 // @flow
 import * as React from "react";
-import {TouchableOpacity, StyleSheet, View} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 
 import Icon from "./Icon";
+import {withTheme} from "./theme";
 
 import type {IconName} from "./Model";
-import type {StyleProps} from "./theme";
+import type {ThemeProps, StyleProps} from "./theme";
 
-type IconButtonProps = StyleProps & {
+type IconButtonProps = StyleProps & ThemeProps & {
     onPress: () => void,
     name: IconName,
-    color: string
+    color: string,
+    primary: boolean
 };
 
-export default class IconButton extends React.Component<IconButtonProps> {
+class IconButton extends React.Component<IconButtonProps> {
 
     static defaultProps = {
-        color: "white"
+        color: "white",
+        primary: false
     }
 
     render(): React.Node {
-        const {onPress, name, color, style} = this.props;
+        const {onPress, name, color, theme, primary} = this.props;
+        const style = [];
+        if (primary) {
+            style.push({
+                backgroundColor: theme.palette.primary,
+                borderRadius: 14,
+                width: 28,
+                height: 28,
+                justifyContent: "center",
+                alignItems: "center"
+            });
+        }
+        style.push(this.props.style);
         return (
-            <TouchableOpacity style={styles.button} {...{onPress}}>
+            <TouchableOpacity {...{onPress}}>
                 <View {...{style}}>
-                    <Icon {...{name, color }} />
+                    <Icon {...{name, color}} />
                 </View>
             </TouchableOpacity>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    button: {
-        backgroundColor: "transparent",
-        alignSelf: "center"
-    }
-})
+export default withTheme(IconButton);

@@ -4,20 +4,33 @@ import * as React from "react";
 import {StyleSheet, View, SafeAreaView, TouchableOpacity} from "react-native";
 import {LinearGradient} from "expo";
 
-import {Image, StyleGuide, IconButton, ActionSheet, Content} from "../components";
+import {Image, StyleGuide, IconButton, ActionSheet, Content, notImplementedYet} from "../components";
 
 import SocialAPI from "./api";
-import {Comments, Handle, Message} from "./components";
+import {Comments, Handle, Message, NewMessage} from "./components";
 
 import type {NavigationProps} from "../components";
 
 export default class Story extends React.Component<NavigationProps<{ id: string }>> {
 
     comments: ActionSheet;
+    newPost: ActionSheet;
 
     @autobind
     goBack() {
         this.props.navigation.goBack();
+    }
+
+    @autobind
+    toggleNewMessage() {
+        this.newPost.toggle();
+    }
+
+    @autobind
+    setNewPostRef(newPost: ActionSheet | null) {
+        if (newPost) {
+            this.newPost = newPost;
+        }
     }
 
     render(): React.Node {
@@ -25,6 +38,10 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
         const {id} = navigation.state.params;
         const story = SocialAPI.story(id);
         const user = SocialAPI.user(story.user);
+        const postAction = {
+            label: "Post",
+            onPress: notImplementedYet
+        };
         return (
             <View style={styles.story}>
                 <Image  {...story.picture} style={styles.image} />
@@ -45,7 +62,7 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
                         </SafeAreaView>
                     </LinearGradient>
                     <SafeAreaView style={styles.bottom}>
-                        <IconButton name="edit" onPress={() => alert("🤷🏻‍♂️")} />
+                        <IconButton name="edit" onPress={this.toggleNewMessage} />
                     </SafeAreaView>
                     <ActionSheet title="Comments" ref={this.setCommentsRef}>
                         <Content style={styles.comments}>
@@ -55,6 +72,9 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
                             ))
                         }
                         </Content>
+                    </ActionSheet>
+                    <ActionSheet title="New Post" ref={this.setNewPostRef} rightAction={postAction}>
+                        <NewMessage />
                     </ActionSheet>
                 </View>
             </View>

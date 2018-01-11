@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react";
 import {StyleSheet, View, Dimensions} from "react-native";
-import {LinearGradient, Constants} from "expo";
+import {LinearGradient} from "expo";
 
 import Image from "./Image";
 import Text from "./Text";
@@ -11,23 +11,28 @@ import type {Picture} from "./Model";
 
 type HeaderProps = {
     picture: Picture,
-    title: string,
-    children?: React.Node
+    title?: string,
+    children?: React.Node,
+    heightRatio: number
 };
 
 export default class Header extends React.Component<HeaderProps> {
 
+    static defaultProps = {
+        heightRatio: 0.68
+    }
+
     render(): React.Node {
-        const {picture, title, children} = this.props;
+        const {picture, title, children, heightRatio} = this.props;
         return (
-            <View>
+            <View style={{ height: width * heightRatio }}>
                 <Image style={styles.image} {...picture} />
                 <LinearGradient
                     style={styles.gradient}
                     colors={["rgba(0,0,0,0.8)", "transparent", "rgba(0,0,0,0.8)"]}
                 >
                     {children}
-                    <Text type="title1" color="white" style={styles.text}>{title}</Text>
+                    { title && <Text type="title1" color="white" style={styles.text}>{title}</Text> }
                 </LinearGradient>
             </View>
         );
@@ -35,13 +40,11 @@ export default class Header extends React.Component<HeaderProps> {
 }
 
 const {width} = Dimensions.get("window");
-const height = width * 0.62 + Constants.statusBarHeight;
 const styles = StyleSheet.create({
     image: {
-        height
+        ...StyleSheet.absoluteFillObject
     },
     gradient: {
-        height,
         ...StyleSheet.absoluteFillObject,
         justifyContent: "space-between"
     },

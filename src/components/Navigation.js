@@ -11,6 +11,9 @@ import type {
 } from "react-navigation/src/TypeDefinition";
 
 export type NavigationProps<P: {} = {}> = NavigationNavigatorProps<{}, { params: P, index: number }>;
+export type OptionalNavigationProps = {
+    navigation?: NavigationScreenProp<*>
+};
 
 export class NavigationHelpers {
     static reset(navigation: NavigationScreenProp<*>, routeName: string, key: string | null = null) {
@@ -22,6 +25,10 @@ export class NavigationHelpers {
             ]
         });
         navigation.dispatch(action);
+    }
+
+    static logout(navigation: NavigationScreenProp<*>) {
+        NavigationHelpers.reset(navigation, "Welcome");
     }
 }
 

@@ -5,10 +5,7 @@ import {inject} from "mobx-react/native";
 import styleGuide from "./StyleGuide";
 import type {Palette, StyleGuide} from "./StyleGuide";
 
-// TODO: Use React.ElementConfig instead when flow bin 0.63 is available
-// https://flow.org/en/docs/react/types/#toc-react-elementconfig
-type RequiredProps<Props: {}, Comp> = $Diff<Props, $PropertyType<Comp, "defaultProps">>;
-type ElementConfig<Props: {}, Comp, InjectedProps> = $Diff<RequiredProps<Props, Comp>, InjectedProps>;
+type ElementConfig<Comp, InjectedProps> = $Diff<React.ElementConfig<Comp>, InjectedProps>;
 
 export type ThemeProps = {
     theme: Theme
@@ -19,13 +16,13 @@ export type StyleSheet<StyleNames: string> = { [name: StyleNames]: Object };
 export type StylesProps<StyleNames: string> = { styles: StyleSheet<StyleNames> };
 
 export function withTheme<Props: {}, Comp: React.ComponentType<Props>>
-(C: Comp): React.ComponentType<ElementConfig<Props, Comp, ThemeProps>>
+(C: Comp): React.ComponentType<ElementConfig<Comp, ThemeProps>>
 {
     return inject("theme")(C);
 }
 
 export function withStyles<StlNames: string, Props: {}, Comp: React.ComponentType<Props>>
-(styles: Theme => StyleSheet<StlNames>, C: Comp): React.ComponentType<ElementConfig<Props, Comp, StylesProps<StlNames>>>
+(styles: Theme => StyleSheet<StlNames>, C: Comp): React.ComponentType<ElementConfig<Comp, StylesProps<StlNames>>>
 {
     return inject("theme")(({ theme, ...props }) => <C styles={styles(theme)} {...props} />);
 }

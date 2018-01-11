@@ -21,9 +21,6 @@ type QuantityInputProps = ThemeProps & {
 @observer
 class QuantityInput extends React.Component<QuantityInputProps> {
 
-    // TODO: fix me
-    static defaultProps = {};
-
     @observable quantity: number = 1;
     @autobind @action increment() { this.quantity++; }
     @autobind @action decrement() { this.quantity--; }

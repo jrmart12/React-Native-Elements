@@ -10,9 +10,6 @@ type NotificationDotProps = StyleProps & ThemeProps;
 
 class NotificationDot extends React.Component<NotificationDotProps> {
 
-    // TODO: fix me
-    static defaultProps = {};
-
     render(): React.Node {
         const {style, theme} = this.props;
         const backgroundColor = theme.palette.primary;

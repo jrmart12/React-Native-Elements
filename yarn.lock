@@ -2678,9 +2678,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flow-bin@0.61.0:
-  version "0.61.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.61.0.tgz#d0473a8c35dbbf4de573823f4932124397d32d35"
+flow-bin@0.63.1:
+  version "0.63.1"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.63.1.tgz#ab00067c197169a5fb5b4996c8f6927b06694828"
 
 flow-result-checker@^0.3.0:
   version "0.3.0"
@@ -3719,9 +3719,9 @@ jest-environment-node@^21.2.1:
     jest-mock "^21.2.0"
     jest-util "^21.2.1"
 
-jest-expo@23.0.0:
-  version "23.0.0"
-  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-23.0.0.tgz#31e392017ed91e099ff0be3586c4f2f1f7d0c201"
+jest-expo@^24.0.0:
+  version "24.0.0"
+  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-24.0.0.tgz#3a74f8452060768c48c5b254c08c6e53cf7ee847"
   dependencies:
     babel-jest "^21.2.0"
     jest "^21.2.1"

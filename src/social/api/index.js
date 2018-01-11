@@ -4,6 +4,7 @@ import type {Picture} from "../../components/Model";
 
 const users = require("./users");
 const posts = require("./posts");
+const myPosts = require("./my-posts");
 const stories = require("./stories");
 const messages = require("./messages");
 
@@ -11,7 +12,8 @@ export type User = {
     id: string,
     name: string,
     picture: string,
-    caption: string
+    caption: string,
+    cover: Picture
 };
 
 export type Post = {
@@ -56,16 +58,22 @@ export type Social = {
     posts: Post[],
     stories: Story[],
     user: string => User,
-    story: string => Story
+    story: string => Story,
+    messageThread: string => MessageThread,
+    me: () => User,
+    myPosts: Post[]
 };
 
 const api: Social = {
      messages,
      users,
      posts,
-     stories: _.sortBy(stories, story => story.read, ["desc"]),
+     stories: _.sortBy(stories, story => story.read),
      user: (id: string): User => users.filter(user => user.id === id)[0],
      story: (id: string): Story => stories.filter(story => story.id === id)[0],
+     messageThread: (id: string): MessageThread => messages.filter(thread => thread.id === id)[0],
+     me: (): User => users.filter(user => user.id === "schavez")[0],
+     myPosts
  };
 
  export default api;

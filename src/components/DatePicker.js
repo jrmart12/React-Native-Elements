@@ -19,7 +19,7 @@ const styles = (theme: Theme): StyleSheet<StyleNames> => ({
         ...StyleGuide.styles.button
     },
     datePicker: {
-        height: 44,
+        ...StyleGuide.styles.barHeight,
         flex: 1
     },
     dateInput: {
@@ -40,9 +40,6 @@ const styles = (theme: Theme): StyleSheet<StyleNames> => ({
 
 @observer
 class DatePicker extends React.Component<StylesProps<StyleNames>> {
-
-    // TODO: FIX ME
-    static defaultProps = {};
 
     @observable date: string = moment().format("MMMM Do");
     @autobind @action onDateChange(date: string) { this.date = date; }

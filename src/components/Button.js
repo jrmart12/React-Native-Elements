@@ -22,9 +22,6 @@ type ButtonProps = ThemeProps & StyleProps & {
 
 class Button extends React.Component<ButtonProps> {
 
-    // TODO: fixme
-    static defaultProps = {};
-
     render(): React.Node {
         const {
             onPress, style, label, icon, primary, secondary, theme, primaryTextColor, disabled
