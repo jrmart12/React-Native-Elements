@@ -11,7 +11,8 @@ type TypographyProps = StyleProps & ThemeProps & {
     type: $Keys<Typographies>,
     color: string,
     children: string,
-    primary?: boolean
+    primary?: boolean,
+    numberOfLines?: number
 };
 
 class TextComp extends React.Component<TypographyProps> {
@@ -22,13 +23,13 @@ class TextComp extends React.Component<TypographyProps> {
     };
 
     render(): React.Node {
-        const {theme, type, style, children, primary} = this.props;
+        const {theme, type, style, children, primary, numberOfLines} = this.props;
         const typography = StyleGuide.typography[type];
         const color = primary ? theme.palette.primary : (typography.color ? typography.color : this.props.color);
         const computedStyle = [typography, { color }];
         computedStyle.push(styles.default);
         computedStyle.push(style);
-        return <Text style={computedStyle}>{children}</Text>;
+        return <Text style={computedStyle} {...{numberOfLines}}>{children}</Text>;
     }
 }
 

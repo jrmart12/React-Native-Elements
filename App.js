@@ -15,6 +15,7 @@ import {StackNavigatorOptions} from "./src/components/Navigation";
 import {Welcome} from "./src/welcome";
 import {FoodNavigator} from "./src/food";
 import {SocialNavigator} from "./src/social";
+import {MusicNavigator} from "./src/music";
 
 useStrict(true);
 
@@ -56,5 +57,6 @@ export default class App extends React.Component<{}> {
 const MainNavigator = StackNavigator({
     Welcome: { screen: Welcome },
     Food: { screen: FoodNavigator },
-    Social: { screen: SocialNavigator }
+    Social: { screen: SocialNavigator },
+    Music: { screen: MusicNavigator }
 }, StackNavigatorOptions);

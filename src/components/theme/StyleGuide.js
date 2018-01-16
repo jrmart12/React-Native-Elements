@@ -80,6 +80,7 @@ export type StyleGuide = {
 };
 
 const darkGray = "#999999";
+const gray = "#CCCCCC";
 const tiny = 8;
 const small = 16;
 const borderRadius = tiny;
@@ -87,14 +88,15 @@ const shadow = {
     shadowColor: "black",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.18,
-    shadowRadius: 2
+    shadowRadius: 2,
+    elevation: 1
 };
 
 const styleGuide: StyleGuide = {
     palette: {
         black: "black",
         darkGray,
-        gray: "#CCCCCC",
+        gray,
         lightGray: "#F3F3F3",
         white: "white"
     },

@@ -8,9 +8,7 @@ import {LinearGradient} from "expo";
 
 import NavigationBar from "./NavigationBar";
 import Text from "./Text";
-import {withTheme, StyleGuide} from "./theme";
-
-import type {ThemeProps} from "./theme";
+import {withTheme, StyleGuide, type ThemeProps} from "./theme";
 import type {NavigationProps} from "./Navigation";
 import type {Action} from "./Model";
 
@@ -24,13 +22,12 @@ type FeedProps<T> = ThemeProps & NavigationProps<*> & {
     title: string,
     header?: React.Node,
     back?: string,
-    rightAction?: Action
+    rightAction?: Action,
+    numColumns?: number
 };
 
 @observer
 class Feed<T: Item> extends React.Component<FeedProps<T>> {
-
-    static defaultProps = {};
 
     @observable scrollAnimation = new Animated.Value(0);
 
@@ -47,7 +44,7 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
 
     render(): React.Node {
         const {keyExtractor, renderItem, scrollAnimation} = this;
-        const {data, title, navigation, theme, back, rightAction, header} = this.props;
+        const {data, title, navigation, theme, back, rightAction, header, numColumns} = this.props;
         const translateY = scrollAnimation.interpolate({
             inputRange: [55, 56, 57],
             outputRange: [55, 0, 0]
@@ -88,7 +85,8 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
                         )
                     )}
                     scrollEventThrottle={1}
-                    {...{data, keyExtractor, renderItem, onScroll}}
+                    columnWrapperStyle={(numColumns && numColumns > 0) ? styles.columnWrapperStyle : undefined}
+                    {...{data, keyExtractor, renderItem, onScroll, numColumns}}
                 />
             </LinearGradient>
         );
@@ -114,6 +112,10 @@ const styles = StyleSheet.create({
     extraHeader: {
         backgroundColor: "white",
         ...StyleGuide.styles.shadow
+    },
+    columnWrapperStyle: {
+        marginRight: StyleGuide.spacing.small,
+        marginTop: StyleGuide.spacing.small
     }
 });
 

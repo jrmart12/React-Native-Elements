@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         padding: StyleGuide.spacing.tiny,
         marginHorizontal: StyleGuide.spacing.small,
         marginTop: StyleGuide.spacing.small,
+        marginBottom: 1,
         ...StyleGuide.styles.borderRadius,
         ...StyleGuide.styles.shadow
     }

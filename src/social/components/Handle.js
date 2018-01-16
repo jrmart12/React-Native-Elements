@@ -2,9 +2,7 @@
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
-import {Text, StyleGuide} from "../../components";
-
-import Avatar from "./Avatar";
+import {Text, StyleGuide, Avatar} from "../../components";
 
 import type {User} from "../api";
 

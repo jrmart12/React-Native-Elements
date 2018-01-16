@@ -41,6 +41,11 @@ class Welcome extends React.Component<ThemeProps & NavigationProps<>> {
         this.navigate("Social");
     }
 
+    @autobind
+    music() {
+        this.navigate("Music");
+    }
+
     render(): React.Node {
         return (
             <View style={styles.container}>
@@ -68,6 +73,13 @@ class Welcome extends React.Component<ThemeProps & NavigationProps<>> {
                         title="Social"
                         backgroundColor={Colors.Social.primary}
                         onPress={this.social}
+                    />
+                    <Kit
+                        uri={images.music.uri}
+                        preview={images.music.preview}
+                        title="Music"
+                        backgroundColor={Colors.Music.primary}
+                        onPress={this.music}
                     />
                 </ScrollView>
             </View>

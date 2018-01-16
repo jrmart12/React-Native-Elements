@@ -11,8 +11,7 @@ export type ThemeProps = {
     theme: Theme
 };
 
-// eslint-disable-next-line flowtype/no-weak-types
-export type StyleSheet<StyleNames: string> = { [name: StyleNames]: Object };
+export type StyleSheet<StyleNames: string> = { [name: StyleNames]: mixed };
 export type StylesProps<StyleNames: string> = { styles: StyleSheet<StyleNames> };
 
 export function withTheme<Props: {}, Comp: React.ComponentType<Props>>

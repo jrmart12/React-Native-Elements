@@ -24,9 +24,11 @@ export {default as QuantityInput} from "./QuantityInput";
 export {default as DatePicker} from "./DatePicker";
 export {default as SegmentedControl} from "./SegmentedControl";
 export {default as KeyboardSpacer} from "./KeyboardSpacer";
-export {NavigationHelpers} from "./Navigation";
 export {default as Images} from "./images";
+export {default as Avatar} from "./Avatar";
+export {NavigationHelpers} from "./Navigation";
 export {createTheme, Colors, StyleGuide, withTheme, withStyles} from "./theme";
 export {notImplementedYet} from "./notImplementedYet";
 
 export type {NavigationProps} from "./Navigation";
+export type {ThemeProps} from "./theme";

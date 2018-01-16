@@ -2,8 +2,7 @@
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
-import {BaseCard, Text} from "../../components";
-import Avatar from "./Avatar";
+import {BaseCard, Text, Avatar} from "../../components";
 import SocialAPI from "../api";
 
 import type {Message} from "../api";

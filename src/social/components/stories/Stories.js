@@ -3,11 +3,9 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, ScrollView, View, TouchableOpacity} from "react-native";
 
-import {StyleGuide} from "../../../components";
+import {StyleGuide, Avatar} from "../../../components";
 
 import SocialAPI from "../../api";
-
-import Avatar from "../Avatar";
 
 import AddStory from "./AddStory";
 import NotificationDot from "./NotificationDot";

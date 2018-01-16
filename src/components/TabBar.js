@@ -16,7 +16,7 @@ export type Tab = {
 
 export type Tabs = Tab[];
 
-type TabBarProps = NavigationProps<> & {
+export type TabBarProps = NavigationProps<> & {
     tabs: Tabs
 };
 
