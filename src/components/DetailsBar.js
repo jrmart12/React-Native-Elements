@@ -18,28 +18,28 @@ type DetailsBarProps = {
     details: Detail[]
 };
 
-export default class DetailsBar extends React.Component<DetailsBarProps> {
+export default class DetailsBar extends React.PureComponent<DetailsBarProps> {
 
     render(): React.Node {
         return (
             <View style={styles.details}>
-            {
-                this.props.details.map((detail, key) => (
-                    <View style={styles.item} {...{key}}>
-                        <View style={styles.icon}>
-                            {detail.icon && <Icon name={detail.icon} primary={true} />}
-                            {detail.comp}
+                {
+                    this.props.details.map((detail, key) => (
+                        <View style={styles.item} {...{key}}>
+                            <View style={styles.icon}>
+                                {detail.icon && <Icon name={detail.icon} primary />}
+                                {detail.comp}
+                            </View>
+                            <Text
+                                type="caption"
+                                style={styles.caption}
+                                primary
+                            >
+                                {detail.caption}
+                            </Text>
                         </View>
-                        <Text
-                            type="caption"
-                            style={styles.caption}
-                            primary={true}
-                        >
-                        {detail.caption}
-                        </Text>
-                    </View>
-                ))
-            }
+                    ))
+                }
             </View>
         );
     }

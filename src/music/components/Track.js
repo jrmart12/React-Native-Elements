@@ -2,21 +2,22 @@
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
-import {Text, StyleGuide} from "../../components";
+import {Text, IconButton, StyleGuide, notImplementedYet} from "../../components";
 
 type StepProps = {
     index: number,
     track: string
 };
 
-export default class Track extends React.Component<StepProps> {
+export default class Track extends React.PureComponent<StepProps> {
 
     render(): React.Node {
         const {track, index} = this.props;
         return (
             <View style={styles.container}>
                 <Text style={styles.step}>{`${index}`}</Text>
-                <Text style={styles.text}>{track}</Text>
+                <Text style={styles.track}>{track}</Text>
+                <IconButton name="more-horizontal" primary onPress={notImplementedYet} />
             </View>
         );
     }
@@ -31,7 +32,9 @@ const styles = StyleSheet.create({
         marginRight: StyleGuide.spacing.small,
         color: StyleGuide.palette.darkGray
     },
-    text: {
-        marginRight: StyleGuide.spacing.small
+    track: {
+        marginRight: StyleGuide.spacing.small,
+        flex: 1,
+        flexWrap: "wrap"
     }
 });

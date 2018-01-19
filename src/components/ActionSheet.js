@@ -64,7 +64,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
             outputRange: [height, 0]
         });
         return (
-            <Modal visible={this.visible} transparent={true} onRequestClose={this.toggle}>
+            <Modal visible={this.visible} transparent onRequestClose={this.toggle}>
                 <View style={styles.modal}>
                     <Animated.View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: "black", opacity }}>
                         <TouchableOpacity style={styles.exit} onPress={this.toggle} />
@@ -73,17 +73,17 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
                         <TouchableWithoutFeedback onPress={this.toggle}>
                             <View style={styles.header}>
                                 <TouchableOpacity style={styles.left} onPress={this.toggle}>
-                                    <Icon name="chevron-down" primary={true} />
+                                    <Icon name="chevron-down" primary />
                                 </TouchableOpacity>
-                                <Text style={styles.center} type="headline" primary={true}>{title}</Text>
+                                <Text style={styles.center} type="headline" primary>{title}</Text>
                                 <View style={styles.right}>
-                                {
-                                    rightAction && (
-                                        <TouchableOpacity onPress={rightAction.onPress}>
-                                            <Text type="headline" primary={true}>{rightAction.label}</Text>
-                                        </TouchableOpacity>
-                                    )
-                                }
+                                    {
+                                        rightAction && (
+                                            <TouchableOpacity onPress={rightAction.onPress}>
+                                                <Text type="headline" primary>{rightAction.label}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    }
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>

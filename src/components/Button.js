@@ -1,5 +1,4 @@
 // @flow
-"use strict";
 import * as React from "react";
 import {StyleSheet, TouchableOpacity, TouchableNativeFeedback, Platform, View} from "react-native";
 
@@ -20,24 +19,39 @@ type ButtonProps = ThemeProps & StyleProps & {
     primaryTextColor?: boolean
 };
 
-class Button extends React.Component<ButtonProps> {
+class Button extends React.PureComponent<ButtonProps> {
 
     render(): React.Node {
         const {
             onPress, style, label, icon, primary, secondary, theme, primaryTextColor, disabled
         } = this.props;
-        const backgroundColor = primary ? theme.palette.primary : (secondary ? theme.palette.secondary : "transparent");
         const opacity = disabled ? 0.5 : 1;
-        const color = primary ? "white" : (
-            secondary ? theme.palette.primary : (primaryTextColor ? theme.palette.primary : StyleGuide.palette.darkGray)
-        );
+        let color: string;
+        let backgroundColor: string;
+        if (primary) {
+            backgroundColor = theme.palette.primary;
+        } else if (secondary) {
+            backgroundColor = theme.palette.secondary;
+        } else {
+            backgroundColor = "transparent";
+        }
+        if (primary) {
+            color = "white";
+        } else if (secondary) {
+            color = theme.palette.primary;
+        } else if (primaryTextColor) {
+            color = theme.palette.primary;
+        } else {
+            color = StyleGuide.palette.darkGray;
+        }
         const shadow = primary ? StyleGuide.styles.shadow : {};
+        // eslint-disable-next-line no-nested-ternary
         const Btn = disabled ? View : (Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback);
         return (
             <Btn {...{onPress}}>
                 <View style={[styles.button, { backgroundColor, opacity, ...shadow }, style]} >
-                {icon && <Icon name={icon} style={styles.icon} {...{color}} />}
-                {label && <Text type="headline" {...{color}}>{label}</Text>}
+                    {icon && <Icon name={icon} style={styles.icon} {...{color}} />}
+                    {label && <Text type="headline" {...{color}}>{label}</Text>}
                 </View>
             </Btn>
         );
@@ -49,7 +63,7 @@ const styles = StyleSheet.create({
         ...StyleGuide.styles.button
     },
     icon: {
-        ...StyleGuide.styles.buttonIcon,
+        ...StyleGuide.styles.buttonIcon
     }
 });
 

@@ -1,9 +1,11 @@
 // @flow
+import * as _ from "lodash";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
+import {observer} from "mobx-react/native";
 
-import {Button, StyleGuide, Image, Text, notImplementedYet} from "../../components";
+import {Button, StyleGuide, Image, Text} from "../../components";
 import {withPlayer, type PlayerProps} from "./Player";
 import MusicAPI, {type Album} from "../api";
 
@@ -11,17 +13,30 @@ type DetailHeaderProps = PlayerProps & {
     album: Album
 };
 
+@observer
 class DetailHeader extends React.Component<DetailHeaderProps> {
 
     @autobind
-    play() {
-        const {album} = this.props;
+    toggle() {
+        const {album, player} = this.props;
         const tracks = MusicAPI.tracks(album.id);
-        this.props.player.play(tracks[0].uri);
+        if (player.isSongPlaying(tracks[0])) {
+            player.toggle();
+        } else {
+            player.play(album, tracks[0]);
+        }
+    }
+
+    @autobind
+    shuffle() {
+        const {album, player} = this.props;
+        const tracks = MusicAPI.tracks(album.id).filter(track => !player.isSongPlaying(track));
+        const track = _.sample(tracks);
+        player.play(album, track);
     }
 
     render(): React.Node {
-        const {album} = this.props;
+        const {album, player} = this.props;
         return (
             <View style={styles.root}>
                 <View style={styles.header}>
@@ -33,10 +48,15 @@ class DetailHeader extends React.Component<DetailHeaderProps> {
                 </View>
                 <View style={styles.controls}>
                     <View style={styles.leftControl}>
-                        <Button icon="play" secondary={true} onPress={this.play} />
+                        <Button
+                            icon={player.isAlbumPlaying(album) ? "pause" : "play"}
+                            onPress={this.toggle}
+                            disabled={player.locked}
+                            secondary
+                        />
                     </View>
                     <View style={styles.rightControl}>
-                        <Button icon="shuffle" secondary={true} onPress={notImplementedYet} />
+                        <Button icon="shuffle" secondary onPress={this.shuffle} disabled={player.locked} />
                     </View>
                 </View>
             </View>

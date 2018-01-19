@@ -16,7 +16,7 @@ type IconProps = ThemeProps & {
     size: number
 };
 
-class IconComp extends React.Component<IconProps> {
+class IconComp extends React.PureComponent<IconProps> {
 
     static defaultProps = {
         color: StyleGuide.palette.darkGray,
@@ -25,7 +25,14 @@ class IconComp extends React.Component<IconProps> {
 
     render(): React.Node {
         const {theme, name, primary, secondary, color, size} = this.props;
-        const iconColor = primary ? theme.palette.primary : (secondary ? theme.palette.secondary : color);
+        let iconColor: string;
+        if (primary) {
+            iconColor = theme.palette.primary;
+        } else if (secondary) {
+            iconColor = theme.palette.secondary;
+        } else {
+            iconColor = color;
+        }
         return (
             <Icon color={iconColor} style={styles.icon} {...{name, size}} />
         );

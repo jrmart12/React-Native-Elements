@@ -22,8 +22,8 @@ type QuantityInputProps = ThemeProps & {
 class QuantityInput extends React.Component<QuantityInputProps> {
 
     @observable quantity: number = 1;
-    @autobind @action increment() { this.quantity++; }
-    @autobind @action decrement() { this.quantity--; }
+    @autobind @action increment() { this.quantity += 1; }
+    @autobind @action decrement() { this.quantity -= 1; }
 
     render(): React.Node {
         const {singular, plural, from, to, theme} = this.props;
@@ -31,15 +31,15 @@ class QuantityInput extends React.Component<QuantityInputProps> {
             <View style={[styles.container, { backgroundColor: theme.palette.secondary }]}>
                 <Button
                     icon="minus"
-                    secondary={true}
+                    secondary
                     style={styles.leftButton}
                     disabled={this.quantity === from}
                     onPress={this.decrement}
                 />
-                <Text primary={true}>{`${this.quantity} ${this.quantity > 1 ? plural : singular}`}</Text>
+                <Text primary>{`${this.quantity} ${this.quantity > 1 ? plural : singular}`}</Text>
                 <Button
                     icon="plus"
-                    secondary={true}
+                    secondary
                     style={styles.rightButton}
                     disabled={this.quantity === to}
                     onPress={this.increment}
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: StyleGuide.spacing.small,
-        ...StyleGuide.styles.borderRadius,
+        ...StyleGuide.styles.borderRadius
     },
     leftButton: {
         marginBottom: 0,

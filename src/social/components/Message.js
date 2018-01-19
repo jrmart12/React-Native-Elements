@@ -16,7 +16,7 @@ type MessageProps = OptionalNavigationProps & {
     id?: string
 };
 
-export default class Message extends React.Component<MessageProps> {
+export default class Message extends React.PureComponent<MessageProps> {
 
     render(): React.Node {
         const {message, timestamp, navigation, id} = this.props;

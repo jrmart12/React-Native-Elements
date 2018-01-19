@@ -14,7 +14,7 @@ type HeaderProps = {
     timestamp: number
 };
 
-export default class Header extends React.Component<HeaderProps> {
+export default class Header extends React.PureComponent<HeaderProps> {
 
     render(): React.Node {
         const {user, timestamp} = this.props;

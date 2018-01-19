@@ -22,7 +22,9 @@ export default class IngredientComp extends React.Component<IngredientProps> {
 
     componentWillMount() {
         const {ingredient} = this.props;
-        ingredient.checked && this.toggle();
+        if (ingredient.checked) {
+            this.toggle();
+        }
     }
 
     render(): React.Node {
@@ -30,17 +32,17 @@ export default class IngredientComp extends React.Component<IngredientProps> {
         const {ingredient} = this.props;
         return (
             <View>
-            <TouchableOpacity onPress={this.toggle}>
-                <View style={[styles.content, { opacity: checked ? 0.5 : 1 }]}>
-                    <View style={styles.radio}>
-                        <Icon name={checked ? "check-circle" : "circle"} primary={true} />
+                <TouchableOpacity onPress={this.toggle}>
+                    <View style={[styles.content, { opacity: checked ? 0.5 : 1 }]}>
+                        <View style={styles.radio}>
+                            <Icon name={checked ? "check-circle" : "circle"} primary />
+                        </View>
+                        <View style={styles.text}>
+                            <Text>{ingredient.name}</Text>
+                            <Text style={styles.subhead} type="subhead">{ingredient.quantity}</Text>
+                        </View>
                     </View>
-                    <View style={styles.text}>
-                        <Text>{ingredient.name}</Text>
-                        <Text style={styles.subhead} type="subhead">{ingredient.quantity}</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
                 <View style={styles.separator} />
             </View>
         );

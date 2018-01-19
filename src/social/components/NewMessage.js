@@ -26,8 +26,8 @@ export default class NewMessage extends React.Component<{}> {
                     placeholder="Share a message"
                     underlineColorAndroid="transparent"
                     textAlignVertical="top"
-                    multiline={true}
-                    autoFocus={true}
+                    multiline
+                    autoFocus
                 />
                 <SegmentedControl values={["Text", "Photo"]} {...{selectedIndex, onChange}} />
                 <KeyboardSpacer />

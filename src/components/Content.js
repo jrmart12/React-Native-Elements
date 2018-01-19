@@ -10,7 +10,7 @@ type ContentProps = StyleProps & {
     children: React.Node
 };
 
-export default class Content extends React.Component<ContentProps> {
+export default class Content extends React.PureComponent<ContentProps> {
 
     render(): React.Node {
         const {children, style} = this.props;

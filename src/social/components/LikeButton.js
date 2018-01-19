@@ -19,7 +19,7 @@ class LikeButton extends React.Component<ThemeProps> {
         const {liked, onPress} = this;
         const {theme} = this.props;
         return (
-            <IconButton name="heart" color={liked ? theme.palette.primary : theme.palette.darkGray} {...{onPress}}  />
+            <IconButton name="heart" color={liked ? theme.palette.primary : theme.palette.darkGray} {...{onPress}} />
         );
     }
 }

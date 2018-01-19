@@ -56,9 +56,10 @@ export type Food = {
     restaurants: Restaurant[]
 };
 
- const api: Food = {
-     categories: recipes.categories,
-     recipes: recipes.recipes,
-     restaurants
- };
- export default api;
+const api: Food = {
+    categories: recipes.categories,
+    recipes: recipes.recipes,
+    restaurants
+};
+
+export default api;

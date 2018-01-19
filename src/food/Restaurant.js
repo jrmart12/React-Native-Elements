@@ -18,7 +18,7 @@ export default class RestaurantComp extends React.Component<NavigationProps<{ re
     reservation: ActionSheet;
 
     render(): React.Node {
-        const {navigation} = this.props
+        const {navigation} = this.props;
         const {restaurant} = navigation.state.params;
         const {ratings, title, picture, coordinate, description} = restaurant;
         const details = [
@@ -45,7 +45,7 @@ export default class RestaurantComp extends React.Component<NavigationProps<{ re
                     <Map height={250} markers={[restaurant]} {...{coordinate}} />
                     <View style={styles.description}>
                         <Button
-                            primary={true}
+                            primary
                             label="Make reservation"
                             onPress={this.makeReservation}
                             style={styles.makeReservation}
@@ -75,7 +75,7 @@ export default class RestaurantComp extends React.Component<NavigationProps<{ re
 
     @autobind
     setReservationRef(reservation: ActionSheet | null) {
-        if(reservation) {
+        if (reservation) {
             this.reservation = reservation;
         }
     }
@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
     },
     description: {
         position: "relative",
-        top: -100,
+        top: -100
     }
 });

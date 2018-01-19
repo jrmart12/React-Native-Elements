@@ -18,7 +18,7 @@ type CardProps = {
     onPress: () => mixed
 };
 
-export default class Card extends React.Component<CardProps> {
+export default class Card extends React.PureComponent<CardProps> {
 
     static defaultProps = {
         height: 300

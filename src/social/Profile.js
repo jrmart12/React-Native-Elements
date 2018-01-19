@@ -39,21 +39,21 @@ export default class Profile extends React.Component<NavigationProps<>> {
             <Container>
                 <Header picture={me.cover} heightRatio={1}>
                     <NavigationBar type="transparent" rightAction={{ icon: "log-out", onPress }} {...{navigation}} />
-                        <View style={styles.container}>
-                            <Avatar uri={me.picture} size={90} style={styles.avatar} />
-                            <Text color="white" type="title3" style={styles.text}>{me.name}</Text>
-                            <Text color="white" type="callout" style={styles.text}>{me.caption}</Text>
-                            <SegmentedControl
-                                transparent={true}
-                                values={["Posts", "Comments", "Likes"]}
-                                {...{selectedIndex, onChange}}
-                            />
-                        </View>
+                    <View style={styles.container}>
+                        <Avatar uri={me.picture} size={90} style={styles.avatar} />
+                        <Text color="white" type="title3" style={styles.text}>{me.name}</Text>
+                        <Text color="white" type="callout" style={styles.text}>{me.caption}</Text>
+                        <SegmentedControl
+                            transparent
+                            values={["Posts", "Comments", "Likes"]}
+                            {...{selectedIndex, onChange}}
+                        />
+                    </View>
                 </Header>
                 <Content style={styles.content}>
-                {
-                    myPosts.map((post, key) => <Post {...{post, key}} />)
-                }
+                    {
+                        myPosts.map((post, key) => <Post {...{post, key}} />)
+                    }
                 </Content>
             </Container>
         );
@@ -87,4 +87,4 @@ const styles = StyleSheet.create({
     content: {
         paddingBottom: StyleGuide.spacing.small
     }
-})
+});

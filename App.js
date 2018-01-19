@@ -1,11 +1,9 @@
 // @flow
 /* eslint-disable no-console */
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {useStrict, observable, action} from "mobx";
-import {Provider} from "mobx-react/native";
+import {Provider, observer} from "mobx-react/native";
 import {StackNavigator} from "react-navigation";
-import {observer} from "mobx-react/native";
 import {Font, AppLoading} from "expo";
 import {Feather} from "@expo/vector-icons";
 
@@ -16,8 +14,15 @@ import {Welcome} from "./src/welcome";
 import {FoodNavigator} from "./src/food";
 import {SocialNavigator} from "./src/social";
 import {MusicNavigator} from "./src/music";
+import {Player} from "./src/music/components";
+
+const SFProTextBold = require("./fonts/SF-Pro-Text-Bold.otf");
+const SFProTextSemibold = require("./fonts/SF-Pro-Text-Semibold.otf");
+const SFProTextRegular = require("./fonts/SF-Pro-Text-Regular.otf");
 
 useStrict(true);
+
+const onNavigationStateChange = () => undefined;
 
 @observer
 export default class App extends React.Component<{}> {
@@ -27,9 +32,9 @@ export default class App extends React.Component<{}> {
 
     async componentWillMount(): Promise<void> {
         const fonts = Font.loadAsync({
-            "SFProText-Bold": require("./fonts/SF-Pro-Text-Bold.otf"),
-            "SFProText-Semibold": require("./fonts/SF-Pro-Text-Semibold.otf"),
-            "SFProText-Regular": require("./fonts/SF-Pro-Text-Regular.otf")
+            "SFProText-Bold": SFProTextBold,
+            "SFProText-Semibold": SFProTextSemibold,
+            "SFProText-Regular": SFProTextRegular
         });
         const images = Images.downloadAsync();
         const icons = Font.loadAsync(Feather.font);
@@ -37,20 +42,16 @@ export default class App extends React.Component<{}> {
         this.ready();
     }
 
-    @autobind
-    onNavigationStateChange() {}
-
     render(): React.Node {
-        const {isReady, onNavigationStateChange} = this;
+        const {isReady} = this;
         if (!isReady) {
             return <AppLoading />;
-        } else {
-            return (
-                <Provider theme={createTheme()}>
-                    <MainNavigator {...{onNavigationStateChange}} />
-                </Provider>
-            );
         }
+        return (
+            <Provider theme={createTheme()} player={new Player()}>
+                <MainNavigator {...{onNavigationStateChange}} />
+            </Provider>
+        );
     }
 }
 

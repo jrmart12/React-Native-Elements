@@ -6,7 +6,7 @@ type ContainerProps = {
     children: React.Node
 };
 
-export default class Container extends React.Component<ContainerProps> {
+export default class Container extends React.PureComponent<ContainerProps> {
 
     render(): React.Node {
         return (

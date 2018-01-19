@@ -11,7 +11,7 @@ type HandleProps = {
     handleColor: string
 };
 
-export default class Handle extends React.Component<HandleProps> {
+export default class Handle extends React.PureComponent<HandleProps> {
 
     static defaultProps = {
         handleColor: "black"

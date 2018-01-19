@@ -1,11 +1,10 @@
 // @flow
 import * as React from "react";
-import {Provider} from "mobx-react/native";
 import {TabNavigator, StackNavigator} from "react-navigation";
 
 import {StackNavigatorOptions} from "../components/Navigation";
 
-import {MusicTabBar, Player} from "./components";
+import {MusicTabBar} from "./components";
 
 import Library from "./Library";
 import Album from "./Album";
@@ -23,7 +22,7 @@ const LibraryNavigator = StackNavigator({
     Album: { screen: Album }
 }, StackNavigatorOptions);
 
-export const MusicTabNavigator = TabNavigator({
+export const MusicNavigator = TabNavigator({
     Library: { screen: LibraryNavigator }
 }, {
     animationEnabled: false,
@@ -32,13 +31,3 @@ export const MusicTabNavigator = TabNavigator({
     tabBarPosition: "bottom",
     swipeEnabled: false
 });
-
-export class MusicNavigator extends React.Component<{}> {
-    render(): React.Node {
-        return (
-            <Provider player={new Player()}>
-                <MusicTabNavigator />
-            </Provider>
-        );
-    }
-}

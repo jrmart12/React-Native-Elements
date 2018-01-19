@@ -8,7 +8,7 @@ import type {Theme, StylesProps, StyleSheet} from "../../../components/theme";
 
 type StyleNames = "addStory";
 
-const styles = (theme: Theme): StyleSheet<StyleNames> => ({
+const themedStyles = (theme: Theme): StyleSheet<StyleNames> => ({
     addStory: {
         backgroundColor: theme.palette.secondary,
         height: 48,
@@ -20,18 +20,18 @@ const styles = (theme: Theme): StyleSheet<StyleNames> => ({
     }
 });
 
-class AddStory extends React.Component<StylesProps<StyleNames>> {
+class AddStory extends React.PureComponent<StylesProps<StyleNames>> {
 
     render(): React.Node {
         const {styles} = this.props;
         return (
             <TouchableOpacity onPress={notImplementedYet}>
                 <View style={styles.addStory}>
-                    <Icon name="plus" primary={true} />
+                    <Icon name="plus" primary />
                 </View>
             </TouchableOpacity>
         );
     }
 }
 
-export default withStyles(styles, AddStory);
+export default withStyles(themedStyles, AddStory);

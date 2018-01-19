@@ -28,6 +28,7 @@ class Map extends React.Component<MapProps> {
 
     componentDidMount() {
         const {coordinate} = this.props;
+        // eslint-disable-next-line no-undef
         requestAnimationFrame(() => {
             this.map.animateToRegion({
                 ...coordinate,
@@ -52,15 +53,15 @@ class Map extends React.Component<MapProps> {
                     provider="google"
                     customMapStyle={mapStyle}
                 >
-                {
-                    markers.map(markers => (
-                        <MapView.Marker
-                            key={markers.id}
-                            coordinate={markers.coordinate}
-                            pinColor={theme.palette.primary}
-                        />
-                    ))
-                }
+                    {
+                        markers.map(marker => (
+                            <MapView.Marker
+                                key={marker.id}
+                                coordinate={marker.coordinate}
+                                pinColor={theme.palette.primary}
+                            />
+                        ))
+                    }
                 </MapView>
                 <LinearGradient
                     colors={["rgba(243, 243, 243, 0)", "rgba(243, 243, 243, 1)"]}

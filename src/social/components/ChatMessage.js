@@ -12,15 +12,15 @@ type ChatMessageProps = {
     message: Message
 };
 
-export default class ChatMessage extends React.Component<ChatMessageProps> {
+export default class ChatMessage extends React.PureComponent<ChatMessageProps> {
 
     render(): React.Node {
         const {id, message} = this.props;
-        const messages = SocialAPI.messageThread(id).messages;
-        const nextMessage = messages.filter((m, i) => i-1 >= 0 && messages[i-1].id === message.id)[0];
+        const {messages} = SocialAPI.messageThread(id);
+        const nextMessage = messages.filter((m, i) => i - 1 >= 0 && messages[i - 1].id === message.id)[0];
         const flexDirection = message.me ? "row-reverse" : "row";
         const showAvatar = !nextMessage || (message.me ? !nextMessage.me : nextMessage.me);
-        const user = message.me ? SocialAPI.me() :  SocialAPI.user(SocialAPI.messageThread(id).user);
+        const user = message.me ? SocialAPI.me() : SocialAPI.user(SocialAPI.messageThread(id).user);
         return (
             <View style={{ flexDirection }}>
                 <View style={styles.user}>

@@ -3,12 +3,13 @@ import * as React from "react";
 import autobind from "autobind-decorator";
 import {SafeAreaView, View, Animated, StyleSheet} from "react-native";
 
+import type {StyleObj as Style} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+
 import LeftAction from "./LeftAction";
 import Text from "./Text";
 import IconButton from "./IconButton";
 import {withTheme, StyleGuide} from "./theme";
 
-import type {StyleObj as Style} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import type {ThemeProps} from "./theme";
 import type {NavigationProps} from "./Navigation";
 import type {Action} from "./Model";
@@ -45,27 +46,27 @@ class NavigationBar extends React.Component<NavigationBarProps> {
             <SafeAreaView style={containerStyle}>
                 <View style={styles.content}>
                     <View style={styles.block}>
-                    {back && <LeftAction onPress={this.goBack} name="chevron-left" label={back} />}
+                        {back && <LeftAction onPress={this.goBack} name="chevron-left" label={back} />}
                     </View>
                     {
                         title !== "" && (
                             <View style={styles.block}>
                                 <AnimatedText type="headline" color="white" style={[styles.text, titleStyle]}>
-                                {title}
+                                    {title}
                                 </AnimatedText>
                             </View>
                         )
                     }
                     <View style={styles.rightBlock}>
-                    {
-                        rightAction && (
-                            <IconButton
-                                onPress={rightAction.onPress}
-                                name={rightAction.icon}
-                                style={styles.rightAction}
-                            />
-                        )
-                    }
+                        {
+                            rightAction && (
+                                <IconButton
+                                    onPress={rightAction.onPress}
+                                    name={rightAction.icon}
+                                    style={styles.rightAction}
+                                />
+                            )
+                        }
                     </View>
                 </View>
             </SafeAreaView>

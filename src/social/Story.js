@@ -27,10 +27,22 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
     }
 
     @autobind
-    setNewPostRef(newPost: ActionSheet | null) {
+    newPostRef(newPost: ActionSheet | null) {
         if (newPost) {
             this.newPost = newPost;
         }
+    }
+
+    @autobind
+    commentsRef(comments: ActionSheet | null) {
+        if (comments) {
+            this.comments = comments;
+        }
+    }
+
+    @autobind
+    toggleComments() {
+        this.comments.toggle();
     }
 
     render(): React.Node {
@@ -44,7 +56,7 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
         };
         return (
             <View style={styles.story}>
-                <Image  {...story.picture} style={styles.image} />
+                <Image style={styles.image} {...story.picture} />
                 <View style={styles.content}>
                     <LinearGradient colors={["black", "transparent"]} style={styles.gradient}>
                         <SafeAreaView>
@@ -55,7 +67,8 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
                                 </View>
                                 <TouchableOpacity onPress={this.toggleComments}>
                                     <Comments
-                                        comments={story.comments.map(comment => comment.user)} showLabel={false}
+                                        comments={story.comments.map(comment => comment.user)}
+                                        showLabel={false}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -64,33 +77,26 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
                     <SafeAreaView style={styles.bottom}>
                         <IconButton name="edit" onPress={this.toggleNewMessage} />
                     </SafeAreaView>
-                    <ActionSheet title="Comments" ref={this.setCommentsRef}>
+                    <ActionSheet title="Comments" ref={this.commentsRef}>
                         <Content style={styles.comments}>
-                        {
-                            story.comments.map((msg, key) => (
-                                <Message user={msg.user} timestamp={msg.timestamp} message={msg.comment} {...{key}} />
-                            ))
-                        }
+                            {
+                                story.comments.map((msg, key) => (
+                                    <Message
+                                        user={msg.user}
+                                        timestamp={msg.timestamp}
+                                        message={msg.comment}
+                                        {...{key}}
+                                    />
+                                ))
+                            }
                         </Content>
                     </ActionSheet>
-                    <ActionSheet title="New Post" ref={this.setNewPostRef} rightAction={postAction}>
+                    <ActionSheet title="New Post" ref={this.newPostRef} rightAction={postAction}>
                         <NewMessage />
                     </ActionSheet>
                 </View>
             </View>
         );
-    }
-
-    @autobind
-    setCommentsRef(comments: ActionSheet | null) {
-        if (comments) {
-            this.comments = comments;
-        }
-    }
-
-    @autobind
-    toggleComments() {
-        this.comments.toggle();
     }
 }
 

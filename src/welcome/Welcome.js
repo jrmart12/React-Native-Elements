@@ -1,9 +1,9 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {SafeAreaView, ScrollView, StyleSheet, View, Image, StatusBar, Platform} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View, Image, StatusBar, Platform } from "react-native";
 
-import {NavigationHelpers, Colors, StyleGuide, Images, Text, withTheme} from "../components";
+import { NavigationHelpers, Colors, StyleGuide, Images, Text, withTheme } from "../components";
 
 import Kit from "./Kit";
 
@@ -22,7 +22,7 @@ class Welcome extends React.Component<ThemeProps & NavigationProps<>> {
     }
 
     navigate(themeName: ThemeName) {
-        const {navigation, theme} = this.props;
+        const { navigation, theme } = this.props;
         StatusBar.setBarStyle("light-content");
         if (Platform.OS === "android") {
             StatusBar.setBackgroundColor(Colors[themeName].primary);

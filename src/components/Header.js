@@ -16,7 +16,7 @@ type HeaderProps = {
     heightRatio: number
 };
 
-export default class Header extends React.Component<HeaderProps> {
+export default class Header extends React.PureComponent<HeaderProps> {
 
     static defaultProps = {
         heightRatio: 0.68

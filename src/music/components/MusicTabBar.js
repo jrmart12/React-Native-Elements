@@ -7,7 +7,7 @@ import PlayerControls from "./PlayerControls";
 
 import type {TabBarProps} from "../../components/TabBar";
 
-export default class MusicTabBar extends React.Component<TabBarProps> {
+export default class MusicTabBar extends React.PureComponent<TabBarProps> {
 
     render(): React.Node {
         const {tabs, navigation} = this.props;

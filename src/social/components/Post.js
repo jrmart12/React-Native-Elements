@@ -12,7 +12,7 @@ import Comments from "./Comments";
 
 import type {Post} from "../api";
 
-export default class PostComp extends React.Component<{ post: Post }> {
+export default class PostComp extends React.PureComponent<{ post: Post }> {
 
     render(): React.Node {
         const {post} = this.props;

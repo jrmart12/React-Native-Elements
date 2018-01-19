@@ -11,29 +11,26 @@ import {Post, Stories, NewMessage} from "./components";
 import type {Post as PostModel} from "./api";
 import type {NavigationProps} from "../components";
 
+const renderItem = (post: PostModel): React.Node => <Post {...{post}} />;
+
 export default class Timeline extends React.Component<NavigationProps<>> {
-
-    newPost: ActionSheet;
-
-    @autobind
-    renderItem(post: PostModel): React.Node {
-        return <Post {...{post}} />;
-    }
 
     @autobind
     onPress() {
         this.newPost.toggle();
     }
 
+    newPost: ActionSheet;
+
     @autobind
-    setNewPostRef(newPost: ActionSheet | null) {
+    newPostRef(newPost: ActionSheet | null) {
         if (newPost) {
             this.newPost = newPost;
         }
     }
 
     render(): React.Node {
-        const {renderItem, onPress} = this;
+        const {onPress} = this;
         const {navigation} = this.props;
         const data = SocialAPI.posts;
         const title = "Timeline";
@@ -51,7 +48,7 @@ export default class Timeline extends React.Component<NavigationProps<>> {
                     header={<Stories {...{navigation}} />}
                     {...{data, renderItem, title, navigation, rightAction}}
                 />
-                <ActionSheet title="New Post" ref={this.setNewPostRef} rightAction={postAction}>
+                <ActionSheet title="New Post" ref={this.newPostRef} rightAction={postAction}>
                     <NewMessage />
                 </ActionSheet>
             </View>

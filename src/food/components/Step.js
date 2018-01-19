@@ -9,7 +9,7 @@ type StepProps = {
     step: string
 };
 
-export default class Step extends React.Component<StepProps> {
+export default class Step extends React.PureComponent<StepProps> {
 
     render(): React.Node {
         const {step, index} = this.props;

@@ -8,7 +8,7 @@ import type {StyleProps, ThemeProps} from "../../../components/theme";
 
 type NotificationDotProps = StyleProps & ThemeProps;
 
-class NotificationDot extends React.Component<NotificationDotProps> {
+class NotificationDot extends React.PureComponent<NotificationDotProps> {
 
     render(): React.Node {
         const {style, theme} = this.props;

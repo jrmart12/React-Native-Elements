@@ -2,11 +2,11 @@
 import * as _ from "lodash";
 import * as React from "react";
 import {Image as RNImage, Animated, StyleSheet, View, Platform} from "react-native";
-import {BlurView, FileSystem} from "expo";
-import SHA1 from "crypto-js/sha1";
+import {BlurView} from "expo";
 import {observable, computed} from "mobx";
 import {observer} from "mobx-react/native";
 
+import CacheManager from "./CacheManager";
 import type {StyleProps} from "./theme";
 
 type ImageProps = StyleProps & {
@@ -27,29 +27,25 @@ export default class Image extends React.Component<ImageProps> {
     @observable _intensity: Animated.Value = new Animated.Value(100);
 
     @computed get uri(): string { return this._uri; }
-    set uri(uri: string) { this._uri = uri }
+    set uri(uri: string) { this._uri = uri; }
 
     @computed get intensity(): Animated.Value { return this._intensity; }
     set intensity(intensity: Animated.Value) { this._intensity = intensity; }
 
-    async componentWillMount(): Promise<void> {
-        const {preview, uri} = this.props;
-        try {
-            const entry = await getCacheEntry(uri);
-            if (!entry.exists) {
-                if (preview && Platform.OS === "ios") {
-                    this.uri = preview;
-                }
-                if (uri.startsWith("file://")) {
-                    await FileSystem.copyAsync({ from: uri, to: entry.path });
-                } else {
-                    await FileSystem.downloadAsync(uri, entry.path);
-                }
-            }
-            this.uri = entry.path;
-        } catch(e) {
+    async load(props: ImageProps): Promise<void> {
+        const {uri, preview} = props;
+        const ready = CacheManager.cache(uri, newURI => this.uri = newURI);
+        if (!ready && preview && Platform.OS === "ios") {
             this.uri = uri;
         }
+    }
+
+    componentWillMount() {
+        this.load(this.props);
+    }
+
+    componentWillReceiveProps(props: ImageProps) {
+        this.load(props);
     }
 
     onLoadEnd(uri: string) {
@@ -86,12 +82,4 @@ export default class Image extends React.Component<ImageProps> {
             </View>
         );
     }
-}
-
-const getCacheEntry = async(uri): Promise<{ exists: boolean, path: string }> => {
-    const ext = uri.substring(uri.lastIndexOf("."), uri.indexOf("?") === -1 ? undefined : uri.indexOf("?"));
-    const path = FileSystem.cacheDirectory + SHA1(uri) + ext;
-    const info = await FileSystem.getInfoAsync(path);
-    const {exists} = info;
-    return { exists, path };
 }

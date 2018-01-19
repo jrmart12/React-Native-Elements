@@ -14,45 +14,57 @@ type SegmentedControlProps = ThemeProps & {
     transparent?: boolean
 };
 
-class SegmentedControl extends React.Component<SegmentedControlProps> {
+class SegmentedControl extends React.PureComponent<SegmentedControlProps> {
 
     render(): React.Node {
         const {theme, values, transparent, selectedIndex, onChange} = this.props;
         return (
             <View style={styles.container}>
-            {
-                values.map((value, key) => {
-                    const isFirst = key === 0;
-                    const isLast = key === (values.length - 1);
-                    const isSelected = key === selectedIndex;
-                    const color = isSelected ? "white" : (transparent ? "black" : theme.palette.primary);
-                    const backgroundColor = isSelected
-                        ?
-                            (transparent ? "rgba(0, 0, 0, 0.5)" : theme.palette.primary)
-                        :
-                            (transparent ? "rgba(255, 255, 255, 0.5)" : theme.palette.secondary)
-                        ;
-                    const style = [styles.control, { backgroundColor }];
-                    if (isFirst) {
-                        style.push(styles.first);
-                    } else if (isLast) {
-                        style.push(styles.last);
-                    }
-                    if (isSelected) {
-                        return (
-                            <View {...{style, key}}>
-                                <Text style={{ color }}>{value}</Text>
-                            </View>
-                        );
-                    } else {
+                {
+                    values.map((value, key) => {
+                        const isFirst = key === 0;
+                        const isLast = key === (values.length - 1);
+                        const isSelected = key === selectedIndex;
+                        let color: string;
+                        let backgroundColor: string;
+                        if (isSelected) {
+                            color = "white";
+                        } else if (transparent) {
+                            color = "black";
+                        } else {
+                            color = theme.palette.primary;
+                        }
+                        if (isSelected) {
+                            if (transparent) {
+                                backgroundColor = "rgba(0, 0, 0, 0.5)";
+                            } else {
+                                backgroundColor = theme.palette.primary;
+                            }
+                        } else if (transparent) {
+                            backgroundColor = "rgba(255, 255, 255, 0.5)";
+                        } else {
+                            backgroundColor = theme.palette.secondary;
+                        }
+                        const style = [styles.control, { backgroundColor }];
+                        if (isFirst) {
+                            style.push(styles.first);
+                        } else if (isLast) {
+                            style.push(styles.last);
+                        }
+                        if (isSelected) {
+                            return (
+                                <View {...{style, key}}>
+                                    <Text style={{ color }}>{value}</Text>
+                                </View>
+                            );
+                        }
                         return (
                             <TouchableOpacity onPress={() => onChange(key)} {...{key, style}}>
                                 <Text style={{ color }}>{value}</Text>
                             </TouchableOpacity>
                         );
-                    }
-                })
-            }
+                    })
+                }
             </View>
         );
     }

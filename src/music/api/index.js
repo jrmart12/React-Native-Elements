@@ -45,11 +45,11 @@ const tracks: { [album: string]: Track[] } = {
     melodrama,
     "ibn-el-leil": ibnRlLeil,
     shakira
-}
+};
 
- const api: Music = {
-     albums,
-     tracks: (album: string) => tracks[album]
- };
+const api: Music = {
+    albums,
+    tracks: (album: string) => tracks[album]
+};
 
- export default api;
+export default api;

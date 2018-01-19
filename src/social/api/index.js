@@ -65,15 +65,15 @@ export type Social = {
 };
 
 const api: Social = {
-     messages,
-     users,
-     posts,
-     stories: _.sortBy(stories, story => story.read),
-     user: (id: string): User => users.filter(user => user.id === id)[0],
-     story: (id: string): Story => stories.filter(story => story.id === id)[0],
-     messageThread: (id: string): MessageThread => messages.filter(thread => thread.id === id)[0],
-     me: (): User => users.filter(user => user.id === "schavez")[0],
-     myPosts
- };
+    messages,
+    users,
+    posts,
+    stories: _.sortBy(stories, story => story.read),
+    user: (id: string): User => users.filter(user => user.id === id)[0],
+    story: (id: string): Story => stories.filter(story => story.id === id)[0],
+    messageThread: (id: string): MessageThread => messages.filter(thread => thread.id === id)[0],
+    me: (): User => users.filter(user => user.id === "schavez")[0],
+    myPosts
+};
 
- export default api;
+export default api;

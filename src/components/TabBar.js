@@ -36,15 +36,15 @@ export default class TabBar extends React.Component<TabBarProps> {
         return (
             <SafeAreaView style={styles.root}>
                 <View style={styles.tabs}>
-                {
-                    tabs.map(tab => (
-                        <TouchableWithoutFeedback key={tab.key} onPress={() => this.navigate(tab.key)}>
-                            <View style={styles.tab}>
-                                <Icon name={tab.icon} primary={activeKey === tab.key} />
-                            </View>
-                        </TouchableWithoutFeedback>
-                    ))
-                }
+                    {
+                        tabs.map(tab => (
+                            <TouchableWithoutFeedback key={tab.key} onPress={() => this.navigate(tab.key)}>
+                                <View style={styles.tab}>
+                                    <Icon name={tab.icon} primary={activeKey === tab.key} />
+                                </View>
+                            </TouchableWithoutFeedback>
+                        ))
+                    }
                 </View>
             </SafeAreaView>
         );

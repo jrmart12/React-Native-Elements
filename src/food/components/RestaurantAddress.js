@@ -6,7 +6,7 @@ import {Text, Image, StyleGuide} from "../../components";
 
 import type {Restaurant} from "../api";
 
-export default class RestaurantAddress extends React.Component<{ restaurant: Restaurant }> {
+export default class RestaurantAddress extends React.PureComponent<{ restaurant: Restaurant }> {
 
     render(): React.Node {
         const {restaurant} = this.props;

@@ -31,7 +31,7 @@ export default class Recipes extends React.Component<NavigationProps<>> {
         const rightAction = {
             icon: "log-out",
             onPress
-        }
+        };
         return (
             <Feed {...{data, renderItem, title, navigation, rightAction}} />
         );

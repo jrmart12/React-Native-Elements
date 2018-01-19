@@ -7,7 +7,8 @@ import Text from "./Text";
 import {StyleGuide} from "./theme";
 import {notImplementedYet} from "./notImplementedYet";
 
-export default class PayButton extends React.Component<{}> {
+// eslint-disable-next-line react/prefer-stateless-function
+export default class PayButton extends React.PureComponent<{}> {
 
     render(): React.Node {
         const Button = Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;

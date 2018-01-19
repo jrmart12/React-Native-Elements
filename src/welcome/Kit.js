@@ -12,7 +12,7 @@ type KitProps = {
     preview: string
 };
 
-export default class Kit extends React.Component<KitProps> {
+export default class Kit extends React.PureComponent<KitProps> {
 
     render(): React.Node {
         const {backgroundColor, title, uri, preview, onPress} = this.props;

@@ -22,7 +22,7 @@ export default class AlbumComp extends React.Component<AlbumProps> {
 
     render(): React.Node {
         const {onPress} = this;
-        const {album} = this.props
+        const {album} = this.props;
         return (
             <TouchableWithoutFeedback {...{onPress}}>
                 <View style={styles.container}>

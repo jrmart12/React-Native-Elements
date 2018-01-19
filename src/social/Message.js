@@ -10,13 +10,13 @@ import {ChatMessage} from "./components";
 import type {NavigationProps} from "../components/Navigation";
 import type {Message as MessageModel} from "./api";
 
-export default class Message extends React.Component<NavigationProps<{ id: string }>> {
+export default class Message extends React.PureComponent<NavigationProps<{ id: string }>> {
 
     @autobind
     renderItem(message: MessageModel): React.Node {
         const {navigation} = this.props;
         const {id} = navigation.state.params;
-        return <ChatMessage {...{id, message}} />
+        return <ChatMessage {...{id, message}} />;
     }
 
     render(): React.Node {
@@ -37,7 +37,7 @@ export default class Message extends React.Component<NavigationProps<{ id: strin
                             underlineColorAndroid="transparent"
                             style={styles.input}
                         />
-                        <IconButton name="arrow-up" primary={true} onPress={notImplementedYet} />
+                        <IconButton name="arrow-up" onPress={notImplementedYet} backgroundPrimary rounded />
                     </View>
                 </SafeAreaView>
                 <KeyboardSpacer />

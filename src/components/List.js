@@ -9,21 +9,19 @@ type ListProps<T> = {
     renderRow: (T, number) => React.Node
 };
 
-export default class List<T> extends React.Component<ListProps<T>> {
+export default class List<T> extends React.PureComponent<ListProps<T>> {
 
     render(): React.Node {
         const {rows, renderRow} = this.props;
         return (
             <View style={styles.container}>
-            {
-                rows.map((row, index) => (
-                    <View key={index} style={index !== (rows.length - 1) ? styles.separator : {}}>
-                    {
-                        renderRow(row, index)
-                    }
-                    </View>
-                ))
-            }
+                {
+                    rows.map((row, index) => (
+                        <View key={index} style={index !== (rows.length - 1) ? styles.separator : {}}>
+                            {renderRow(row, index)}
+                        </View>
+                    ))
+                }
             </View>
         );
     }

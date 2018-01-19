@@ -17,7 +17,7 @@ export default class Comments extends React.Component<{ comments: string[], show
     render(): React.Node {
         const {comments, showLabel} = this.props;
         const users: User[] = comments.slice(0, 3).map(id => SocialAPI.user(id));
-        const left = users.length === 0 ? 0 : (-5 * (users.length - 1) + StyleGuide.spacing.tiny);
+        const left = users.length === 0 ? 0 : ((-5 * (users.length - 1)) + StyleGuide.spacing.tiny);
         return (
             <View style={styles.comments}>
                 {
@@ -41,9 +41,8 @@ export default class Comments extends React.Component<{ comments: string[], show
         const {showLabel} = this.props;
         if (showLabel) {
             return { left: -5 * index };
-        } else {
-            return { left: 5 * (length - index - 1) };
         }
+        return { left: 5 * (length - index - 1) };
     }
 }
 

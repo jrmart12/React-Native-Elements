@@ -19,7 +19,7 @@ type ActivityProps = {
     onPress: () => mixed
 };
 
-export default class Activity extends React.Component<ActivityProps> {
+export default class Activity extends React.PureComponent<ActivityProps> {
 
     render(): React.Node {
         const {title, subtitle, ratings, reviews, picture, onPress} = this.props;

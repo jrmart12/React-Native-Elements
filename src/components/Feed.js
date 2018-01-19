@@ -26,24 +26,21 @@ type FeedProps<T> = ThemeProps & NavigationProps<*> & {
     numColumns?: number
 };
 
+const keyExtractor = <T: Item>(item: T): string => item.id;
+
 @observer
 class Feed<T: Item> extends React.Component<FeedProps<T>> {
 
     @observable scrollAnimation = new Animated.Value(0);
 
     @autobind
-    keyExtractor(item: T): string {
-        return item.id;
-    }
-
-    @autobind
-    renderItem({ item }: { item: T }): React.Node {
+    renderItem(item: { item: T }): React.Node {
         const {renderItem} = this.props;
-        return renderItem(item);
+        return renderItem(item.item);
     }
 
     render(): React.Node {
-        const {keyExtractor, renderItem, scrollAnimation} = this;
+        const {renderItem, scrollAnimation} = this;
         const {data, title, navigation, theme, back, rightAction, header, numColumns} = this.props;
         const translateY = scrollAnimation.interpolate({
             inputRange: [55, 56, 57],

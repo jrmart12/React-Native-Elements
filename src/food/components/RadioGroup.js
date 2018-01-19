@@ -20,16 +20,17 @@ export default class RadioGroup extends React.Component<RadioGroupProps> {
         const {options} = this.props;
         return (
             <View style={styles.container}>
-            {
-                options.map((label, key) => (
-                    <Button
-                        style={styles.button}
-                        primary={this.selected === key}
-                        secondary={this.selected !== key}
-                        {...{label, key}} onPress={() => this.select(key)}
-                    />
-                ))
-            }
+                {
+                    options.map((label, key) => (
+                        <Button
+                            style={styles.button}
+                            primary={this.selected === key}
+                            secondary={this.selected !== key}
+                            onPress={() => this.select(key)}
+                            {...{label, key}}
+                        />
+                    ))
+                }
             </View>
         );
     }

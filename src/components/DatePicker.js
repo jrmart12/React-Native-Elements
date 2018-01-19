@@ -5,7 +5,7 @@ import * as React from "react";
 import {View} from "react-native";
 import {observable, action} from "mobx";
 import {observer} from "mobx-react/native";
-import {default as RNDatePicker} from "react-native-datepicker";
+import RNDatePicker from "react-native-datepicker";
 
 import {withStyles, StyleGuide} from "./theme";
 
@@ -13,7 +13,7 @@ import type {Theme, StyleSheet, StylesProps} from "./theme";
 
 type StyleNames = "button" | "datePicker" | "dateInput" | "dateText" | "dateTouchBody" | "btnTextConfirm";
 
-const styles = (theme: Theme): StyleSheet<StyleNames> => ({
+const themedStyles = (theme: Theme): StyleSheet<StyleNames> => ({
     button: {
         backgroundColor: theme.palette.secondary,
         ...StyleGuide.styles.button
@@ -64,4 +64,4 @@ class DatePicker extends React.Component<StylesProps<StyleNames>> {
     }
 }
 
-export default withStyles(styles, DatePicker);
+export default withStyles(themedStyles, DatePicker);

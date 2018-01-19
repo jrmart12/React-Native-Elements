@@ -13,7 +13,7 @@ type LeftActionProps = {
     onPress: () => void
 };
 
-export default class LeftAction extends React.Component<LeftActionProps> {
+export default class LeftAction extends React.PureComponent<LeftActionProps> {
 
     render(): React.Node {
         const {name, label, onPress} = this.props;

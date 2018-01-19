@@ -10,14 +10,14 @@ type BaseCardProps = StyleProps & {
     children: React.Node
 };
 
-export default class BaseCard extends React.Component<BaseCardProps> {
+export default class BaseCard extends React.PureComponent<BaseCardProps> {
 
     render(): React.Node {
         const {style, onPress, children} = this.props;
         return (
             <TouchableWithoutFeedback {...{onPress}}>
                 <View style={[styles.card, style]}>
-                {children}
+                    {children}
                 </View>
             </TouchableWithoutFeedback>
         );

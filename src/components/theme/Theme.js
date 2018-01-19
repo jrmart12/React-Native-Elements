@@ -14,15 +14,13 @@ export type ThemeProps = {
 export type StyleSheet<StyleNames: string> = { [name: StyleNames]: mixed };
 export type StylesProps<StyleNames: string> = { styles: StyleSheet<StyleNames> };
 
-export function withTheme<Props: {}, Comp: React.ComponentType<Props>>
-(C: Comp): React.ComponentType<ElementConfig<Comp, ThemeProps>>
-{
+// eslint-disable-next-line max-len
+export function withTheme<Props: {}, Comp: React.ComponentType<Props>>(C: Comp): React.ComponentType<ElementConfig<Comp, ThemeProps>> {
     return inject("theme")(C);
 }
 
-export function withStyles<StlNames: string, Props: {}, Comp: React.ComponentType<Props>>
-(styles: Theme => StyleSheet<StlNames>, C: Comp): React.ComponentType<ElementConfig<Comp, StylesProps<StlNames>>>
-{
+// eslint-disable-next-line max-len
+export function withStyles<StlNames: string, Props: {}, Comp: React.ComponentType<Props>>(styles: Theme => StyleSheet<StlNames>, C: Comp): React.ComponentType<ElementConfig<Comp, StylesProps<StlNames>>> {
     return inject("theme")(({ theme, ...props }) => <C styles={styles(theme)} {...props} />);
 }
 
@@ -69,7 +67,7 @@ export const createTheme = (): Theme => ({
     typography: { ...styleGuide.typography },
     spacing: { ...styleGuide.spacing },
     styles: { ...styleGuide.styles },
-    switchColors: function(colors: ThemeColors) {
+    switchColors(colors: ThemeColors) {
         this.palette.primary = colors.primary;
         this.palette.secondary = colors.secondary;
     }

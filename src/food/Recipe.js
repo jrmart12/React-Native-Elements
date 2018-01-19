@@ -19,8 +19,8 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
     render(): React.Node {
         const {navigation} = this.props;
         const {categoryId, recipeId} = navigation.state.params;
-        const category = FoodAPI.categories.filter(category => categoryId === category.id)[0];
-        const recipe = FoodAPI.recipes[category.id].filter(recipe => recipe.id === recipeId)[0];
+        const category = FoodAPI.categories.filter(cat => categoryId === cat.id)[0];
+        const recipe = FoodAPI.recipes[category.id].filter(r => r.id === recipeId)[0];
         const people = `${recipe.people} ${recipe.people > 1 ? "people" : "person"}`;
         const minutes = `${recipe.minutes} minutes`;
         const icon = recipe.people > 1 ? "user" : "users";
@@ -31,7 +31,7 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
                 </Header>
                 <DetailsBar details={[{ icon, caption: people }, { icon: "clock", caption: minutes }]} />
                 <Content style={styles.gutter}>
-                    <Button primary={true} label="See Ingredients" onPress={this.toggleIngredientList} />
+                    <Button primary label="See Ingredients" onPress={this.toggleIngredientList} />
                     <List rows={recipe.instructions} renderRow={(step, i) => <Step index={i + 1} {...{step}} />} />
                 </Content>
                 <ActionSheet title="Ingredients" ref={this.setIngredientListRef}>
@@ -39,7 +39,7 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
                         recipe.ingredients.map((ingredient, key) => <Ingredient {...{ingredient, key}} />)
                     }
                     <View style={styles.gutter}>
-                        <Button primary={true} label="Add to Reminder" onPress={notImplementedYet} />
+                        <Button primary label="Add to Reminder" onPress={notImplementedYet} />
                     </View>
                 </ActionSheet>
             </Container>
@@ -53,7 +53,7 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
 
     @autobind
     setIngredientListRef(ingredientList: ActionSheet | null) {
-        if(ingredientList) {
+        if (ingredientList) {
             this.ingredientList = ingredientList;
         }
     }
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
     gutter: {
         padding: StyleGuide.spacing.small
     }
-})
+});

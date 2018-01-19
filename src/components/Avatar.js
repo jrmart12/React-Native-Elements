@@ -1,11 +1,11 @@
 // @flow
 import * as React from "react";
 import {Image as NativeImage} from "react-native";
-import {Svg, FileSystem} from "expo";
-import {observable, runInAction} from "mobx";
+import {Svg} from "expo";
+import {observable, computed} from "mobx";
 import {observer} from "mobx-react/native";
-import SHA1 from "crypto-js/sha1";
 
+import CacheManager from "./CacheManager";
 import type {StyleProps} from "./theme";
 
 const {Defs, Image, ClipPath, Path} = Svg;
@@ -24,17 +24,14 @@ export default class Avatar extends React.Component<AvatarProps> {
         stacked: false
     };
 
-    @observable uri: string = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+    @observable _uri: string;
+
+    @computed get uri(): string { return this._uri; }
+    set uri(uri: string) { this._uri = uri; }
 
     async componentWillMount(): Promise<void> {
         const {uri} = this.props;
-        const ext = uri.substring(uri.lastIndexOf("."), uri.indexOf("?") === -1 ? undefined : uri.indexOf("?"));
-        const path = FileSystem.cacheDirectory + SHA1(uri) + ext;
-        const info = await FileSystem.getInfoAsync(path);
-        if (!info.exists) {
-            await FileSystem.downloadAsync(uri, path);
-        }
-        runInAction(() => this.uri = path);
+        CacheManager.cache(uri, newURI => (this.uri = newURI));
     }
 
     render(): React.Node {

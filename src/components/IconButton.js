@@ -9,25 +9,28 @@ import type {IconName} from "./Model";
 import type {ThemeProps, StyleProps} from "./theme";
 
 type IconButtonProps = StyleProps & ThemeProps & {
-    onPress: () => void,
+    onPress: () => mixed,
     name: IconName,
     color: string,
-    primary: boolean
+    primary: boolean,
+    backgroundPrimary: boolean,
+    rounded: boolean
 };
 
-class IconButton extends React.Component<IconButtonProps> {
+class IconButton extends React.PureComponent<IconButtonProps> {
 
     static defaultProps = {
         color: "white",
-        primary: false
+        backgroundPrimary: false,
+        primary: false,
+        rounded: false
     }
 
     render(): React.Node {
-        const {onPress, name, color, theme, primary} = this.props;
+        const {onPress, name, theme, backgroundPrimary, primary, rounded} = this.props;
         const style = [];
-        if (primary) {
+        if (rounded) {
             style.push({
-                backgroundColor: theme.palette.primary,
                 borderRadius: 14,
                 width: 28,
                 height: 28,
@@ -35,6 +38,12 @@ class IconButton extends React.Component<IconButtonProps> {
                 alignItems: "center"
             });
         }
+        if (backgroundPrimary) {
+            style.push({
+                backgroundColor: theme.palette.primary
+            });
+        }
+        const color = primary ? theme.palette.primary : this.props.color;
         style.push(this.props.style);
         return (
             <TouchableOpacity {...{onPress}}>

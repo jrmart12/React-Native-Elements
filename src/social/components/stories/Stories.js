@@ -1,54 +1,21 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
-import {StyleSheet, ScrollView, View, TouchableOpacity} from "react-native";
-
-import {StyleGuide, Avatar} from "../../../components";
+import {StyleSheet, ScrollView} from "react-native";
 
 import SocialAPI from "../../api";
 
+import Story from "./Story";
 import AddStory from "./AddStory";
-import NotificationDot from "./NotificationDot";
 
 import type {NavigationProps} from "../../../components/Navigation";
 
-type StoryProps = NavigationProps<> & {
-    read: boolean,
-    uri: string,
-    id: string
-};
-
-class Story extends React.Component<StoryProps> {
-
-    @autobind
-    onPress() {
-        const {navigation, id} = this.props;
-        navigation.navigate("Story", { id });
-    }
-
-    render(): React.Node {
-        const {onPress} = this;
-        const {read, uri} = this.props;
-        return (
-            <TouchableOpacity {...{onPress}}>
-                <View style={[styles.story, { opacity: read ? 0.3 : 1 }]}>
-                    <Avatar size={48} {...{uri}} />
-                    {
-                        !read && <NotificationDot style={styles.dot} />
-                    }
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
-
-export default class Stories extends React.Component<NavigationProps<>> {
+export default class Stories extends React.PureComponent<NavigationProps<>> {
 
     render(): React.Node {
         const {navigation} = this.props;
-        const stories = SocialAPI.stories;
+        const {stories} = SocialAPI;
         return (
-            <ScrollView contentContainerStyle={styles.stories} horizontal={true}>
+            <ScrollView contentContainerStyle={styles.stories} horizontal>
                 <AddStory />
                 {
                     stories.map(story => {
@@ -75,13 +42,5 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         height: 80
-    },
-    story: {
-        marginLeft: StyleGuide.spacing.small
-    },
-    dot: {
-        position: "absolute",
-        top: 0,
-        right: 0
     }
 });

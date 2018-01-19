@@ -1,14 +1,10 @@
 // @flow
 import * as React from "react";
-import {NavigationActions} from "react-navigation"
+import {NavigationActions} from "react-navigation";
+import type {NavigationNavigatorProps, NavigationScreenProp} from "react-navigation/src/TypeDefinition";
 
 import TabBar from "./TabBar";
 import type {Tabs} from "./TabBar";
-
-import type {
-    // eslint-disable-next-line no-unused-vars
-    NavigationNavigatorProps, NavigationScreenProp, NavigationState
-} from "react-navigation/src/TypeDefinition";
 
 export type NavigationProps<P: {} = {}> = NavigationNavigatorProps<{}, { params: P, index: number }>;
 export type OptionalNavigationProps = {
