@@ -9,15 +9,22 @@ import type {NavigationProps} from "../../components";
 import type {Album} from "../api";
 
 type AlbumProps = NavigationProps<> & {
-    album: Album
+    album: Album,
+    from: "profile" | "library"
 };
 
 export default class AlbumComp extends React.Component<AlbumProps> {
 
+    static defaultProps = {
+        from: "library"
+    }
+
     @autobind
     onPress() {
-        const {navigation, album} = this.props;
-        navigation.navigate("Album", { album });
+        const {navigation, album, from} = this.props;
+        const key = from === "library" ? "Album" : "ProfileAlbum";
+        const back = from === "library" ? "Library" : "Profile";
+        navigation.navigate(key, { album, back });
     }
 
     render(): React.Node {

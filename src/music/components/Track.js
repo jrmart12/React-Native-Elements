@@ -1,23 +1,34 @@
 // @flow
+import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
-import {Text, IconButton, StyleGuide, notImplementedYet} from "../../components";
+import {Text, IconButton, StyleGuide} from "../../components";
 
-type StepProps = {
+import type {Track} from "../api";
+
+type TrackProps = {
     index: number,
-    track: string
+    track: Track,
+    onPress: Track => mixed
 };
 
-export default class Track extends React.PureComponent<StepProps> {
+export default class TrackComp extends React.PureComponent<TrackProps> {
+
+    @autobind
+    onPress() {
+        const {track, onPress} = this.props;
+        onPress(track);
+    }
 
     render(): React.Node {
+        const {onPress} = this;
         const {track, index} = this.props;
         return (
             <View style={styles.container}>
                 <Text style={styles.step}>{`${index}`}</Text>
-                <Text style={styles.track}>{track}</Text>
-                <IconButton name="more-horizontal" primary onPress={notImplementedYet} />
+                <Text style={styles.track}>{track.name}</Text>
+                <IconButton name="more-horizontal" primary {...{onPress}} />
             </View>
         );
     }

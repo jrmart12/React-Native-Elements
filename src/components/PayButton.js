@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: "black",
         ...StyleGuide.styles.button,
-        ...StyleGuide.styles.shadow
+        ...StyleGuide.styles.shadow,
+        marginBottom: 0
     },
     icon: {
         ...StyleGuide.styles.buttonIcon

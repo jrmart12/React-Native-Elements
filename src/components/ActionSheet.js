@@ -1,9 +1,7 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {
-    StyleSheet, View, SafeAreaView, Modal, TouchableOpacity, Animated, Dimensions, TouchableWithoutFeedback
-} from "react-native";
+import {StyleSheet, View, Modal, TouchableOpacity, Animated, Dimensions, TouchableWithoutFeedback} from "react-native";
 import {observable, action} from "mobx";
 import {observer} from "mobx-react/native";
 import {Constants} from "expo";
@@ -14,6 +12,7 @@ import {StyleGuide} from "./theme";
 
 type ActionSheetProps = {
     title: string,
+    subtitle?: string,
     children: React.Node,
     rightAction?: {
         label: string,
@@ -54,7 +53,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
     }
 
     render(): React.Node {
-        const {title, children, rightAction} = this.props;
+        const {title, subtitle, children, rightAction} = this.props;
         const opacity = this.animation.interpolate({
             inputRange: [0, 1],
             outputRange: [0, 0.5]
@@ -69,13 +68,20 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
                     <Animated.View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: "black", opacity }}>
                         <TouchableOpacity style={styles.exit} onPress={this.toggle} />
                     </Animated.View>
-                    <AnimatedSafeAreaView style={[styles.content, { transform: [{ translateY }]}]}>
+                    <Animated.View style={[styles.content, { transform: [{ translateY }]}]}>
                         <TouchableWithoutFeedback onPress={this.toggle}>
                             <View style={styles.header}>
                                 <TouchableOpacity style={styles.left} onPress={this.toggle}>
                                     <Icon name="chevron-down" primary />
                                 </TouchableOpacity>
-                                <Text style={styles.center} type="headline" primary>{title}</Text>
+                                <View style={styles.center}>
+                                    <Text type="headline" style={styles.title} numberOfLines={1} primary>{title}</Text>
+                                    {subtitle && (
+                                        <Text type="footnote" style={styles.title} numberOfLines={1} primary>
+                                            {subtitle}
+                                        </Text>
+                                    )}
+                                </View>
                                 <View style={styles.right}>
                                     {
                                         rightAction && (
@@ -88,14 +94,13 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
                             </View>
                         </TouchableWithoutFeedback>
                         {children}
-                    </AnimatedSafeAreaView>
+                    </Animated.View>
                 </View>
             </Modal>
         );
     }
 }
 
-const AnimatedSafeAreaView = Animated.createAnimatedComponent(SafeAreaView);
 const {height} = Dimensions.get("window");
 const duration = 350;
 const useNativeDriver = true;
@@ -119,12 +124,16 @@ const styles = StyleSheet.create({
         maxHeight: height - Constants.statusBarHeight
     },
     left: {
-        width: 100
+        width: 36
     },
     center: {
+        flex: 1
+    },
+    title: {
+        textAlign: "center"
     },
     right: {
-        width: 100,
+        minWidth: 36,
         flexDirection: "row",
         justifyContent: "flex-end"
     },

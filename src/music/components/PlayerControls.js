@@ -1,18 +1,37 @@
 // @flow
+import autobind from "autobind-decorator";
 import * as React from "react";
-import {View, StyleSheet, ActivityIndicator, Animated, Dimensions} from "react-native";
+import {View, StyleSheet, ActivityIndicator, Animated, Dimensions, TouchableWithoutFeedback} from "react-native";
 import {observer} from "mobx-react/native";
 import {LinearGradient} from "expo";
 
 import {IconButton, Text, Image} from "../../components";
-import {StyleGuide, withTheme, type ThemeProps} from "../../components/theme";
+import {StyleGuide, type ThemeProps} from "../../components/theme";
 
-import {withPlayer, type PlayerProps} from "./Player";
+import PlayerActionSheet from "./PlayerActionSheet";
+import {withPlayerAndTheme, type PlayerProps} from "./Player";
 
 type PlayerControlsProps = PlayerProps & ThemeProps;
 
 @observer
 class PlayerControls extends React.Component<PlayerControlsProps> {
+
+    playerActionSheet: PlayerActionSheet;
+
+    @autobind
+    setPlayerActionSheet(playerActionSheet: ?PlayerActionSheet) {
+        if (playerActionSheet) {
+            this.playerActionSheet = playerActionSheet;
+        }
+    }
+
+    @autobind
+    toggle() {
+        const {player} = this.props;
+        if (player.playlistEntry) {
+            this.playerActionSheet.toggle(player.playlistEntry.track);
+        }
+    }
 
     render(): React.Node {
         const {player, theme} = this.props;
@@ -31,35 +50,42 @@ class PlayerControls extends React.Component<PlayerControlsProps> {
                     colors={["white", theme.palette.secondary]}
                     style={[styles.progress, { borderColor, transform: [{ translateX }]}]}
                 />
-                <View style={styles.controls}>
-                    {
-                        !player.isLoaded && (
-                            <ActivityIndicator color={theme.palette.primary} />
-                        )
-                    }
-                    {
-                        player.isLoaded && (
-                            <IconButton
-                                name={player.isPlaying ? "pause" : "play"}
-                                color={theme.palette.primary}
-                                onPress={player.toggle}
-                            />
-                        )
-                    }
-                    {
-                        (player.album && player.track) && (
-                            <View style={styles.title}>
-                                <Text type="headline" primary>{player.track.name}</Text>
-                                <Text type="footnote" primary>{player.album.artist}</Text>
-                            </View>
-                        )
-                    }
-                    {
-                        player.album && (
-                            <Image style={styles.cover} {...player.album.picture} />
-                        )
-                    }
-                </View>
+                <TouchableWithoutFeedback onPress={this.toggle}>
+                    <View style={styles.controls}>
+                        {
+                            !player.isLoaded && (
+                                <ActivityIndicator color={theme.palette.primary} />
+                            )
+                        }
+                        {
+                            player.isLoaded && (
+                                <IconButton
+                                    name={player.isPlaying ? "pause" : "play"}
+                                    color={theme.palette.primary}
+                                    onPress={player.toggle}
+                                />
+                            )
+                        }
+                        {
+                            player.playlistEntry && (
+                                <View style={styles.title}>
+                                    <Text type="headline" primary>{player.playlistEntry.track.name}</Text>
+                                    <Text type="footnote" primary>{player.playlistEntry.album.artist}</Text>
+                                </View>
+                            )
+                        }
+                        {
+                            player.playlistEntry && (
+                                <Image style={styles.cover} {...player.playlistEntry.album.picture} />
+                            )
+                        }
+                    </View>
+                </TouchableWithoutFeedback>
+                {
+                    player.playlist && (
+                        <PlayerActionSheet ref={this.setPlayerActionSheet} playlist={player.playlist} />
+                    )
+                }
             </Animated.View>
         );
     }
@@ -97,4 +123,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default withPlayer(withTheme(PlayerControls));
+export default withPlayerAndTheme(PlayerControls);

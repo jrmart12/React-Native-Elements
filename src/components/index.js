@@ -31,4 +31,4 @@ export {createTheme, Colors, StyleGuide, withTheme, withStyles} from "./theme";
 export {notImplementedYet} from "./notImplementedYet";
 
 export type {NavigationProps} from "./Navigation";
-export type {ThemeProps} from "./theme";
+export type {ThemeProps, StyleProps} from "./theme";

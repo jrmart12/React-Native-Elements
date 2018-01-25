@@ -1,55 +1,67 @@
 // @flow
-import * as _ from "lodash";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 import {observer} from "mobx-react/native";
 
-import {Button, StyleGuide, Image, Text} from "../../components";
-import {withPlayer, type PlayerProps} from "./Player";
-import MusicAPI, {type Album} from "../api";
+import {Button, StyleGuide, Text, Image} from "../../components";
 
-type DetailHeaderProps = PlayerProps & {
-    album: Album
+import {withPlayer, type PlayerProps} from "./Player";
+import PlaylistThumbnail from "./PlaylistThumbnail";
+
+import {type Playlist} from "../api";
+
+type AlbumHeaderProps = PlayerProps & {
+    playlist: Playlist
 };
 
 @observer
-class DetailHeader extends React.Component<DetailHeaderProps> {
+class PlaylistHeader extends React.Component<AlbumHeaderProps> {
 
     @autobind
     toggle() {
-        const {album, player} = this.props;
-        const tracks = MusicAPI.tracks(album.id);
-        if (player.isSongPlaying(tracks[0])) {
+        const {playlist, player} = this.props;
+        const playlistEntry = playlist.entries[0];
+        if (player.isSongPlaying(playlist, playlistEntry)) {
             player.toggle();
         } else {
-            player.play(album, tracks[0]);
+            player.play(playlist, playlistEntry);
         }
     }
 
     @autobind
     shuffle() {
-        const {album, player} = this.props;
-        const tracks = MusicAPI.tracks(album.id).filter(track => !player.isSongPlaying(track));
-        const track = _.sample(tracks);
-        player.play(album, track);
+        const {playlist, player} = this.props;
+        player.shuffle(playlist);
     }
 
     render(): React.Node {
-        const {album, player} = this.props;
+        const {playlist, player} = this.props;
+        const artists = playlist.isAlbum ?
+            playlist.entries[0].album.name :
+            playlist.entries.map(entry => entry.album.artist).join(", ");
         return (
             <View style={styles.root}>
                 <View style={styles.header}>
-                    <Image {...album.picture} style={styles.image} />
-                    <View>
-                        <Text type="headline">{album.name}</Text>
-                        <Text type="footnote">{album.artist}</Text>
+                    {
+                        playlist.isAlbum && (
+                            <Image {...playlist.entries[0].album.picture} style={styles.image} />
+                        )
+                    }
+                    {
+                        !playlist.isAlbum && (
+                            <PlaylistThumbnail size={80} style={styles.cover} {...{playlist}} />
+                        )
+                    }
+                    <View style={styles.metadata}>
+                        <Text type="headline" numberOfLines={1}>{playlist.name}</Text>
+                        <Text type="footnote" numberOfLines={1}>{artists}</Text>
                     </View>
                 </View>
                 <View style={styles.controls}>
                     <View style={styles.leftControl}>
                         <Button
-                            icon={player.isAlbumPlaying(album) ? "pause" : "play"}
+                            icon="play"
                             onPress={this.toggle}
                             disabled={player.locked}
                             secondary
@@ -78,6 +90,12 @@ const styles = StyleSheet.create({
         height: 80,
         marginRight: StyleGuide.spacing.small
     },
+    cover: {
+        marginRight: StyleGuide.spacing.small
+    },
+    metadata: {
+        flex: 1
+    },
     controls: {
         flexDirection: "row",
         paddingHorizontal: StyleGuide.spacing.small
@@ -92,4 +110,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default withPlayer(DetailHeader);
+export default withPlayer(PlaylistHeader);

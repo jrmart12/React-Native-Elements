@@ -19,5 +19,5 @@ export type IconName = "activity" | "airplay" | "alert-circle" | "alert-octagon"
 
 export type Action = {
     icon: IconName,
-    onPress: () => void
+    onPress: () => mixed
 };

@@ -13,8 +13,10 @@ type IconButtonProps = StyleProps & ThemeProps & {
     name: IconName,
     color: string,
     primary: boolean,
+    secondary: boolean,
     backgroundPrimary: boolean,
-    rounded: boolean
+    rounded: boolean,
+    disabled: boolean
 };
 
 class IconButton extends React.PureComponent<IconButtonProps> {
@@ -23,12 +25,16 @@ class IconButton extends React.PureComponent<IconButtonProps> {
         color: "white",
         backgroundPrimary: false,
         primary: false,
-        rounded: false
+        secondary: false,
+        rounded: false,
+        disabled: false
     }
 
     render(): React.Node {
-        const {onPress, name, theme, backgroundPrimary, primary, rounded} = this.props;
-        const style = [];
+        const {
+            onPress, name, theme, backgroundPrimary, primary, secondary, rounded, color: defaultColor, disabled
+        } = this.props;
+        const style = [{ opacity: disabled ? 0.5 : 1 }];
         if (rounded) {
             style.push({
                 borderRadius: 14,
@@ -43,14 +49,22 @@ class IconButton extends React.PureComponent<IconButtonProps> {
                 backgroundColor: theme.palette.primary
             });
         }
-        const color = primary ? theme.palette.primary : this.props.color;
+        let color: string;
+        if (primary) {
+            color = theme.palette.primary;
+        } else if (secondary) {
+            color = theme.palette.secondary;
+        } else {
+            color = defaultColor;
+        }
         style.push(this.props.style);
+        const Btn = disabled ? View : TouchableOpacity;
         return (
-            <TouchableOpacity {...{onPress}}>
+            <Btn {...{onPress}}>
                 <View {...{style}}>
                     <Icon {...{name, color}} />
                 </View>
-            </TouchableOpacity>
+            </Btn>
         );
     }
 }

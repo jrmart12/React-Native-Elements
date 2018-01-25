@@ -1,4 +1,5 @@
 // @flow
+import * as _ from "lodash";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {observable, action} from "mobx";
@@ -7,7 +8,8 @@ import {Animated, Dimensions} from "react-native";
 import {Audio} from "expo";
 
 import type {PlaybackStatus} from "expo/src/av/AV";
-import type {Album, Track} from "../api";
+import type {ThemeProps} from "../../components";
+import type {Playlist, PlaylistEntry} from "../api";
 
 type CompositeAnimation = {
     start: () => void,
@@ -23,29 +25,31 @@ export default class Player {
     @observable sliding: Animated.Value = new Animated.Value(64);
     @observable progress: Animated.Value = new Animated.Value(0);
 
-    @observable album: ?Album;
-    @observable track: ?Track;
+    @observable playlist: ?Playlist;
+    @observable playlistEntry: ?PlaylistEntry;
+
     @observable isLoaded = false;
     @observable isPlaying = false;
     @observable locked = false;
+    @observable volume = 0;
 
     @action lock() { this.locked = true; }
     @action unlock() { this.locked = false; }
     @action resetProgress() { this.progress = new Animated.Value(0); }
 
-    play(album: Album, track: Track) {
+    async play(playlist: Playlist, playlistEntry: PlaylistEntry): Promise<void> {
         if (!this.locked) {
-            this.load(album, track);
+            this.load(playlist, playlistEntry);
         }
     }
 
     @action
-    async load(album: Album, track: Track): Promise<void> {
+    async load(playlist: Playlist, playlistEntry: PlaylistEntry): Promise<void> {
         this.lock();
-        const {uri} = track;
+        const {uri} = playlistEntry.track;
         Animated.timing(this.sliding, { duration: 300, toValue: 0, useNativeDriver }).start();
-        this.album = album;
-        this.track = track;
+        this.playlist = playlist;
+        this.playlistEntry = playlistEntry;
         if (this.sound) {
             this.resetProgress();
             await this.sound.unloadAsync();
@@ -59,12 +63,19 @@ export default class Player {
         }
     }
 
-    isAlbumPlaying(album: Album): boolean {
-        return this.isPlaying && this.album != null && this.album.id === album.id;
+    async shuffle(playlist: Playlist): Promise<PlaylistEntry> {
+        const selectedEntry = _.sample(playlist.entries.filter(entry => !this.isSongPlaying(playlist, entry)));
+        await this.play(playlist, selectedEntry);
+        return selectedEntry;
     }
 
-    isSongPlaying(track: Track): boolean {
-        return this.track != null && this.track.uri === track.uri;
+    isPlaylistPlaying(playlist: Playlist): boolean {
+        return this.isPlaying && this.playlist != null && this.playlist.id === playlist.id;
+    }
+
+    isSongPlaying(playlist: Playlist, playlistEntry: PlaylistEntry): boolean {
+        return this.playlist != null && this.playlistEntry != null && playlist.id === this.playlist.id &&
+         this.playlistEntry.track.uri === playlistEntry.track.uri;
     }
 
     @autobind
@@ -84,6 +95,7 @@ export default class Player {
     statusUpdate(status: PlaybackStatus) {
         this.isLoaded = status.isLoaded;
         if (status.isLoaded) {
+            this.volume = status.volume;
             this.isLoaded = !status.isBuffering;
             this.isPlaying = status.isPlaying;
             if (this.isLoaded && this.locked) {
@@ -95,8 +107,8 @@ export default class Player {
             if (status.didJustFinish) {
                 this.resetProgress();
                 this.sliding = new Animated.Value(64);
-                this.album = undefined;
-                this.track = undefined;
+                this.playlist = undefined;
+                this.playlistEntry = undefined;
             }
         }
     }
@@ -109,6 +121,11 @@ export type PlayerProps = {
 // eslint-disable-next-line max-len
 export function withPlayer<Props: {}, Comp: React.ComponentType<Props>>(C: Comp): React.ComponentType<$Diff<React.ElementConfig<Comp>, PlayerProps>> {
     return inject("player")(C);
+}
+
+// eslint-disable-next-line max-len
+export function withPlayerAndTheme<Props: {}, Comp: React.ComponentType<Props>>(C: Comp): React.ComponentType<$Diff<React.ElementConfig<Comp>, PlayerProps & ThemeProps>> {
+    return inject("player", "theme")(C);
 }
 
 const useNativeDriver = true;

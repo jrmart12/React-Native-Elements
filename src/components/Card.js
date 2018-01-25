@@ -5,17 +5,18 @@ import {LinearGradient} from "expo";
 
 import Image from "./Image";
 import Text from "./Text";
-import {StyleGuide} from "./theme";
+import {StyleGuide, type StyleProps} from "./theme";
 
 import type {Picture} from "./Model";
 
-type CardProps = {
+type CardProps = StyleProps & {
     title: string,
     subtitle?: string,
     description?: string,
-    picture: Picture,
+    picture?: Picture,
     height?: number,
-    onPress: () => mixed
+    onPress: () => mixed,
+    children?: React.Node
 };
 
 export default class Card extends React.PureComponent<CardProps> {
@@ -25,11 +26,12 @@ export default class Card extends React.PureComponent<CardProps> {
     };
 
     render(): React.Node {
-        const {picture, height, title, subtitle, description, onPress} = this.props;
+        const {picture, height, title, subtitle, description, onPress, children, style} = this.props;
         return (
             <TouchableWithoutFeedback {...{ onPress }}>
-                <View style={styles.card}>
-                    <Image style={[styles.image, { height }]} {...picture} />
+                <View style={[styles.card, style]}>
+                    {picture && <Image style={[styles.image, { height }]} {...picture} />}
+                    {children}
                     <View style={styles.content}>
                         <LinearGradient colors={topGradient} style={styles.gradient}>
                             {
@@ -42,7 +44,7 @@ export default class Card extends React.PureComponent<CardProps> {
                         {
                             description && (
                                 <LinearGradient colors={bottomGradient} style={styles.gradient}>
-                                    <Text color="white">{description}</Text>
+                                    <Text color="white" numberOfLines={1}>{description}</Text>
                                 </LinearGradient>
                             )
                         }

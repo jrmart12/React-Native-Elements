@@ -8,7 +8,7 @@ import {LinearGradient} from "expo";
 
 import NavigationBar from "./NavigationBar";
 import Text from "./Text";
-import {withTheme, StyleGuide, type ThemeProps} from "./theme";
+import {withTheme, StyleGuide, type StyleProps, type ThemeProps} from "./theme";
 import type {NavigationProps} from "./Navigation";
 import type {Action} from "./Model";
 
@@ -16,7 +16,7 @@ type Item = {
     id: string
 };
 
-type FeedProps<T> = ThemeProps & NavigationProps<*> & {
+type FeedProps<T> = ThemeProps & StyleProps & NavigationProps<*> & {
     data: T[],
     renderItem: T => React.Node,
     title: string,
@@ -41,7 +41,7 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
 
     render(): React.Node {
         const {renderItem, scrollAnimation} = this;
-        const {data, title, navigation, theme, back, rightAction, header, numColumns} = this.props;
+        const {data, title, navigation, theme, back, rightAction, header, numColumns, style} = this.props;
         const translateY = scrollAnimation.interpolate({
             inputRange: [55, 56, 57],
             outputRange: [55, 0, 0]
@@ -69,7 +69,7 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
                     {...{ navigation, title, back, titleStyle, rightAction}}
                 />
                 <AnimatedFlatList
-                    contentContainerStyle={styles.container}
+                    contentContainerStyle={[styles.container, style]}
                     showsVerticalScrollIndicator={false}
                     ListHeaderComponent={(
                         !back && (

@@ -1,16 +1,14 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
+import {StyleSheet} from "react-native";
 
-import {Feed, NavigationHelpers} from "../components";
+import {Feed, NavigationHelpers, StyleGuide, type NavigationProps} from "../components";
 
-import MusicAPI from "./api";
-import {Album} from "./components";
+import MusicAPI, {type Album as AlbumModel} from "./api";
+import {Album, withPlayer, type PlayerProps} from "./components";
 
-import type {NavigationProps} from "../components";
-import type {Album as AlbumModel} from "./api";
-
-export default class Library extends React.Component<NavigationProps<>> {
+class Library extends React.Component<PlayerProps & NavigationProps<>> {
 
     @autobind
     renderItem(album: AlbumModel): React.Node {
@@ -19,8 +17,11 @@ export default class Library extends React.Component<NavigationProps<>> {
     }
 
     @autobind
-    onPress() {
-        const {navigation} = this.props;
+    async onPress(): Promise<void> {
+        const {navigation, player} = this.props;
+        if (player.sound) {
+            await player.sound.unloadAsync();
+        }
         NavigationHelpers.logout(navigation);
     }
 
@@ -34,7 +35,15 @@ export default class Library extends React.Component<NavigationProps<>> {
             onPress
         };
         return (
-            <Feed {...{data, renderItem, title, navigation, rightAction}} numColumns={2} />
+            <Feed {...{data, renderItem, title, navigation, rightAction}} style={styles.content} numColumns={2} />
         );
     }
 }
+
+const styles = StyleSheet.create({
+    content: {
+        paddingBottom: StyleGuide.spacing.small + 64
+    }
+});
+
+export default withPlayer(Library);

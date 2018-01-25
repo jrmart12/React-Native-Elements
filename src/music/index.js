@@ -8,6 +8,9 @@ import {MusicTabBar} from "./components";
 
 import Library from "./Library";
 import Album from "./Album";
+import Discovery from "./Discovery";
+import Playlist from "./Playlist";
+import Profile from "./Profile";
 
 import type {NavigationProps} from "../components/Navigation";
 
@@ -22,8 +25,21 @@ const LibraryNavigator = StackNavigator({
     Album: { screen: Album }
 }, StackNavigatorOptions);
 
+const DiscoveryNavigator = StackNavigator({
+    Discovery: { screen: Discovery },
+    Playlist: { screen: Playlist }
+}, StackNavigatorOptions);
+
+const ProfileNavigator = StackNavigator({
+    MusicalProfile: { screen: Profile },
+    ProfileAlbum: { screen: Album },
+    ProfilePlaylist: { screen: Playlist }
+}, StackNavigatorOptions);
+
 export const MusicNavigator = TabNavigator({
-    Library: { screen: LibraryNavigator }
+    Library: { screen: LibraryNavigator },
+    Discovery: { screen: DiscoveryNavigator },
+    MusicalProfile: { screen: ProfileNavigator }
 }, {
     animationEnabled: false,
     // eslint-disable-next-line react/display-name

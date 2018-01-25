@@ -27,14 +27,14 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
     }
 
     @autobind
-    newPostRef(newPost: ActionSheet | null) {
+    newPostRef(newPost: ?ActionSheet) {
         if (newPost) {
             this.newPost = newPost;
         }
     }
 
     @autobind
-    commentsRef(comments: ActionSheet | null) {
+    commentsRef(comments: ?ActionSheet) {
         if (comments) {
             this.comments = comments;
         }

@@ -3,14 +3,14 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet} from "react-native";
 
-import {Container, NavigationBar, Content, List, StyleGuide} from "../components";
+import {StyleGuide, Container, NavigationBar, Content, List, type NavigationProps} from "../components";
 
-import MusicAPI, {type Album, type Track as TrackModel} from "./api";
-import {Track, PlaylistHeader, PlayerActionSheet} from "./components";
+import {type Playlist, type Track} from "./api";
+import {PlaylistEntry, PlaylistHeader, PlayerActionSheet} from "./components";
 
-import type {NavigationProps} from "../components";
+type PlaylistScreenParams = { playlist: Playlist, back: string };
 
-export default class AlbumScreen extends React.PureComponent<NavigationProps<{ album: Album, back: string }>> {
+export default class PlaylistScreen extends React.PureComponent<NavigationProps<PlaylistScreenParams>> {
 
     playerActionSheet: PlayerActionSheet;
 
@@ -22,23 +22,21 @@ export default class AlbumScreen extends React.PureComponent<NavigationProps<{ a
     }
 
     @autobind
-    toggle(track: TrackModel) {
+    toggle(track: Track) {
         this.playerActionSheet.toggle(track);
     }
 
     render(): React.Node {
         const {navigation} = this.props;
-        const {album, back} = navigation.state.params;
-        const tracks = MusicAPI.tracks(album.id);
-        const playlist = MusicAPI.transformAlbumToPlaylist(album);
+        const {playlist, back} = navigation.state.params;
         return (
             <Container>
                 <NavigationBar {...{navigation, back}} />
                 <PlaylistHeader {...{playlist}} />
                 <Content style={styles.gutter}>
                     <List
-                        rows={tracks}
-                        renderRow={(track, i) => <Track index={i + 1} onPress={this.toggle} {...{track}} />}
+                        rows={playlist.entries}
+                        renderRow={entry => <PlaylistEntry onPress={this.toggle} {...{entry}} />}
                     />
                 </Content>
                 <PlayerActionSheet ref={this.setPlayerActionSheet} {...{playlist}} />

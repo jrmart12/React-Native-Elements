@@ -45,8 +45,14 @@ class Button extends React.PureComponent<ButtonProps> {
             color = StyleGuide.palette.darkGray;
         }
         const shadow = primary ? StyleGuide.styles.shadow : {};
-        // eslint-disable-next-line no-nested-ternary
-        const Btn = disabled ? View : (Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback);
+        let Btn: React.ComponentType<*>;
+        if (disabled) {
+            Btn = View;
+        } else if (Platform.OS === "ios") {
+            Btn = TouchableOpacity;
+        } else {
+            Btn = TouchableNativeFeedback;
+        }
         return (
             <Btn {...{onPress}}>
                 <View style={[styles.button, { backgroundColor, opacity, ...shadow }, style]} >
