@@ -1,10 +1,12 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {StyleSheet, View, Modal, TouchableOpacity, Animated, Dimensions, TouchableWithoutFeedback} from "react-native";
+import {
+    StyleSheet, View, Modal, TouchableOpacity, Animated, Dimensions, TouchableWithoutFeedback, Platform
+} from "react-native";
 import {observable, action} from "mobx";
 import {observer} from "mobx-react/native";
-import {Constants} from "expo";
+import {Constants, BlurView} from "expo";
 
 import Text from "./Text";
 import Icon from "./Icon";
@@ -58,6 +60,10 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
             inputRange: [0, 1],
             outputRange: [0, 0.5]
         });
+        const intensity = this.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 100]
+        });
         const translateY = this.animation.interpolate({
             inputRange: [0, 1],
             outputRange: [height, 0]
@@ -65,9 +71,20 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
         return (
             <Modal visible={this.visible} transparent onRequestClose={this.toggle}>
                 <View style={styles.modal}>
-                    <Animated.View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: "black", opacity }}>
-                        <TouchableOpacity style={styles.exit} onPress={this.toggle} />
-                    </Animated.View>
+                    {
+                        Platform.OS === "android" && (
+                            <Animated.View
+                                style={{ ...StyleSheet.absoluteFillObject, backgroundColor: "black", opacity }}
+                            >
+                                <TouchableOpacity style={styles.exit} onPress={this.toggle} />
+                            </Animated.View>
+                        )
+                    }
+                    {
+                        Platform.OS === "ios" && (
+                            <AnimatedBlurView tint="dark" style={StyleSheet.absoluteFill} {...{intensity}} />
+                        )
+                    }
                     <Animated.View style={[styles.content, { transform: [{ translateY }]}]}>
                         <TouchableWithoutFeedback onPress={this.toggle}>
                             <View style={styles.header}>
@@ -104,6 +121,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
 const {height} = Dimensions.get("window");
 const duration = 350;
 const useNativeDriver = true;
+const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
