@@ -82,7 +82,9 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
                     }
                     {
                         Platform.OS === "ios" && (
-                            <AnimatedBlurView tint="dark" style={StyleSheet.absoluteFill} {...{intensity}} />
+                            <AnimatedBlurView tint="dark" style={StyleSheet.absoluteFill} {...{intensity}}>
+                                <TouchableOpacity style={styles.exit} onPress={this.toggle} />
+                            </AnimatedBlurView>
                         )
                     }
                     <Animated.View style={[styles.content, { transform: [{ translateY }]}]}>
