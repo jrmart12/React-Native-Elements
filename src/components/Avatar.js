@@ -59,14 +59,18 @@ export default class Avatar extends React.Component<AvatarProps> {
                         />
                     </ClipPath>
                 </Defs>
-                <Image
-                    x={0}
-                    y={0}
-                    href={{ uri }}
-                    preserveAspectRatio="xMidYMid slice"
-                    clipPath="url(#crescent)"
-                    {...{width: size, height: size}}
-                />
+                {
+                    uri && (
+                        <Image
+                            x={0}
+                            y={0}
+                            href={{ uri }}
+                            preserveAspectRatio="xMidYMid slice"
+                            clipPath="url(#crescent)"
+                            {...{width: size, height: size}}
+                        />
+                    )
+                }
             </Svg>
         );
     }

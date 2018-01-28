@@ -14,6 +14,7 @@ import {Welcome} from "./src/welcome";
 import {FoodNavigator} from "./src/food";
 import {SocialNavigator} from "./src/social";
 import {MusicNavigator} from "./src/music";
+import {PhotographyNavigator} from "./src/photography";
 import {Player} from "./src/music/components";
 
 const SFProTextBold = require("./fonts/SF-Pro-Text-Bold.otf");
@@ -59,5 +60,6 @@ const MainNavigator = StackNavigator({
     Welcome: { screen: Welcome },
     Food: { screen: FoodNavigator },
     Social: { screen: SocialNavigator },
-    Music: { screen: MusicNavigator }
+    Music: { screen: MusicNavigator },
+    Photography: { screen: PhotographyNavigator }
 }, StackNavigatorOptions);

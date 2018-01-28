@@ -2,6 +2,7 @@
 import * as React from "react";
 import autobind from "autobind-decorator";
 import {SafeAreaView, View, Animated, StyleSheet} from "react-native";
+import {LinearGradient} from "expo";
 
 import type {StyleObj as Style} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
@@ -18,17 +19,20 @@ type NavigationBarType = "opaque" | "transparent";
 
 type NavigationBarProps = ThemeProps & NavigationProps<*> & {
     title: string,
+    subtitle?: string,
     type: NavigationBarType,
     titleStyle?: Style,
     back?: string,
-    rightAction?: Action
+    rightAction?: Action,
+    withGradient: boolean
 };
 
 class NavigationBar extends React.Component<NavigationBarProps> {
 
     static defaultProps = {
         type: "opaque",
-        title: ""
+        title: "",
+        withGradient: false
     };
 
     @autobind
@@ -38,22 +42,40 @@ class NavigationBar extends React.Component<NavigationBarProps> {
     }
 
     render(): React.Node {
-        const {type, title, theme, back, titleStyle, rightAction} = this.props;
+        const {type, title, subtitle, theme, back, titleStyle, rightAction, withGradient} = this.props;
         const containerStyle = {
             backgroundColor: type === "opaque" ? theme.palette.primary : "transparent"
         };
-        return (
+        const navBar = (
             <SafeAreaView style={containerStyle}>
                 <View style={styles.content}>
-                    <View style={styles.block}>
+                    <View style={[styles.leftBlock]}>
                         {back && <LeftAction onPress={this.goBack} name="chevron-left" label={back} />}
                     </View>
                     {
                         title !== "" && (
                             <View style={styles.block}>
-                                <AnimatedText type="headline" color="white" style={[styles.text, titleStyle]}>
+                                <AnimatedText
+                                    type="headline"
+                                    color="white"
+                                    align="center"
+                                    style={titleStyle}
+                                    numberOfLines={1}
+                                >
                                     {title}
                                 </AnimatedText>
+                                {
+                                    subtitle && (
+                                        <Text
+                                            type="footnote"
+                                            color="white"
+                                            align="center"
+                                            numberOfLines={1}
+                                        >
+                                            {subtitle}
+                                        </Text>
+                                    )
+                                }
                             </View>
                         )
                     }
@@ -71,6 +93,14 @@ class NavigationBar extends React.Component<NavigationBarProps> {
                 </View>
             </SafeAreaView>
         );
+        if (withGradient) {
+            return (
+                <LinearGradient colors={["black", "transparent"]}>
+                    {navBar}
+                </LinearGradient>
+            );
+        }
+        return navBar;
     }
 }
 
@@ -80,11 +110,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center"
     },
-    text: {
-        textAlign: "center"
+    leftBlock: {
+        flex: 1
     },
     block: {
-        flex: 1
+        flex: 2
     },
     rightBlock: {
         flex: 1,

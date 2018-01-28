@@ -8,20 +8,18 @@ export default class CacheManager {
 
     static listeners: { [uri: string]: Listener[] } = {};
 
-    static async cache(uri: string, listener: Listener): Promise<boolean> {
+    static async cache(uri: string, listener: Listener): Promise<void> {
         const {path, exists} = await getCacheEntry(uri);
         if (isDownloading(uri)) {
             addListener(uri, listener);
         } else if (exists) {
             listener(path);
-            return true;
         } else {
             addListener(uri, listener);
             await FileSystem.downloadAsync(uri, path);
             notifyAll(uri, path);
             unsubscribe(uri);
         }
-        return false;
     }
 }
 

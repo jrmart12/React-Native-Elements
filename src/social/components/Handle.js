@@ -24,7 +24,13 @@ export default class Handle extends React.PureComponent<HandleProps> {
                 <Avatar uri={user.picture} />
                 <View style={styles.username}>
                     <Text type="headline" style={styles.headline} color={handleColor}>{user.name}</Text>
-                    <Text type="footnote" style={styles.footnote}>{`@${user.id}`}</Text>
+                    <Text
+                        type="footnote"
+                        style={styles.footnote}
+                        color={handleColor === "black" ? "#999999" : handleColor}
+                    >
+                        {`@${user.id}`}
+                    </Text>
                 </View>
             </View>
         );
