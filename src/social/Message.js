@@ -1,16 +1,46 @@
 // @flow
+import moment from "moment";
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, SafeAreaView, TextInput, View} from "react-native";
+import {observable, action} from "mobx";
+import {observer} from "mobx-react/native";
 
-import {Feed, Container, IconButton, KeyboardSpacer, StyleGuide, notImplementedYet} from "../components";
+import {Feed, Container, IconButton, KeyboardSpacer, StyleGuide} from "../components";
 import SocialAPI from "./api";
 import {ChatMessage} from "./components";
 
 import type {NavigationProps} from "../components/Navigation";
 import type {Message as MessageModel} from "./api";
 
-export default class Message extends React.PureComponent<NavigationProps<{ id: string }>> {
+
+@observer
+export default class Message extends React.Component<NavigationProps<{ id: string }>> {
+
+    @observable message: string;
+    @observable messages: MessageModel[];
+
+    @autobind @action
+    postMessage() {
+        this.messages.push({
+            id: moment().format("X"),
+            me: true,
+            message: this.message,
+            timestamp: parseInt(moment().format("X"), 10)
+        });
+        this.message = "";
+    }
+
+    @autobind @action
+    setMessage(message: string) {
+        this.message = message;
+    }
+
+    componentWillMount() {
+        const {navigation} = this.props;
+        const {id} = navigation.state.params;
+        this.messages = SocialAPI.messageThread(id).messages;
+    }
 
     @autobind
     renderItem(message: MessageModel): React.Node {
@@ -20,7 +50,7 @@ export default class Message extends React.PureComponent<NavigationProps<{ id: s
     }
 
     render(): React.Node {
-        const {renderItem} = this;
+        const {renderItem, messages} = this;
         const {navigation} = this.props;
         const {id} = navigation.state.params;
         const thread = SocialAPI.messageThread(id);
@@ -29,15 +59,18 @@ export default class Message extends React.PureComponent<NavigationProps<{ id: s
         const title = user.name;
         return (
             <Container>
-                <Feed data={thread.messages} {...{renderItem, back, title, navigation}} />
+                <Feed data={messages.slice()} {...{renderItem, back, title, navigation}} />
                 <SafeAreaView style={styles.inputBox}>
                     <View style={styles.innerInputBox}>
                         <TextInput
                             placeholder="Message"
                             underlineColorAndroid="transparent"
                             style={styles.input}
+                            onSubmitEditing={this.postMessage}
+                            onChangeText={this.setMessage}
+                            value={this.message}
                         />
-                        <IconButton name="arrow-up" onPress={notImplementedYet} backgroundPrimary rounded />
+                        <IconButton name="arrow-up" onPress={this.postMessage} backgroundPrimary rounded />
                     </View>
                 </SafeAreaView>
                 <KeyboardSpacer />
