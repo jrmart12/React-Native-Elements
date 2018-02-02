@@ -1,8 +1,7 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {StyleSheet} from "react-native";
-import {SafeAreaView} from "react-navigation";
+import {StyleSheet, View} from "react-native";
 
 import {
     Container, Header, NavigationBar, DetailsBar, Content, List, Button, ActionSheet, StyleGuide, notImplementedYet
@@ -39,9 +38,9 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
                     {
                         recipe.ingredients.map((ingredient, key) => <Ingredient {...{ingredient, key}} />)
                     }
-                    <SafeAreaView style={styles.gutter}>
+                    <View style={styles.gutter}>
                         <Button primary label="Add to Reminder" onPress={notImplementedYet} />
-                    </SafeAreaView>
+                    </View>
                 </ActionSheet>
             </Container>
         );

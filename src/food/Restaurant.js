@@ -2,7 +2,6 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
-import {SafeAreaView} from "react-navigation";
 
 import {
     Container, Header, NavigationBar, DetailsBar, Content, Text, BaseCard, Button, ActionSheet, StyleGuide, Map,
@@ -58,12 +57,12 @@ export default class RestaurantComp extends React.Component<NavigationProps<{ re
                 </Content>
                 <ActionSheet title="Reservation" ref={this.setReservationRef}>
                     <RestaurantAddress {...{restaurant}} />
-                    <SafeAreaView style={styles.gutter}>
+                    <View style={styles.gutter}>
                         <DatePicker />
                         <QuantityInput singular="person" plural="people" from={1} to={6} />
                         <RadioGroup options={["19:00", "19:30", "20:00", "20:30"]} />
                         <PayButton />
-                    </SafeAreaView>
+                    </View>
                 </ActionSheet>
             </Container>
         );

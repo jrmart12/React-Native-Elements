@@ -3,8 +3,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {observable, action} from "mobx";
 import {observer} from "mobx-react/native";
-import {StyleSheet, TextInput} from "react-native";
-import {SafeAreaView} from "react-navigation";
+import {StyleSheet, TextInput, View} from "react-native";
 
 import {StyleGuide, SegmentedControl, KeyboardSpacer} from "../../components";
 
@@ -21,7 +20,7 @@ export default class NewMessage extends React.Component<{}> {
     render(): React.Node {
         const {selectedIndex, onChange} = this;
         return (
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
                 <TextInput
                     style={styles.textInput}
                     placeholder="Share a message"
@@ -32,7 +31,7 @@ export default class NewMessage extends React.Component<{}> {
                 />
                 <SegmentedControl values={["Text", "Photo"]} {...{selectedIndex, onChange}} />
                 <KeyboardSpacer />
-            </SafeAreaView>
+            </View>
         );
     }
 }

@@ -19,4 +19,4 @@ const PhotosTabNavigator = TabNavigator({
 export const PhotographyNavigator = StackNavigator({
     Photos: { screen: PhotosTabNavigator },
     Photo: { screen: Photo }
-}, StackNavigatorOptions);
+}, { ...StackNavigatorOptions, navigationOptions: { gesturesEnabled: false } });

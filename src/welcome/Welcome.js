@@ -63,7 +63,7 @@ class Welcome extends React.Component<ThemeProps & NavigationProps<>> {
                         <Image source={Images.logo} style={styles.logo} />
                     </View>
                 </SafeAreaView>
-                <ScrollView>
+                <ScrollView contentContainerStyle={styles.content}>
                     <Kit
                         uri={images.food.uri}
                         preview={images.food.preview}
@@ -115,6 +115,9 @@ const styles = StyleSheet.create({
     logo: {
         width: 50,
         height: 50
+    },
+    content: {
+        paddingVertical: StyleGuide.spacing.small
     }
 });
 
