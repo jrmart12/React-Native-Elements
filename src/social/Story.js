@@ -4,8 +4,7 @@ import * as React from "react";
 import {StyleSheet, View, TouchableOpacity, Platform, StatusBar} from "react-native";
 
 import {
-    Image, StyleGuide, IconButton, ActionSheet, Content, TransparentHeader, Footer, withTheme, notImplementedYet,
-    type ThemeProps
+    Image, StyleGuide, IconButton, ActionSheet, Content, TransparentHeader, Footer, notImplementedYet
 } from "../components";
 
 import SocialAPI from "./api";
@@ -13,7 +12,7 @@ import {Comments, Handle, Message, NewMessage} from "./components";
 
 import type {NavigationProps} from "../components";
 
-class Story extends React.Component<NavigationProps<{ id: string }> & ThemeProps> {
+export default class Story extends React.Component<NavigationProps<{ id: string }>> {
 
     comments: ActionSheet;
     newPost: ActionSheet;
@@ -50,14 +49,13 @@ class Story extends React.Component<NavigationProps<{ id: string }> & ThemeProps
 
     componentWillMount() {
         if (Platform.OS === "android") {
-            StatusBar.setBackgroundColor("black");
+            StatusBar.setHidden(true);
         }
     }
 
     componentWillUnmount() {
-        const {theme} = this.props;
         if (Platform.OS === "android") {
-            StatusBar.setBackgroundColor(theme.palette.primary);
+            StatusBar.setHidden(false);
         }
     }
 
@@ -139,5 +137,3 @@ const styles = StyleSheet.create({
         paddingBottom: 40
     }
 });
-
-export default withTheme(Story);

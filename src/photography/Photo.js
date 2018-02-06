@@ -2,29 +2,87 @@
 import autobind from "autobind-decorator";
 import moment from "moment";
 import * as React from "react";
-import {StyleSheet, View, Animated, Dimensions, Image as RNImage, Platform, StatusBar} from "react-native";
+import {
+    StyleSheet, View, Image as RNImage, Platform, StatusBar, Dimensions, ActivityIndicator, Animated
+} from "react-native";
 import {observable, action} from "mobx";
 import {observer} from "mobx-react/native";
 
-import {
-    NavigationBar, Image, IconButton, Footer, Sheet, notImplementedYet, withTheme, type NavigationProps, type ThemeProps
-} from "../components";
+import {NavigationBar, Image, BlurView, IconButton, Footer, type NavigationProps} from "../components";
 
-import {Filters, Filter, type FilterName} from "./components";
+import {Filters, Filter, PhotoActionSheet, Rotation, type FilterName} from "./components";
 import type {Photo} from "./api";
 
-type PhotoScreenProps = NavigationProps<{ photo: Photo, from: string }> & ThemeProps;
+type PhotoScreenProps = NavigationProps<{ photo: Photo, from: string }>;
 
 @observer
-class PhotoScreen extends React.Component<PhotoScreenProps> {
+export default class PhotoScreen extends React.Component<PhotoScreenProps> {
 
-    @observable animation: Animated.Value = new Animated.Value(0);
-    @observable visible = false;
-    @observable aspectRatio = 1;
+    filters: PhotoActionSheet;
+    crop: PhotoActionSheet;
+
+    @observable aspectRatio: number = 1;
     @observable filter: FilterName;
+    @observable areFiltersReady: boolean = false;
+    @observable filterAnimation = new Animated.Value(0);
+    @observable rotation = new Animated.Value(width / 2);
 
-    @action show() { this.visible = true; }
-    @action hide() { this.visible = false; }
+    @autobind @action
+    setFiltersAsReady() {
+        this.areFiltersReady = true;
+    }
+
+    @autobind
+    setFiltersRef(filters: ?PhotoActionSheet) {
+        if (filters) {
+            this.filters = filters;
+        }
+    }
+
+    @autobind
+    setCropRef(crop: ?PhotoActionSheet) {
+        if (crop) {
+            this.crop = crop;
+        }
+    }
+
+    @autobind
+    toggleFilters() {
+        Animated.timing(
+            this.filterAnimation,
+            {
+                toValue: 1,
+                duration,
+                useNativeDriver
+            }
+        ).start();
+        this.filters.toggle();
+    }
+
+    @autobind
+    toggleCrop() {
+        Animated.timing(
+            this.filterAnimation,
+            {
+                toValue: 1,
+                duration,
+                useNativeDriver
+            }
+        ).start();
+        this.crop.toggle();
+    }
+
+    @autobind
+    onClose() {
+        Animated.timing(
+            this.filterAnimation,
+            {
+                toValue: 0,
+                duration,
+                useNativeDriver
+            }
+        ).start();
+    }
 
     @autobind @action
     switchFilter(filter: FilterName) {
@@ -36,83 +94,85 @@ class PhotoScreen extends React.Component<PhotoScreenProps> {
         this.aspectRatio = width / height;
     }
 
-    @autobind toggleFilters() {
-        if (!this.visible) {
-            this.show();
-            Animated.timing(
-                this.animation,
-                {
-                    toValue: 1,
-                    duration,
-                    useNativeDriver
-                }
-            ).start();
-        } else {
-            Animated.timing(
-                this.animation,
-                {
-                    toValue: 0,
-                    duration,
-                    useNativeDriver
-                }
-            ).start(() => this.hide());
-        }
-    }
-
     componentWillMount() {
         const {photo} = this.props.navigation.state.params;
         if (Platform.OS === "android") {
-            StatusBar.setBackgroundColor("black");
+            StatusBar.setHidden(true);
         }
         // Fix getSize is already invoked somewhere in gl-react-expo
         RNImage.getSize(photo.urls.preview, this.setAspectRatio, () => this.setAspectRatio(1, 1));
     }
 
     componentWillUnmount() {
-        const {theme} = this.props;
         if (Platform.OS === "android") {
-            StatusBar.setBackgroundColor(theme.palette.primary);
+            StatusBar.setHidden(false);
         }
     }
 
     render(): React.Node {
-        const {aspectRatio, toggleFilters, switchFilter, filter: name} = this;
+        const {
+            aspectRatio, toggleFilters, toggleCrop, switchFilter, areFiltersReady, setFiltersAsReady, filter: name,
+            onClose, rotation
+        } = this;
         const {navigation} = this.props;
         const {photo, from} = navigation.state.params;
         const date = moment(photo.created_at).format("DD MMMM YYYY · HH:mm");
         const title = photo.location ? photo.location.name : "";
         const subtitle = date;
-        const translateY = this.animation.interpolate({
+        const opacity = this.filterAnimation.interpolate({
             inputRange: [0, 1],
-            outputRange: [height, 0]
+            outputRange: [0, 1]
+        });
+        const intensity = this.filterAnimation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 100]
+        });
+        const rotate = this.rotation.interpolate({
+            inputRange: [0, width],
+            outputRange: ["-25deg", "25deg"]
         });
         return (
             <View style={styles.container}>
                 <Image preview={photo.urls.preview} uri={photo.urls.regular} style={styles.image} />
-                <Filter style={styles.image} uri={photo.urls.regular} {...{aspectRatio, name}} />
+                <BlurView style={StyleSheet.absoluteFill} {...{intensity}} />
+                {
+                    <Animated.View style={{ opacity, ...StyleSheet.absoluteFillObject, transform: [{ rotate }] }}>
+                        <Filter
+                            style={styles.filter}
+                            uri={photo.urls.regular}
+                            onDraw={setFiltersAsReady}
+                            {...{aspectRatio, name}}
+                        />
+                    </Animated.View>
+                }
                 <NavigationBar type="transparent" back={from} withGradient {...{navigation, title, subtitle}} />
                 {
                     <Footer>
-                        <IconButton name="sliders" onPress={toggleFilters} />
-                        <IconButton name="crop" onPress={notImplementedYet} />
+                        {
+                            areFiltersReady && <IconButton name="sliders" onPress={toggleFilters} />
+                        }
+                        {
+                            areFiltersReady && <IconButton name="crop" onPress={toggleCrop} />
+                        }
+                        {
+                            !areFiltersReady && <ActivityIndicator color="white" />
+                        }
                     </Footer>
                 }
-                <AnimatedSheet
-                    title="Filters"
-                    toggle={this.toggleFilters}
-                    style={[styles.sheet, { transform: [{ translateY }] }]}
-                >
+                <PhotoActionSheet ref={this.setFiltersRef} title="Filters" {...{onClose}}>
                     <Filters {...{photo, aspectRatio, switchFilter}} />
-                </AnimatedSheet>
+                </PhotoActionSheet>
+                <PhotoActionSheet ref={this.setCropRef} title="Edit" {...{onClose}}>
+                    <Rotation {...{rotation}} />
+                </PhotoActionSheet>
             </View>
         );
     }
 }
 
-const {height} = Dimensions.get("window");
-const AnimatedSheet = Animated.createAnimatedComponent(Sheet);
-const duration = 350;
+const duration = 300;
 const useNativeDriver = true;
+const {width} = Dimensions.get("window");
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -121,12 +181,11 @@ const styles = StyleSheet.create({
     image: {
         ...StyleSheet.absoluteFillObject
     },
-    sheet: {
+    filter: {
         position: "absolute",
-        left: 0,
-        right: 0,
-        bottom: 0
+        top: 100,
+        left: (width - (width * 0.63)) / 2,
+        width: width * 0.63,
+        height: width * 0.63 * 1.65
     }
 });
-
-export default withTheme(PhotoScreen);

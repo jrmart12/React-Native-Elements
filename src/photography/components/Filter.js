@@ -11,13 +11,14 @@ export type FilterName = "saturate" | "sepia" | "warm" | "amaro" | "brannan" | "
 type FilterProps = StyleProps & {
     uri: string,
     aspectRatio: number,
-    name: FilterName
+    name: FilterName,
+    onDraw?: () => mixed
 };
 
 export default class Filter extends React.PureComponent<FilterProps> {
 
     render(): React.Node {
-        const {style, uri, aspectRatio, name} = this.props;
+        const {style, uri, aspectRatio, name, onDraw} = this.props;
         const source = { uri };
         return (
             // $FlowFixMe
@@ -28,7 +29,7 @@ export default class Filter extends React.PureComponent<FilterProps> {
                             <Amaro on={name === "amaro"}>
                                 <Brannan on={name === "brannan"}>
                                     <Valencia on={name === "valencia"}>
-                                        <GLImage {...{source, aspectRatio}} />
+                                        <GLImage {...{source, aspectRatio, onDraw}} />
                                     </Valencia>
                                 </Brannan>
                             </Amaro>

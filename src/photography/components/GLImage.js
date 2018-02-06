@@ -142,6 +142,7 @@ type ImageProps =
         center?: [number, number],
         zoom?: number,
         aspectRatio?: number,
+        onDraw?: () => mixed,
         resizeMode: "cover" | "free"
     } |
     {
@@ -149,6 +150,7 @@ type ImageProps =
         center?: [number, number],
         zoom?: number,
         aspectRatio?: number,
+        onDraw?: () => mixed,
         resizeMode: "contain"
     } |
     {
@@ -156,6 +158,7 @@ type ImageProps =
         center?: [number, number],
         zoom?: number,
         aspectRatio?: number,
+        onDraw?: () => mixed,
         resizeMode: "stretch"
     }
 ;
@@ -169,11 +172,10 @@ export default class Image extends React.PureComponent<ImageProps> {
     };
 
     render(): React.Node {
-        const {source, resizeMode, aspectRatio, center, zoom, ...rest} = this.props;
+        const {source, resizeMode, aspectRatio, center, zoom, onDraw, ...rest} = this.props;
         if (resizeMode === "cover" || resizeMode === "free") {
             return (
                 <Node
-                    {...rest}
                     shader={resizeMode === "cover" ? shaders.cover : shaders.free}
                     uniforms={{
                         t: source,
@@ -182,6 +184,8 @@ export default class Image extends React.PureComponent<ImageProps> {
                         center,
                         zoom
                     }}
+                    {...{onDraw}}
+                    {...rest}
                 />
             );
         }

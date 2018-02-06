@@ -9,6 +9,7 @@ export {default as GeoFeed} from "./GeoFeed";
 export {default as Header} from "./Header";
 export {default as DetailsBar} from "./DetailsBar";
 export {default as Image} from "./Image";
+export {default as BlurView} from "./BlurView";
 export {default as CacheManager} from "./CacheManager";
 export {default as Button} from "./Button";
 export {default as IconButton} from "./IconButton";

@@ -42,7 +42,7 @@ export default class ContrastSaturationBrightness extends React.PureComponent<Co
     };
 
     render(): React.Node {
-        const { on, children: t, contrast, saturation, brightness } = this.props;
+        const {on, children: t, contrast, saturation, brightness} = this.props;
         if (!on) {
             return this.props.children;
         }
