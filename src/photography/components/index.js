@@ -5,5 +5,6 @@ export {default as Filter} from "./Filter";
 export {default as GLImage} from "./GLImage";
 export {default as PhotoActionSheet} from "./PhotoActionSheet";
 export {default as Rotation} from "./Rotation";
+export {default as Crop} from "./Crop";
 
 export type {FilterName} from "./Filter";

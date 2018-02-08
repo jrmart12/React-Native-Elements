@@ -10,7 +10,7 @@ import {observer} from "mobx-react/native";
 
 import {NavigationBar, Image, BlurView, IconButton, Footer, type NavigationProps} from "../components";
 
-import {Filters, Filter, PhotoActionSheet, Rotation, type FilterName} from "./components";
+import {Filters, Filter, PhotoActionSheet, Rotation, Crop, type FilterName} from "./components";
 import type {Photo} from "./api";
 
 type PhotoScreenProps = NavigationProps<{ photo: Photo, from: string }>;
@@ -73,7 +73,7 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
     }
 
     @autobind
-    onClose() {
+    onCloseActionSheet() {
         Animated.timing(
             this.filterAnimation,
             {
@@ -112,7 +112,7 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
     render(): React.Node {
         const {
             aspectRatio, toggleFilters, toggleCrop, switchFilter, areFiltersReady, setFiltersAsReady, filter: name,
-            onClose, rotation
+            onCloseActionSheet, rotation
         } = this;
         const {navigation} = this.props;
         const {photo, from} = navigation.state.params;
@@ -128,7 +128,7 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
             outputRange: [0, 100]
         });
         const rotate = this.rotation.interpolate({
-            inputRange: [0, width],
+            inputRange: [0, viewport],
             outputRange: ["-25deg", "25deg"]
         });
         return (
@@ -137,15 +137,24 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
                 <BlurView style={StyleSheet.absoluteFill} {...{intensity}} />
                 {
                     <Animated.View style={{ opacity, ...StyleSheet.absoluteFillObject, transform: [{ rotate }] }}>
-                        <Filter
-                            style={styles.filter}
-                            uri={photo.urls.regular}
-                            onDraw={setFiltersAsReady}
-                            {...{aspectRatio, name}}
-                        />
+                        <Crop style={styles.filter}>
+                            <Filter
+                                style={StyleSheet.absoluteFill}
+                                uri={photo.urls.regular}
+                                onDraw={setFiltersAsReady}
+                                {...{aspectRatio, name}}
+                            />
+                        </Crop>
                     </Animated.View>
                 }
-                <NavigationBar type="transparent" back={from} withGradient {...{navigation, title, subtitle}} />
+                {
+                    !areFiltersReady && <View />
+                }
+                {
+                    areFiltersReady && (
+                        <NavigationBar type="transparent" back={from} withGradient {...{navigation, title, subtitle}} />
+                    )
+                }
                 {
                     <Footer>
                         {
@@ -159,10 +168,10 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
                         }
                     </Footer>
                 }
-                <PhotoActionSheet ref={this.setFiltersRef} title="Filters" {...{onClose}}>
+                <PhotoActionSheet ref={this.setFiltersRef} title="Filters" onClose={onCloseActionSheet}>
                     <Filters {...{photo, aspectRatio, switchFilter}} />
                 </PhotoActionSheet>
-                <PhotoActionSheet ref={this.setCropRef} title="Edit" {...{onClose}}>
+                <PhotoActionSheet ref={this.setCropRef} title="Edit" onClose={onCloseActionSheet}>
                     <Rotation {...{rotation}} />
                 </PhotoActionSheet>
             </View>
@@ -172,7 +181,8 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
 
 const duration = 300;
 const useNativeDriver = true;
-const {width} = Dimensions.get("window");
+const {width: viewport} = Dimensions.get("window");
+const width = viewport + 88;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -184,7 +194,7 @@ const styles = StyleSheet.create({
     filter: {
         position: "absolute",
         top: 100,
-        left: (width - (width * 0.63)) / 2,
+        left: (viewport - (width * 0.63)) / 2,
         width: width * 0.63,
         height: width * 0.63 * 1.65
     }

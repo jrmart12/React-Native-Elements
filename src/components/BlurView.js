@@ -15,7 +15,7 @@ export default class BlurView extends React.PureComponent<BlurViewProps> {
         const {style, intensity} = this.props;
         const opacity = intensity.interpolate({
             inputRange: [0, 100],
-            outputRange: [0, 1]
+            outputRange: [0, 0.75]
         });
         if (Platform.OS === "ios") {
             return (
@@ -23,7 +23,7 @@ export default class BlurView extends React.PureComponent<BlurViewProps> {
             );
         }
         return (
-            <Animated.View style={[style, { backgroundColor: "rgba(0, 0, 0, 0.75)", opacity }]} />
+            <Animated.View style={[style, { backgroundColor: "rgb(0, 0, 0)", opacity }]} />
         );
     }
 }

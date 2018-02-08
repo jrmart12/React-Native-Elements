@@ -1,4 +1,4 @@
-## React Native Fiber v1.0.0
+## React Native Sketch Elements v1.0.0
 
 [![CircleCI](https://circleci.com/gh/wcandillon/react-native-elements.svg?style=svg&circle-token=e5daa9a9ed152dba4bb50c5192c259c63f7855cf)](https://circleci.com/gh/wcandillon/react-native-elements)
 
