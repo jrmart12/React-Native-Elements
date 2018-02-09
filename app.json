@@ -18,6 +18,9 @@
         "androidStatusBar": {
             "backgroundColor": "#ffffff",
             "barStyle": "dark-content"
-        }
+        },
+        "assetBundlePatterns": [
+            "src/photography/components/gl-filters/images/**"
+        ]
     }
 }
