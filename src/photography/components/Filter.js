@@ -24,7 +24,7 @@ export default class Filter extends React.PureComponent<FilterProps> {
             // $FlowFixMe
             <Surface {...{style}}>
                 <ContrastSaturationBrightness on={name === "saturate"} contrast={1} saturation={0} brightness={1}>
-                    <Temperature on={name === "saturate"}>
+                    <Temperature on={name === "warm"}>
                         <Sepia on={name === "sepia"} sepia={1.2}>
                             <Walden on={name === "walden"}>
                                 <Brannan on={name === "brannan"}>

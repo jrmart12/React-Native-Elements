@@ -59,7 +59,7 @@ type TemperatureProps = {
 export default class ContrastSaturationBrightness extends React.PureComponent<TemperatureProps> {
 
     static defaultProps = {
-        temp: 0
+        temp: 3000
     };
 
     render(): React.Node {

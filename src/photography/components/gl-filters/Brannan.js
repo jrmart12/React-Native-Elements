@@ -1,7 +1,8 @@
 // @flow
 import * as React from "react";
 import {Shaders, Node} from "gl-react";
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
+
+const filters = require("./filters");
 
 const shaders = Shaders.create({
     Brannan: {
@@ -78,16 +79,11 @@ export default class Brannan extends React.PureComponent<{ on: boolean, children
                 shader={shaders.Brannan}
                 uniforms={{
                     inputImageTexture,
-                    // eslint-disable-next-line global-require
-                    inputImageTexture2: resolveAssetSource(require("./images/brannanProcess.png")),
-                    // eslint-disable-next-line global-require
-                    inputImageTexture3: resolveAssetSource(require("./images/brannanBlowout.png")),
-                    // eslint-disable-next-line global-require
-                    inputImageTexture4: resolveAssetSource(require("./images/brannanContrast.png")),
-                    // eslint-disable-next-line global-require
-                    inputImageTexture5: resolveAssetSource(require("./images/brannanLuma.png")),
-                    // eslint-disable-next-line global-require
-                    inputImageTexture6: resolveAssetSource(require("./images/brannanScreen.png"))
+                    inputImageTexture2: filters.brannanProcess,
+                    inputImageTexture3: filters.brannanBlowout,
+                    inputImageTexture4: filters.brannanContrast,
+                    inputImageTexture5: filters.brannanLuma,
+                    inputImageTexture6: filters.brannanScreen
                 }}
             />
         );
