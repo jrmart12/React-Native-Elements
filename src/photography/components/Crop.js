@@ -12,6 +12,8 @@ type CropProps = StyleProps & StylesProps<StyleNames> & {
     children: React.Node
 };
 
+type Side = "top" | "bottom" | "left" | "right";
+
 class Crop extends React.PureComponent<CropProps> {
 
     crop: View;
@@ -44,44 +46,30 @@ class Crop extends React.PureComponent<CropProps> {
         }
     }
 
-    setLeft(left: number) {
-        if (left <= 0) {
-            this.position.left = 0;
-        } else if (left >= (this.widthBoundary - this.position.right)) {
-            this.position.left = this.widthBoundary - this.position.right;
+    set(value: number, side: Side, opposite: Side, limit: number) {
+        if (value <= 0) {
+            this.position[side] = 0;
+        } else if (value >= (limit - this.position[opposite])) {
+            this.position[side] = limit - this.position[opposite];
         } else {
-            this.position.left = left;
+            this.position[side] = value;
         }
+    }
+
+    setLeft(left: number) {
+        this.set(left, "left", "right", this.widthBoundary);
     }
 
     setRight(right: number) {
-        if (right >= 0) {
-            this.position.right = 0;
-        } else if (-right >= this.widthBoundary - this.position.left) {
-            this.position.right = this.widthBoundary - this.position.left;
-        } else {
-            this.position.right = -right;
-        }
+        this.set(-right, "right", "left", this.widthBoundary);
     }
 
     setTop(top: number) {
-        if (top <= 0) {
-            this.position.top = 0;
-        } else if (top >= this.heightBoundary - this.position.bottom) {
-            this.position.top = this.heightBoundary - this.position.bottom;
-        } else {
-            this.position.top = top;
-        }
+        this.set(top, "top", "bottom", this.heightBoundary);
     }
 
     setBottom(bottom: number) {
-        if (bottom >= 0) {
-            this.position.bottom = 0;
-        } else if (-bottom >= this.heightBoundary - this.position.top) {
-            this.position.bottom = this.heightBoundary - this.position.top;
-        } else {
-            this.position.bottom = -bottom;
-        }
+        this.set(-bottom, "bottom", "top", this.heightBoundary);
     }
 
     componentWillMount() {

@@ -40,7 +40,7 @@ export default class Filters extends React.PureComponent<FiltersProps> {
     }
 }
 
-const filters = ["saturate", "sepia", "warm", "amaro", "brannan", "valencia"];
+const filters = ["saturate", "sepia", "warm", "walden", "brannan", "valencia"];
 const styles = StyleSheet.create({
     root: {
         height: 120 + (StyleGuide.spacing.small * 2)

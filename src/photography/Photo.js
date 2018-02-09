@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     },
     filter: {
         position: "absolute",
-        top: 100,
+        top: 50,
         left: (viewport - (width * 0.63)) / 2,
         width: width * 0.63,
         height: width * 0.63 * 1.65
