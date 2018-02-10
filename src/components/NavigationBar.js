@@ -24,7 +24,8 @@ type NavigationBarProps = ThemeProps & NavigationProps<*> & {
     titleStyle?: Style,
     back?: string,
     rightAction?: Action,
-    withGradient: boolean
+    withGradient: boolean,
+    expanded: boolean
 };
 
 class NavigationBar extends React.Component<NavigationBarProps> {
@@ -32,7 +33,8 @@ class NavigationBar extends React.Component<NavigationBarProps> {
     static defaultProps = {
         type: "opaque",
         title: "",
-        withGradient: false
+        withGradient: false,
+        expanded: false
     };
 
     @autobind
@@ -42,7 +44,7 @@ class NavigationBar extends React.Component<NavigationBarProps> {
     }
 
     render(): React.Node {
-        const {type, title, subtitle, theme, back, titleStyle, rightAction, withGradient} = this.props;
+        const {type, title, subtitle, theme, back, titleStyle, rightAction, withGradient, expanded} = this.props;
         const containerStyle = {
             backgroundColor: type === "opaque" ? theme.palette.primary : "transparent"
         };
@@ -53,7 +55,7 @@ class NavigationBar extends React.Component<NavigationBarProps> {
                         {back && <LeftAction onPress={this.goBack} name="chevron-left" label={back} />}
                     </View>
                     {
-                        title !== "" && (
+                        (title !== "" && !expanded) && (
                             <View style={styles.block}>
                                 <AnimatedText
                                     type="headline"
@@ -91,6 +93,13 @@ class NavigationBar extends React.Component<NavigationBarProps> {
                         }
                     </View>
                 </View>
+                {
+                    expanded && (
+                        <View style={[{ backgroundColor: theme.palette.primary }, styles.header]}>
+                            <Text type="title1" color="white">{title}</Text>
+                        </View>
+                    )
+                }
             </SafeAreaView>
         );
         if (withGradient) {

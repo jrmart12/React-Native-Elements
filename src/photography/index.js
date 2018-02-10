@@ -5,6 +5,8 @@ import {TabNavigatorOptions, StackNavigatorOptions} from "../components/Navigati
 
 import Photos from "./Photos";
 import Photo from "./Photo";
+import Albums from "./Albums";
+import Places from "./Places";
 
 const tabs = [
     { key: "Photos", label: "Photos", icon: "grid" },
@@ -13,7 +15,9 @@ const tabs = [
 ];
 
 const PhotosTabNavigator = TabNavigator({
-    Photos: { screen: Photos }
+    Photos: { screen: Photos },
+    Albums: { screen: Albums },
+    Places: { screen: Places }
 }, TabNavigatorOptions(tabs));
 
 export const PhotographyNavigator = StackNavigator({
