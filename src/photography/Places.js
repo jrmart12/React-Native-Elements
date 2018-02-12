@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react";
 
-import {NavigationBar, Container, notImplementedYet, type NavigationProps} from "../components";
+import {NavigationBar, Container, type NavigationProps} from "../components";
 
 import PhotoAPI from "./api";
 import {PhotoMap} from "./components";
@@ -10,10 +10,10 @@ export default class Places extends React.PureComponent<NavigationProps<>> {
 
     render(): React.Node {
         const {navigation} = this.props;
-        const {photos} = PhotoAPI;
+        const photos = PhotoAPI.photos.filter(photo => photo.location);
         const rightAction = {
             icon: "camera",
-            onPress: notImplementedYet
+            onPress: () => navigation.navigate("Camera")
         };
         return (
             <Container>

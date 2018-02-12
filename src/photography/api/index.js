@@ -1,5 +1,9 @@
 // @flow
+import * as _ from "lodash";
+
 const photos = require("./photos");
+
+const albums = _.groupBy(photos, "album");
 
 export type Photo = {
     id: string,
@@ -24,11 +28,15 @@ export type Photo = {
 };
 
 type Photography = {
-    photos: Photo[]
+    photos: Photo[],
+    albums: { [name: string]: Photo[] },
+    album: string => Photo[]
 };
 
 const api: Photography = {
-    photos
+    photos,
+    albums,
+    album: (album: string) => albums[album]
 };
 
 export default api;

@@ -6,12 +6,20 @@ import {StyleSheet, Dimensions, View, TouchableWithoutFeedback} from "react-nati
 import {Image, StyleGuide, type NavigationProps} from "../../components";
 import {type Photo} from "../api";
 
-type PhotoProps = NavigationProps<> & {
+type PhotoProps = NavigationProps<*> & {
     photo: Photo,
-    from: string
+    from: string,
+    size: number
 };
 
+const {width} = Dimensions.get("window");
+const defaultSize = (width - (4 * StyleGuide.spacing.small)) / 3;
+
 export default class PhotoThumbnail extends React.PureComponent<PhotoProps> {
+
+    static defaultProps = {
+        size: defaultSize
+    };
 
     @autobind
     onPress() {
@@ -21,23 +29,23 @@ export default class PhotoThumbnail extends React.PureComponent<PhotoProps> {
 
     render(): React.Node {
         const {onPress} = this;
-        const {photo} = this.props;
+        const {photo, size} = this.props;
         return (
             <TouchableWithoutFeedback {...{onPress}}>
                 <View>
-                    <Image style={styles.photo} uri={photo.urls.small} preview={photo.urls.preview} />
+                    <Image
+                        style={[styles.photo, { width: size, height: size }]}
+                        uri={photo.urls.small}
+                        preview={photo.urls.preview}
+                    />
                 </View>
             </TouchableWithoutFeedback>
         );
     }
 }
 
-const {width} = Dimensions.get("window");
-const size = (width - (4 * StyleGuide.spacing.small)) / 3;
 const styles = StyleSheet.create({
     photo: {
-        width: size,
-        height: size,
         borderWidth: 3,
         borderColor: "white",
         borderRadius: 2,

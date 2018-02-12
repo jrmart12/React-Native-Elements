@@ -10,7 +10,7 @@ import type {IconName} from "./Model";
 import type {ThemeProps, StyleProps} from "./theme";
 
 type ButtonProps = ThemeProps & StyleProps & {
-    onPress: () => void,
+    onPress: () => mixed,
     primary?: boolean,
     secondary?: boolean,
     label?: string,
