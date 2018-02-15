@@ -32,8 +32,8 @@ class Map extends React.Component<MapProps> {
         requestAnimationFrame(() => {
             this.map.animateToRegion({
                 ...coordinate,
-                latitudeDelta: 0.0022,
-                longitudeDelta: 0.0022
+                latitudeDelta: 0.001,
+                longitudeDelta: 0.01
             }, 1);
         });
     }

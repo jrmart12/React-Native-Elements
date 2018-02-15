@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
         ...StyleGuide.styles.borderRadius,
         marginTop: StyleGuide.spacing.small,
         marginHorizontal: StyleGuide.spacing.small,
-        backgroundColor: StyleGuide.palette.darkGray
+        backgroundColor: StyleGuide.palette.darkGray,
+        flex: 1
     },
     image: {
         ...StyleGuide.styles.borderRadius

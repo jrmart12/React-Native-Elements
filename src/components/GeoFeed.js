@@ -9,14 +9,16 @@ import Text from "./Text";
 import Map from "./Map";
 import {withTheme, StyleGuide} from "./theme";
 
-import type {Marker} from "./Model";
+import type {Marker, Location} from "./Model";
 import type {ThemeProps} from "./theme";
 import type {NavigationProps} from "./Navigation";
 
 type GeoFeedProps<T: Marker> = ThemeProps & NavigationProps<*> & {
     markers: T[],
     renderItem: T => React.Node,
-    title: string
+    title: string,
+    back?: string,
+    defaultCoordinates?: Location
 };
 
 @observer
@@ -26,7 +28,7 @@ class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
 
     listHeaderComponent(): React.Node {
         const {scrollAnimation} = this;
-        const {title, theme, markers} = this.props;
+        const {title, theme, markers, defaultCoordinates} = this.props;
         const translateY = scrollAnimation.interpolate({
             inputRange: [-1, 0, 1],
             outputRange: [-1, 0, 0]
@@ -37,7 +39,7 @@ class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
                     <Text type="title1" style={styles.headerText}>{title}</Text>
                 </View>
                 <Map
-                    coordinate={{ latitude: 47.377343, longitude: 8.535342 }}
+                    coordinate={defaultCoordinates || { latitude: 47.377343, longitude: 8.535342 }}
                     markers={markers.map(marker => ({ id: marker.id, coordinate: marker.coordinate }))}
                 />
             </Animated.View>
@@ -46,7 +48,7 @@ class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
 
     render(): React.Node {
         const {scrollAnimation} = this;
-        const {markers, renderItem, title, navigation} = this.props;
+        const {markers, renderItem, title, navigation, back} = this.props;
         const textTranslation = scrollAnimation.interpolate({
             inputRange: [0, 55, 56, 57],
             outputRange: [55, 55, 0, 0]
@@ -64,7 +66,7 @@ class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
         const titleStyle = { transform: [{ translateY: textTranslation }]};
         return (
             <View style={styles.root}>
-                <NavigationBar {...{ navigation, title, titleStyle}} />
+                <NavigationBar {...{ navigation, title, titleStyle, back}} />
                 <AnimatedScrollView
                     style={styles.list}
                     contentContainerStyle={styles.container}

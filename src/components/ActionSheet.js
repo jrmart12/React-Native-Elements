@@ -1,9 +1,7 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {
-    StyleSheet, View, Modal, TouchableOpacity, Animated, Dimensions, Platform
-} from "react-native";
+import {StyleSheet, View, Modal, TouchableOpacity, Animated, Dimensions, Platform} from "react-native";
 import {observable, action} from "mobx";
 import {observer} from "mobx-react/native";
 import {BlurView} from "expo";
