@@ -12,7 +12,7 @@ import type {Picture} from "./Model";
 type CardProps = StyleProps & {
     title: string,
     subtitle?: string,
-    description?: string,
+    description?: string | React.Node,
     picture?: Picture,
     height?: number,
     onPress: () => mixed,
@@ -44,7 +44,14 @@ export default class Card extends React.PureComponent<CardProps> {
                         {
                             description && (
                                 <LinearGradient colors={bottomGradient} style={styles.gradient}>
-                                    <Text color="white" numberOfLines={1}>{description}</Text>
+                                    {
+                                        typeof description === "string" && (
+                                            <Text color="white" numberOfLines={1}>{description}</Text>
+                                        )
+                                    }
+                                    {
+                                        typeof description !== "string" && description
+                                    }
                                 </LinearGradient>
                             )
                         }

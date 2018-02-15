@@ -10,18 +10,20 @@ import type {ThemeProps, StyleProps} from "./theme";
 type RatingCompProps = ThemeProps & StyleProps & {
     name: string,
     ratings: number,
-    total: number
+    total: number,
+    white: boolean
 };
 
 class RatingComp extends React.PureComponent<RatingCompProps> {
 
     static defaultProps = {
         name: "star",
-        total: 5
+        total: 5,
+        white: false
     };
 
     render(): React.Node {
-        const {theme, ratings, name, total} = this.props;
+        const {theme, ratings, name, total, white} = this.props;
         const size = 20;
         const {primary, secondary} = theme.palette;
         const filledStars = ratings - (ratings % 1);
@@ -30,14 +32,24 @@ class RatingComp extends React.PureComponent<RatingCompProps> {
         return (
             <View style={[styles.row, this.props.style]}>
                 {
-                    repeat(total).map(key => <Icon color={secondary} {...{size, style, name, key}} />)
+                    repeat(total).map(key => (
+                        <Icon
+                            name={white ? "star-o" : name}
+                            color={white ? "white" : secondary}
+                            {...{size, style, key}}
+                        />
+                    ))
                 }
                 <View style={[styles.row, StyleSheet.absoluteFill]}>
                     {
-                        repeat(filledStars).map(key => <Icon color={primary} {...{size, key, style, name}} />)
+                        repeat(filledStars).map(key => (
+                            <Icon color={white ? "white" : primary} {...{size, key, style, name}} />
+                        ))
                     }
                     {
-                        halfStar && name === "star" && <Icon name="star-half" color={primary} {...{size, style}} />
+                        halfStar && name === "star" && (
+                            <Icon name="star-half" color={white ? "white" : primary} {...{size, style}} />
+                        )
                     }
                 </View>
             </View>

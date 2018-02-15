@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react";
 
-import {GeoFeed, Activity, notImplementedYet, type NavigationProps} from "../components";
+import {GeoFeed, Activity, Card, Ratings, notImplementedYet, type NavigationProps} from "../components";
 import {type City, type Hotel} from "./api";
 
 export default class Hotels extends React.PureComponent<NavigationProps<{ city: City }>> {
@@ -9,7 +9,7 @@ export default class Hotels extends React.PureComponent<NavigationProps<{ city: 
     render(): React.Node {
         const {navigation} = this.props;
         const {city} = navigation.state.params;
-        const markers = city.restaurants;
+        const markers = city.hotels;
         return (
             <GeoFeed
                 title="Hotels"
@@ -21,4 +21,18 @@ export default class Hotels extends React.PureComponent<NavigationProps<{ city: 
     }
 }
 
-const renderItem = (restaurant: Hotel): React.Node => <Activity {...restaurant} onPress={notImplementedYet} />;
+const renderItem = (hotel: Hotel): React.Node => {
+    if (hotel.featured) {
+        return (
+            <Card
+                key={hotel.id}
+                title={hotel.title}
+                subtitle={hotel.subtitle}
+                onPress={notImplementedYet}
+                picture={hotel.picture}
+                description={<Ratings ratings={hotel.ratings} white />}
+            />
+        );
+    }
+    return <Activity {...hotel} onPress={notImplementedYet} />;
+};
