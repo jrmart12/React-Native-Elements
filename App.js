@@ -1,5 +1,4 @@
 // @flow
-/* eslint-disable no-console */
 import * as React from "react";
 import {useStrict, observable, action} from "mobx";
 import {Provider, observer} from "mobx-react/native";

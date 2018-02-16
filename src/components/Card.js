@@ -64,6 +64,7 @@ export default class Card extends React.PureComponent<CardProps> {
 
 const topGradient = ["rgba(0,0,0,0.8)", "transparent"];
 const bottomGradient = ["transparent", "rgba(0,0,0,0.8)"];
+const subtitle = "rgba(255, 255, 255, 0.7)";
 const styles = StyleSheet.create({
     card: {
         ...StyleGuide.styles.borderRadius,
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
         ...StyleGuide.styles.borderRadius
     },
     subtitle: {
-        color: "rgba(255, 255, 255, 0.7)",
+        color: subtitle,
         fontSize: 15
     }
 });

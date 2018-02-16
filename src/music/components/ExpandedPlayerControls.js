@@ -135,12 +135,9 @@ class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps
                         thumbTintColor={theme.palette.primary}
                     />
                     <Animated.View
-                        style={{
-                            width,
-                            borderBottomWidth: 2,
-                            borderColor: theme.palette.primary,
-                            transform: [{ translateX }]
-                        }}
+                        style={[
+                            styles.progressBar, { borderColor: theme.palette.primary, transform: [{ translateX }] }
+                        ]}
                     />
                 </SafeAreaView>
             </View>
@@ -166,6 +163,10 @@ const styles = StyleSheet.create({
     },
     flip: {
         transform: [{ rotate: "180deg" }]
+    },
+    progressBar: {
+        borderBottomWidth: 2,
+        width
     }
 });
 

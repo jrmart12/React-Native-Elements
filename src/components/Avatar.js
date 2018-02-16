@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react";
-import {Image as NativeImage} from "react-native";
+import {Image as NativeImage, StyleSheet} from "react-native";
 import {Svg} from "expo";
 import {observable, computed} from "mobx";
 import {observer} from "mobx-react/native";
@@ -46,11 +46,11 @@ export default class Avatar extends React.Component<AvatarProps> {
                 borderRadius: width / 2
             };
             return (
-                <NativeImage style={[{ alignSelf: "center" }, style, computedStyle]} source={{ uri }} />
+                <NativeImage style={[styles.avatar, style, computedStyle]} source={{ uri }} />
             );
         }
         return (
-            <Svg style={[{ alignSelf: "center" }, style]} viewBox="0 0 27 36" {...{width, height}}>
+            <Svg style={[styles.avatar, style]} viewBox="0 0 27 36" {...{width, height}}>
                 <Defs>
                     <ClipPath id="crescent">
                         <Path
@@ -75,3 +75,9 @@ export default class Avatar extends React.Component<AvatarProps> {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    avatar: {
+        alignSelf: "center"
+    }
+});

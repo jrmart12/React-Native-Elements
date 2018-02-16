@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         height: 64,
-        backgroundColor: "white",
+        backgroundColor: StyleGuide.palette.white,
         ...StyleGuide.styles.shadow
     },
     controls: {

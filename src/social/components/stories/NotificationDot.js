@@ -2,7 +2,7 @@
 import * as React from "react";
 import {View, StyleSheet} from "react-native";
 
-import {withTheme} from "../../../components";
+import {StyleGuide, withTheme} from "../../../components";
 
 import type {StyleProps, ThemeProps} from "../../../components/theme";
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         height: 12,
         borderWidth: 2,
         borderRadius: 6,
-        borderColor: "white"
+        borderColor: StyleGuide.palette.white
     }
 });
 

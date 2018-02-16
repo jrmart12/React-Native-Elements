@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     tick: {
         width: padding,
-        backgroundColor: "white",
+        backgroundColor: StyleGuide.palette.white,
         marginHorizontal: 1,
         height: 60
     }

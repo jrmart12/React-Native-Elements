@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         padding: StyleGuide.spacing.small
     },
     list: {
-        backgroundColor: "white",
+        backgroundColor: StyleGuide.palette.white,
         ...StyleGuide.styles.borderRadius
     },
     separator: {

@@ -1,7 +1,7 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {View} from "react-native";
+import {View, StyleSheet} from "react-native";
 import {LinearGradient, MapView} from "expo";
 
 import {withTheme} from "./theme";
@@ -65,11 +65,19 @@ class Map extends React.Component<MapProps> {
                 </MapView>
                 <LinearGradient
                     colors={["rgba(243, 243, 243, 0)", "rgba(243, 243, 243, 1)"]}
-                    style={{ height: 100, position: "relative", top: -100 }}
+                    style={styles.gradient}
                 />
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    gradient: {
+        height: 100,
+        position: "relative",
+        top: -100
+    }
+});
 
 export default withTheme(Map);

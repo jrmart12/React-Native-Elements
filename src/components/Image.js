@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as _ from "lodash";
 import * as React from "react";
 import {Image as RNImage, Animated, StyleSheet, View, Platform} from "react-native";
@@ -28,7 +27,11 @@ export default class Image extends React.Component<ImageProps, ImageState> {
         const {uri, style} = props;
         this.style = [
             StyleSheet.absoluteFill,
-            _.pickBy(StyleSheet.flatten(style), (value, key) => propsToCopy.indexOf(key) !== -1)
+            _.transform(
+                _.pickBy(StyleSheet.flatten(style), (value, key) => propsToCopy.indexOf(key) !== -1),
+                // $FlowFixMe
+                (result, value, key) => Object.assign(result, { [key]: (value - (style.borderWidth || 0)) })
+            )
         ];
         CacheManager.cache(uri, this.setURI);
     }
@@ -43,12 +46,11 @@ export default class Image extends React.Component<ImageProps, ImageState> {
         this.load(props);
     }
 
-    @autobind
-    setURI(uri: string) {
+    setURI = (uri: string) => {
         if (this.subscribedToCache) {
             this.setState({ uri });
         }
-    }
+    };
 
     componentDidUpdate(prevProps: ImageProps, prevState: ImageState) {
         const {preview} = this.props;
@@ -98,7 +100,7 @@ export default class Image extends React.Component<ImageProps, ImageState> {
                 }
                 {
                     hasPreview && Platform.OS === "android" && (
-                        <Animated.View style={[computedStyle, { backgroundColor: "black", opacity }]} />
+                        <Animated.View style={[computedStyle, { backgroundColor: black, opacity }]} />
                     )
                 }
             </View>
@@ -106,8 +108,8 @@ export default class Image extends React.Component<ImageProps, ImageState> {
     }
 }
 
+const black = "black";
 const propsToCopy = [
     "borderRadius", "borderBottomLeftRadius", "borderBottomRightRadius", "borderTopLeftRadius", "borderTopRightRadius"
 ];
-
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);

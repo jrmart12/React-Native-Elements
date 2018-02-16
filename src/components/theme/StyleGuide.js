@@ -36,7 +36,8 @@ export type Palette = {
     darkGray: string,
     gray: string,
     lightGray: string,
-    white: string
+    white: "white",
+    transparent: "transparent"
 };
 
 export type Shadow = {
@@ -95,10 +96,11 @@ const shadow = {
 const styleGuide: StyleGuide = {
     palette: {
         black: "black",
+        white: "white",
+        transparent: "transparent",
         darkGray,
         gray,
-        lightGray: "#F3F3F3",
-        white: "white"
+        lightGray: "#F3F3F3"
     },
     typography: {
         body: {

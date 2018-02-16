@@ -64,7 +64,7 @@ export default class Sheet extends React.PureComponent<SheetProps> {
 const {height} = Dimensions.get("window");
 const styles = StyleSheet.create({
     content: {
-        backgroundColor: "white",
+        backgroundColor: StyleGuide.palette.white,
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
         maxHeight: height - Constants.statusBarHeight

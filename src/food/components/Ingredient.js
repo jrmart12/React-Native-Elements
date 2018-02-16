@@ -33,7 +33,7 @@ export default class IngredientComp extends React.Component<IngredientProps> {
         return (
             <View>
                 <TouchableOpacity onPress={this.toggle}>
-                    <View style={[styles.content, { opacity: checked ? 0.5 : 1 }]}>
+                    <View style={[styles.content, checked ? styles.semiOpaque : styles.opaque]}>
                         <View style={styles.radio}>
                             <Icon name={checked ? "check-circle" : "circle"} primary />
                         </View>
@@ -66,5 +66,11 @@ const styles = StyleSheet.create({
     },
     text: {
         padding: StyleGuide.spacing.tiny
+    },
+    semiOpaque: {
+        opacity: 0.5
+    },
+    opaque: {
+        opacity: 1
     }
 });

@@ -127,12 +127,6 @@ const styles = StyleSheet.create({
     goBack: {
         marginRight: StyleGuide.spacing.tiny
     },
-    bottom: {
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        marginBottom: StyleGuide.spacing.tiny,
-        marginHorizontal: StyleGuide.spacing.tiny
-    },
     comments: {
         paddingBottom: 40
     }

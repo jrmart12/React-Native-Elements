@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         padding: StyleGuide.spacing.small
     },
     headerText: {
-        color: "white"
+        color: StyleGuide.palette.white
     },
     item: {
         position: "relative",

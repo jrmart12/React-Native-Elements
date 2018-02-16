@@ -48,9 +48,6 @@ const styles = StyleSheet.create({
     content: {
         paddingRight: StyleGuide.spacing.small
     },
-    filters: {
-        flexDirection: "row"
-    },
     filter: {
         width: 120,
         height: 120,

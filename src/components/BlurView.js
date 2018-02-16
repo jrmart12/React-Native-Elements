@@ -3,7 +3,7 @@ import * as React from "react";
 import {Animated, Platform} from "react-native";
 import {BlurView as ExpoBlurView} from "expo";
 
-import {type StyleProps} from "./theme";
+import {StyleGuide, type StyleProps} from "./theme";
 
 type BlurViewProps = StyleProps & {
     intensity: Animated.Value
@@ -23,7 +23,7 @@ export default class BlurView extends React.PureComponent<BlurViewProps> {
             );
         }
         return (
-            <Animated.View style={[style, { backgroundColor: "rgb(0, 0, 0)", opacity }]} />
+            <Animated.View style={[style, { backgroundColor: StyleGuide.palette.black, opacity }]} />
         );
     }
 }

@@ -81,7 +81,7 @@ export default class Message extends React.Component<NavigationProps<{ id: strin
 
 const styles = StyleSheet.create({
     inputBox: {
-        backgroundColor: "white"
+        backgroundColor: StyleGuide.palette.white
     },
     innerInputBox: {
         padding: StyleGuide.spacing.tiny,

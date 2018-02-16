@@ -43,7 +43,7 @@ class TextComp extends React.PureComponent<TypographyProps> {
 
 const styles = StyleSheet.create({
     default: {
-        backgroundColor: "transparent"
+        backgroundColor: StyleGuide.palette.transparent
     }
 });
 

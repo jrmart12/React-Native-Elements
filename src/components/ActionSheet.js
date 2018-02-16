@@ -6,6 +6,7 @@ import {observable, action} from "mobx";
 import {observer} from "mobx-react/native";
 import {BlurView} from "expo";
 
+import {StyleGuide} from "./theme";
 import Sheet from "./Sheet";
 
 type ActionSheetProps = {
@@ -76,7 +77,11 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
                     {
                         Platform.OS === "android" && (
                             <Animated.View
-                                style={{ ...StyleSheet.absoluteFillObject, backgroundColor: "black", opacity }}
+                                style={{
+                                    ...StyleSheet.absoluteFillObject,
+                                    backgroundColor: StyleGuide.palette.black,
+                                    opacity
+                                }}
                             >
                                 <TouchableOpacity style={styles.exit} onPress={this.toggle} />
                             </Animated.View>

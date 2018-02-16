@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
     text: {
         margin: StyleGuide.spacing.small,
-        color: "white",
+        color: StyleGuide.palette.white,
         ...StyleGuide.typography.title1
     }
 });

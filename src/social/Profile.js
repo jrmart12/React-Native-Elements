@@ -61,23 +61,15 @@ export default class Profile extends React.Component<NavigationProps<>> {
 }
 
 const styles = StyleSheet.create({
-    safeContainer: {
-        flex: 1
-    },
     container: {
         marginHorizontal: StyleGuide.spacing.small,
         flex: 1,
         justifyContent: "center"
     },
-    logOut: {
-        position: "absolute",
-        top: StyleGuide.spacing.tiny,
-        left: StyleGuide.spacing.small
-    },
     avatar: {
         borderRadius: 45,
         borderWidth: 3,
-        borderColor: "white",
+        borderColor: StyleGuide.palette.white,
         marginVertical: StyleGuide.spacing.tiny
     },
     text: {

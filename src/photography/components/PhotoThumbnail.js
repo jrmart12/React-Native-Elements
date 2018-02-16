@@ -47,7 +47,7 @@ export default class PhotoThumbnail extends React.PureComponent<PhotoProps> {
 const styles = StyleSheet.create({
     photo: {
         borderWidth: 3,
-        borderColor: "white",
+        borderColor: StyleGuide.palette.white,
         borderRadius: 2,
         marginLeft: StyleGuide.spacing.small,
         ...StyleGuide.styles.shadow

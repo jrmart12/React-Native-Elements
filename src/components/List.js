@@ -29,7 +29,7 @@ export default class List<T> extends React.PureComponent<ListProps<T>> {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "white",
+        backgroundColor: StyleGuide.palette.white,
         ...StyleGuide.styles.borderRadius
     },
     separator: {

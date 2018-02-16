@@ -41,7 +41,7 @@ class IconComp extends React.PureComponent<IconProps> {
 
 const styles = StyleSheet.create({
     icon: {
-        backgroundColor: "transparent"
+        backgroundColor: StyleGuide.palette.transparent
     }
 });
 

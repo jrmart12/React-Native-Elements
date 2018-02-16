@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         height: 60,
         width: 60,
         borderWidth: 3,
-        borderColor: "white",
+        borderColor: StyleGuide.palette.white,
         borderRadius: 2,
         marginLeft: StyleGuide.spacing.small,
         ...StyleGuide.styles.shadow
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         transform: [{ rotate: "-16deg" }]
     },
     count: {
-        backgroundColor: "white",
+        backgroundColor: StyleGuide.palette.white,
         width: 40,
         height: 18,
         borderRadius: 9,

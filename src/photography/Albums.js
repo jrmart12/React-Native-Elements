@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "white",
+        backgroundColor: StyleGuide.palette.white,
         padding: StyleGuide.spacing.small
     },
     thumbnail: {

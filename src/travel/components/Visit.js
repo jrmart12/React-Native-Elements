@@ -2,7 +2,7 @@
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
-import {Text, withTheme, type ThemeProps, type StyleProps} from "../../components";
+import {Text, StyleGuide, withTheme, type ThemeProps, type StyleProps} from "../../components";
 
 import {type Visit} from "../api";
 
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         height: 12,
         borderRadius: 6,
         borderWidth: 2,
-        backgroundColor: "white"
+        backgroundColor: StyleGuide.palette.white
     },
     line: {
         position: "absolute",
