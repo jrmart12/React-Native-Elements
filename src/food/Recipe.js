@@ -61,7 +61,6 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
 
 const styles = StyleSheet.create({
     gutter: {
-        paddingTop: StyleGuide.spacing.small,
-        paddingHorizontal: StyleGuide.spacing.small
+        padding: StyleGuide.spacing.small
     }
 });
