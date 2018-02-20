@@ -3,9 +3,7 @@ import * as React from "react";
 import {View, StyleSheet} from "react-native";
 import {FontAwesome as Icon} from "@expo/vector-icons";
 
-import {withTheme} from "./theme";
-
-import type {ThemeProps, StyleProps} from "./theme";
+import {withTheme, type ThemeProps, type StyleProps} from "./theme";
 
 type RatingCompProps = ThemeProps & StyleProps & {
     name: string,

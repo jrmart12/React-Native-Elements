@@ -2,8 +2,7 @@
 import * as React from "react";
 import {StyleSheet, TouchableWithoutFeedback, View} from "react-native";
 
-import {StyleGuide} from "./theme";
-import type {StyleProps} from "./theme";
+import {StyleGuide, type StyleProps} from "./theme";
 
 type BaseCardProps = StyleProps & {
     onPress?: () => mixed,
