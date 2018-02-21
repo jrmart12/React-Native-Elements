@@ -3,20 +3,11 @@
 The started kit is built using the latest de-facto components for building a React Native app.
 These are extremely important in order to keep your development as lean and efficient as possible.
 
-## NativeBase
-
-[NativeBase](https://github.com/GeekyAnts/NativeBase) is the most versatile UI component available for React Native.
-It provides a large collection of cross-platform components that can easily be customized.
-The library is extremely robust and has a low barrier to entry.
-
-## React Navigation
-[React Navigation](https://reactnavigation.org/) is quickly becoming the de-facto standard for implementing navigation in React Native. The library is performant, well-designed, and very robust.
-
 ## Flow
 
 When it comes of making your app development lean and efficient, the most overlooked technology is probably static typing.
 It can be quicker to prototype something without it. However, as soon as you actually start to build something, you absolutely need them: The more pressure you put on the type checker, the better.
-This is why React Native Fiber is using [Flow](https://github.com/facebook/flow), a static type checker for JavaScript.
+This is why React Native Elements is using [Flow](https://github.com/facebook/flow), a static type checker for JavaScript.
 Flow enables you to safely refactor your code and catch most of the mistakes you might make.
 
 To run flow on this project, you can use the command below.
