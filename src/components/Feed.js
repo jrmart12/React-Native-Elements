@@ -4,7 +4,6 @@ import * as React from "react";
 import {FlatList, StyleSheet, View, Animated} from "react-native";
 import {observable} from "mobx";
 import {observer} from "mobx-react/native";
-import {LinearGradient} from "expo";
 
 import NavigationBar from "./NavigationBar";
 import Text from "./Text";
@@ -60,11 +59,14 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
         const top = theme.palette.primary;
         const bottom = theme.palette.lightGray;
         return (
-            <LinearGradient
-                style={styles.root}
-                locations={[0, 0.5, 0.5, 1]}
-                colors={back ? [bottom, bottom, bottom, bottom] : [top, top, bottom, bottom]}
-            >
+            <View style={styles.flex}>
+                <View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: bottom }}>
+                    {
+                        !back && (
+                            <View style={[styles.halfFlex, { backgroundColor: top }]} />
+                        )
+                    }
+                </View>
                 <NavigationBar
                     {...{ navigation, title, back, titleStyle, rightAction}}
                 />
@@ -85,15 +87,18 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
                     columnWrapperStyle={(numColumns && numColumns > 0) ? styles.columnWrapperStyle : undefined}
                     {...{data, keyExtractor, renderItem, onScroll, numColumns}}
                 />
-            </LinearGradient>
+            </View>
         );
     }
 }
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const styles = StyleSheet.create({
-    root: {
+    flex: {
         flex: 1
+    },
+    halfFlex: {
+        flex: 0.5
     },
     container: {
         flexGrow: 1,
