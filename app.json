@@ -1,7 +1,7 @@
 {
     "expo": {
         "name": "react-native-elements",
-        "description": "UI elements, multi-screen implemented in React Native, now in one handy kit",
+        "description": "Sketch Elements for React Native: https://react-native.shop/elements",
         "sdkVersion": "25.0.0",
         "orientation": "portrait",
         "privacy": "public",
