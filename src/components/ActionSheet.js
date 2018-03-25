@@ -35,6 +35,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
 
     @autobind toggle() {
         if (!this.visible) {
+            this.animation.stopAnimation();
             this.show();
             Animated.timing(
                 this.animation,
@@ -45,6 +46,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
                 }
             ).start();
         } else {
+            this.animation.stopAnimation();
             Animated.timing(
                 this.animation,
                 {
