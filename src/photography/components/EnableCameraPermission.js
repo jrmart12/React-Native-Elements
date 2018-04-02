@@ -11,7 +11,7 @@ export default class EnableCameraPermission extends React.Component<{}> {
 
     @observable canOpen: boolean | null = null;
 
-    async componentWillMount(): Promise<void> {
+    async componentDidMount(): Promise<void> {
         const canOpen = await Linking.canOpenURL("app-settings:");
         runInAction(() => this.canOpen = canOpen);
     }

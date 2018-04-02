@@ -22,7 +22,7 @@ export default class Degrees extends React.Component<DegreesProps> {
         this.degrees = _.round(((value.value / viewport) * 50) - 25);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.rotation.addListener(this.setDegrees);
     }
 

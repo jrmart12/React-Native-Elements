@@ -25,7 +25,8 @@ type NavigationBarProps = ThemeProps & NavigationProps<*> & {
     back?: string,
     rightAction?: Action,
     withGradient: boolean,
-    expanded: boolean
+    expanded: boolean,
+    largeTitle: boolean
 };
 
 class NavigationBar extends React.Component<NavigationBarProps> {
@@ -44,7 +45,10 @@ class NavigationBar extends React.Component<NavigationBarProps> {
     }
 
     render(): React.Node {
-        const {type, title, subtitle, theme, back, titleStyle, rightAction, withGradient, expanded} = this.props;
+        const {
+            type, title, subtitle, theme, back, titleStyle, rightAction, withGradient, expanded, largeTitle
+        } = this.props;
+        const block = { flex: largeTitle ? 2 : 1 };
         const containerStyle = {
             backgroundColor: type === "opaque" ? theme.palette.primary : "transparent"
         };
@@ -56,7 +60,7 @@ class NavigationBar extends React.Component<NavigationBarProps> {
                     </View>
                     {
                         (title !== "" && !expanded) && (
-                            <View style={styles.block}>
+                            <View style={block}>
                                 <AnimatedText
                                     type="headline"
                                     color="white"
@@ -121,9 +125,6 @@ const styles = StyleSheet.create({
     },
     leftBlock: {
         flex: 1
-    },
-    block: {
-        flex: 2
     },
     rightBlock: {
         flex: 1,

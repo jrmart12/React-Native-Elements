@@ -14,7 +14,7 @@ const images = require("./images");
 
 class Welcome extends React.Component<ThemeProps & NavigationProps<>> {
 
-    componentWillMount() {
+    componentDidMount() {
         StatusBar.setBarStyle("dark-content");
         if (Platform.OS === "android") {
             StatusBar.setBackgroundColor("white");

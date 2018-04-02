@@ -1,6 +1,5 @@
 // @flow
 import * as React from "react";
-import {StyleSheet} from "react-native";
 import {Feather as Icon} from "@expo/vector-icons";
 
 import {StyleGuide, withTheme} from "./theme";
@@ -34,15 +33,9 @@ class IconComp extends React.PureComponent<IconProps> {
             iconColor = color;
         }
         return (
-            <Icon color={iconColor} style={styles.icon} {...{name, size}} />
+            <Icon color={iconColor} {...{name, size}} />
         );
     }
 }
-
-const styles = StyleSheet.create({
-    icon: {
-        backgroundColor: StyleGuide.palette.transparent
-    }
-});
 
 export default withTheme(IconComp);

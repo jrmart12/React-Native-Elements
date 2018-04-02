@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react";
-import {Text, StyleSheet} from "react-native";
+import {Text} from "react-native";
 
 import {StyleGuide, withTheme} from "./theme";
 
@@ -35,16 +35,9 @@ class TextComp extends React.PureComponent<TypographyProps> {
             return this.props.color;
         })();
         const computedStyle = [typography, { textAlign, color }];
-        computedStyle.push(styles.default);
         computedStyle.push(style);
         return <Text style={computedStyle} {...{numberOfLines}}>{children}</Text>;
     }
 }
-
-const styles = StyleSheet.create({
-    default: {
-        backgroundColor: StyleGuide.palette.transparent
-    }
-});
 
 export default withTheme(TextComp);

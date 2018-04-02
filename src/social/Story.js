@@ -46,8 +46,7 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
         this.comments.toggle();
     }
 
-
-    componentWillMount() {
+    componentDidMount() {
         if (Platform.OS === "android") {
             StatusBar.setHidden(true);
         }

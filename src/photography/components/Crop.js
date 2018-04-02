@@ -72,7 +72,7 @@ class Crop extends React.PureComponent<CropProps> {
         this.set(-bottom, "bottom", "top", this.heightBoundary);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const {style} = this.props;
         // $FlowFixMe
         const {width, height} = RNStyleSheet.flatten(style);
@@ -177,18 +177,34 @@ class Crop extends React.PureComponent<CropProps> {
                 </View>
                 <View ref={this.setCrop} style={RNStyleSheet.absoluteFill}>
                     <View style={styles.crop} />
-                    <View style={styles.topLeftResponder} {...this.topLeftResponder.panHandlers}>
-                        <View style={styles.topLeft} />
-                    </View>
-                    <View style={styles.topRightResponder} {...this.topRightResponder.panHandlers}>
-                        <View style={styles.topRight} />
-                    </View>
-                    <View style={styles.bottomLeftResponder} {...this.bottomLeftResponder.panHandlers}>
-                        <View style={styles.bottomLeft} />
-                    </View>
-                    <View style={styles.bottomRightResponder} {...this.bottomRightResponder.panHandlers}>
-                        <View style={styles.bottomRight} />
-                    </View>
+                    {
+                        this.topLeftResponder && (
+                            <View style={styles.topLeftResponder} {...this.topLeftResponder.panHandlers}>
+                                <View style={styles.topLeft} />
+                            </View>
+                        )
+                    }
+                    {
+                        this.topRightResponder && (
+                            <View style={styles.topRightResponder} {...this.topRightResponder.panHandlers}>
+                                <View style={styles.topRight} />
+                            </View>
+                        )
+                    }
+                    {
+                        this.bottomLeftResponder && (
+                            <View style={styles.bottomLeftResponder} {...this.bottomLeftResponder.panHandlers}>
+                                <View style={styles.bottomLeft} />
+                            </View>
+                        )
+                    }
+                    {
+                        this.bottomRightResponder && (
+                            <View style={styles.bottomRightResponder} {...this.bottomRightResponder.panHandlers}>
+                                <View style={styles.bottomRight} />
+                            </View>
+                        )
+                    }
                 </View>
             </View>
         );

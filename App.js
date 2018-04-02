@@ -31,7 +31,7 @@ export default class App extends React.Component<{}> {
     @observable isReady = false;
     @action ready() { this.isReady = true; }
 
-    async componentWillMount(): Promise<void> {
+    async componentDidMount(): Promise<void> {
         const fonts = Font.loadAsync({
             "SFProText-Bold": SFProTextBold,
             "SFProText-Semibold": SFProTextSemibold,

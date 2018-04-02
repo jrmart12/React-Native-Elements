@@ -59,16 +59,18 @@ class PlayerControls extends React.Component<PlayerControlsProps> {
                         }
                         {
                             player.isLoaded && (
-                                <IconButton
-                                    name={player.isPlaying ? "pause" : "play"}
-                                    color={theme.palette.primary}
-                                    onPress={player.toggle}
-                                />
+                                <View style={styles.item}>
+                                    <IconButton
+                                        name={player.isPlaying ? "pause" : "play"}
+                                        color={theme.palette.primary}
+                                        onPress={player.toggle}
+                                    />
+                                </View>
                             )
                         }
                         {
                             player.playlistEntry && (
-                                <View style={styles.title}>
+                                <View style={styles.item}>
                                     <Text type="headline" primary>{player.playlistEntry.track.name}</Text>
                                     <Text type="footnote" primary>{player.playlistEntry.album.artist}</Text>
                                 </View>
@@ -114,8 +116,10 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         borderBottomWidth: 2
     },
-    title: {
-        alignItems: "center"
+    item: {
+        alignItems: "center",
+        justifyContent: "center",
+        height: 64
     },
     cover: {
         height: 44,

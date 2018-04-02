@@ -55,7 +55,7 @@ class Button extends React.PureComponent<ButtonProps> {
         }
         return (
             <Btn {...{onPress}}>
-                <View style={[styles.button, { backgroundColor, opacity, ...shadow }, style]} >
+                <View style={[styles.button, { ...shadow, backgroundColor, opacity }, style]} >
                     {icon && <Icon name={icon} style={styles.icon} {...{color}} />}
                     {label && <Text type="headline" {...{color}}>{label}</Text>}
                 </View>

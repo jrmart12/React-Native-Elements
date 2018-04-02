@@ -22,7 +22,8 @@ export default class PlayerActionSheet extends React.Component<PlayerActionSheet
 
     @observable track: Track;
 
-    componentWillMount() {
+    @action
+    componentDidMount() {
         const {playlist} = this.props;
         this.track = playlist.entries[0].track;
     }
@@ -47,6 +48,9 @@ export default class PlayerActionSheet extends React.Component<PlayerActionSheet
 
     render(): React.Node {
         const {track, switchTrack, setActionSheet} = this;
+        if (!track) {
+            return null;
+        }
         const {playlist} = this.props;
         const title = this.track ? this.track.name : "";
         const {album} = _.find(playlist.entries, entry => entry.track.uri === track.uri);

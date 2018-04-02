@@ -94,7 +94,7 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
         this.aspectRatio = width / height;
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const {photo} = this.props.navigation.state.params;
         if (Platform.OS === "android") {
             StatusBar.setHidden(true);
@@ -152,7 +152,13 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
                 }
                 {
                     areFiltersReady && (
-                        <NavigationBar type="transparent" back={from} withGradient {...{navigation, title, subtitle}} />
+                        <NavigationBar
+                            type="transparent"
+                            back={from}
+                            withGradient
+                            largeTitle
+                            {...{navigation, title, subtitle}}
+                        />
                     )
                 }
                 {
@@ -180,7 +186,7 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
 }
 
 const duration = 300;
-const useNativeDriver = true;
+const useNativeDriver = Platform.OS === "android";
 const {width: viewport} = Dimensions.get("window");
 const width = viewport + 88;
 const styles = StyleSheet.create({

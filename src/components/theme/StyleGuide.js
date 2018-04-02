@@ -44,7 +44,8 @@ export type Shadow = {
     shadowColor: string,
     shadowOffset: { width: number, height: number },
     shadowOpacity: number,
-    shadowRadius: number
+    shadowRadius: number,
+    backgroundColor: "white"
 };
 
 export type Styles = {
@@ -90,7 +91,8 @@ const shadow = {
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.18,
     shadowRadius: 2,
-    elevation: 1
+    elevation: 1,
+    backgroundColor: "white"
 };
 
 const styleGuide: StyleGuide = {

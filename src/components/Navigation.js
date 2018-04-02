@@ -1,7 +1,6 @@
 // @flow
 import * as React from "react";
-import {NavigationActions} from "react-navigation";
-import type {NavigationNavigatorProps, NavigationScreenProp} from "react-navigation/src/TypeDefinition";
+import {NavigationActions, type NavigationNavigatorProps, type NavigationScreenProp} from "react-navigation";
 
 import TabBar from "./TabBar";
 import type {Tabs} from "./TabBar";

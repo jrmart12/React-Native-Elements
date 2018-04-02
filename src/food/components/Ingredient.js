@@ -2,8 +2,6 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View, TouchableOpacity} from "react-native";
-import {observer} from "mobx-react/native";
-import {observable, action} from "mobx";
 
 import {Text, StyleGuide, Icon} from "../../components";
 
@@ -13,23 +11,30 @@ type IngredientProps = {
     ingredient: Ingredient
 };
 
-@observer
-export default class IngredientComp extends React.Component<IngredientProps> {
+type IngredientState = {
+    checked: boolean
+};
 
-    @observable checked: boolean = false;
+export default class IngredientComp extends React.Component<IngredientProps, IngredientState> {
 
-    @autobind @action toggle() { this.checked = !this.checked; }
+    state = {
+        checked: false
+    };
 
-    componentWillMount() {
-        const {ingredient} = this.props;
-        if (ingredient.checked) {
-            this.toggle();
-        }
+    static getDerivedStateFromProps({ ingredient }: IngredientProps): IngredientState {
+        const {checked} = ingredient;
+        return { checked };
+    }
+
+    @autobind
+    toggle() {
+        const {checked} = this.state;
+        this.setState({ checked: !checked });
     }
 
     render(): React.Node {
-        const {checked} = this;
         const {ingredient} = this.props;
+        const {checked} = this.state;
         return (
             <View>
                 <TouchableOpacity onPress={this.toggle}>

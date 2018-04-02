@@ -52,7 +52,7 @@ class CameraScreen extends React.Component<CameraProps> {
         this.props.navigation.goBack();
     }
 
-    async componentWillMount(): Promise<void> {
+    async componentDidMount(): Promise<void> {
         const {status} = await Permissions.askAsync(Permissions.CAMERA);
         this.setCameraPermission(status);
     }
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
     },
     cameraSafeArea: {
         flex: 1,
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        backgroundColor: StyleGuide.palette.transparent
     },
     header: {
         flexDirection: "row",
@@ -158,7 +159,6 @@ const styles = StyleSheet.create({
     grid: {
         borderColor: StyleGuide.palette.darkGray,
         borderWidth: 1,
-        borderBottomWidth: 0,
         marginLeft: StyleGuide.spacing.small,
         width: width - (StyleGuide.spacing.small * 2),
         height: width - (StyleGuide.spacing.small * 2)

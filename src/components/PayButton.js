@@ -27,9 +27,9 @@ export default class PayButton extends React.PureComponent<{}> {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: StyleGuide.palette.black,
-        ...StyleGuide.styles.button,
         ...StyleGuide.styles.shadow,
+        ...StyleGuide.styles.button,
+        backgroundColor: StyleGuide.palette.black,
         marginBottom: 0
     },
     icon: {

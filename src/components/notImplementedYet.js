@@ -1,3 +1,4 @@
 // @flow
-// eslint-disable-next-line no-alert
-export const notImplementedYet = () => alert("Not Implemented 🤷🏻‍♂️");
+import {Alert} from "react-native";
+
+export const notImplementedYet = () => Alert.alert("Not Implemented 🤷🏻‍♂️");

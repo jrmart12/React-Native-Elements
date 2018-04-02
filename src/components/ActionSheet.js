@@ -74,7 +74,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
             outputRange: [height, 0]
         });
         return (
-            <Modal visible={this.visible} transparent onRequestClose={this.toggle}>
+            <Modal visible={this.visible} onRequestClose={this.toggle} transparent>
                 <View style={styles.modal}>
                     {
                         Platform.OS === "android" && (
@@ -110,7 +110,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
 
 const {height} = Dimensions.get("window");
 const duration = 350;
-const useNativeDriver = true;
+const useNativeDriver = Platform.OS === "android";
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 const AnimatedSheet = Animated.createAnimatedComponent(Sheet);
 const styles = StyleSheet.create({

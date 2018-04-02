@@ -18,7 +18,7 @@ import type {Message as MessageModel} from "./api";
 export default class Message extends React.Component<NavigationProps<{ id: string }>> {
 
     @observable message: string;
-    @observable messages: MessageModel[];
+    @observable messages: MessageModel[] = [];
 
     @autobind @action
     postMessage() {
@@ -36,7 +36,8 @@ export default class Message extends React.Component<NavigationProps<{ id: strin
         this.message = message;
     }
 
-    componentWillMount() {
+    @action
+    componentDidMount() {
         const {navigation} = this.props;
         const {id} = navigation.state.params;
         this.messages = SocialAPI.messageThread(id).messages;
@@ -85,7 +86,8 @@ const styles = StyleSheet.create({
     },
     innerInputBox: {
         padding: StyleGuide.spacing.tiny,
-        flexDirection: "row"
+        flexDirection: "row",
+        alignItems: "center"
     },
     input: {
         backgroundColor: StyleGuide.palette.lightGray,
