@@ -1,4 +1,4 @@
 // @flow
-import {Alert} from "react-native";
+import {Alert, Platform} from "react-native";
 
-export const notImplementedYet = () => Alert.alert("Not Implemented 🤷🏻‍♂️");
+export const notImplementedYet = () => Platform.OS === "android" && Alert.alert("Not Implemented 🤷🏻‍♂️");

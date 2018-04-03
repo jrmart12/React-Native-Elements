@@ -79,7 +79,7 @@ class Welcome extends React.Component<ThemeProps & NavigationProps<>> {
                     <Kit
 
                         uri={images.social.uri}
-                        preview={images.food.preview}
+                        preview={images.social.preview}
                         title="Social"
                         backgroundColor={Colors.Social.primary}
                         onPress={this.social}

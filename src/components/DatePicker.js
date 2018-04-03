@@ -11,7 +11,8 @@ import {withStyles, StyleGuide} from "./theme";
 
 import type {Theme, StyleSheet, StylesProps} from "./theme";
 
-type StyleNames = "button" | "datePicker" | "dateInput" | "dateText" | "dateTouchBody" | "btnTextConfirm";
+type StyleNames = "button" | "datePicker" | "dateInput" | "dateText" | "dateTouchBody" | "btnTextConfirm"
+ | "btnTextCancel";
 
 const themedStyles = (theme: Theme): StyleSheet<StyleNames> => ({
     button: {
@@ -34,7 +35,11 @@ const themedStyles = (theme: Theme): StyleSheet<StyleNames> => ({
         flex: 1
     },
     btnTextConfirm: {
-        color: theme.palette.primary
+        color: theme.palette.primary,
+        height: 20
+    },
+    btnTextCancel: {
+        height: 20
     }
 });
 

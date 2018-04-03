@@ -34,8 +34,10 @@ export const StackNavigatorOptions = {
     }
 };
 
+export const animationEnabled = true;
+
 export const TabNavigatorOptions = (tabs: Tabs) => ({
-    animationEnabled: false,
+    animationEnabled,
     // eslint-disable-next-line react/display-name
     tabBarComponent: ({ navigation }: NavigationProps<>) => <TabBar {...{navigation, tabs}} />,
     tabBarPosition: "bottom",

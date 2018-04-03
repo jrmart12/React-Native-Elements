@@ -16,7 +16,7 @@ type ActionSheetProps = {
     noSafeArea: boolean,
     rightAction?: {
         label: string,
-        onPress: () => void
+        onPress: () => mixed
     }
 };
 

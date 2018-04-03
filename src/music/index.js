@@ -2,7 +2,7 @@
 import * as React from "react";
 import {TabNavigator, StackNavigator} from "react-navigation";
 
-import {StackNavigatorOptions} from "../components/Navigation";
+import {StackNavigatorOptions, animationEnabled} from "../components/Navigation";
 
 import {MusicTabBar} from "./components";
 
@@ -41,7 +41,7 @@ export const MusicNavigator = TabNavigator({
     Discovery: { screen: DiscoveryNavigator },
     MusicalProfile: { screen: ProfileNavigator }
 }, {
-    animationEnabled: false,
+    animationEnabled,
     // eslint-disable-next-line react/display-name
     tabBarComponent: ({ navigation }: NavigationProps<>) => <MusicTabBar {...{navigation, tabs}} />,
     tabBarPosition: "bottom",
