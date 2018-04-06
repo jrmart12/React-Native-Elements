@@ -1,5 +1,6 @@
 // @flow
 import * as React from "react";
+import {StatusBar, Platform} from "react-native";
 import {useStrict, observable, action} from "mobx";
 import {Provider, observer} from "mobx-react/native";
 import {StackNavigator} from "react-navigation";
@@ -32,6 +33,10 @@ export default class App extends React.Component<{}> {
     @action ready() { this.isReady = true; }
 
     async componentDidMount(): Promise<void> {
+        StatusBar.setBarStyle("dark-content");
+        if (Platform.OS === "android") {
+            StatusBar.setBackgroundColor("white");
+        }
         const fonts = Font.loadAsync({
             "SFProText-Bold": SFProTextBold,
             "SFProText-Semibold": SFProTextSemibold,

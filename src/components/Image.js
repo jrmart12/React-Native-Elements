@@ -4,11 +4,13 @@ import * as React from "react";
 import {Image as RNImage, Animated, StyleSheet, View, Platform} from "react-native";
 import {BlurView} from "expo";
 import {type StyleObj} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+import type {ImageSourcePropType} from "react-native/Libraries/Image/ImageSourcePropType";
 
 import CacheManager from "./CacheManager";
 
 type ImageProps = {
     style?: StyleObj,
+    defaultSource?: ImageSourcePropType,
     preview?: string,
     uri: string
 };
@@ -25,11 +27,12 @@ export default class Image extends React.Component<ImageProps, ImageState> {
     state = {
         uri: undefined,
         intensity: new Animated.Value(100)
-    }
+    };
 
-    load(props: ImageProps) {
-        const {uri} = props;
-        CacheManager.cache(uri, this.setURI);
+    load({uri}: ImageProps) {
+        if (uri) {
+            CacheManager.cache(uri, this.setURI);
+        }
     }
 
     setURI = (uri: string) => {
@@ -59,15 +62,18 @@ export default class Image extends React.Component<ImageProps, ImageState> {
     }
 
     render(): React.Node {
-        const {preview, style} = this.props;
+        const {preview, style, defaultSource, ...otherProps} = this.props;
         const {uri, intensity} = this.state;
+        const hasDefaultSource = !!defaultSource;
         const hasPreview = !!preview;
+        const hasURI = !!uri;
+        const isImageReady = uri && uri !== preview;
         const opacity = intensity.interpolate({
             inputRange: [0, 100],
             outputRange: [0, 0.5]
         });
         const computedStyle = [
-            StyleSheet.absoluteFillObject,
+            StyleSheet.absoluteFill,
             _.transform(
                 _.pickBy(StyleSheet.flatten(style), (value, key) => propsToCopy.indexOf(key) !== -1),
                 // $FlowFixMe
@@ -77,7 +83,16 @@ export default class Image extends React.Component<ImageProps, ImageState> {
         return (
             <View {...{style}}>
                 {
-                    hasPreview && (
+                    (hasDefaultSource && !hasPreview && !hasURI) && (
+                        <RNImage
+                            source={defaultSource}
+                            style={computedStyle}
+                            {...otherProps}
+                        />
+                    )
+                }
+                {
+                    hasPreview && !isImageReady && (
                         <RNImage
                             source={{ uri: preview }}
                             resizeMode="cover"
@@ -87,11 +102,11 @@ export default class Image extends React.Component<ImageProps, ImageState> {
                     )
                 }
                 {
-                    (uri && uri !== preview) && (
+                    isImageReady && (
                         <RNImage
                             source={{ uri }}
-                            resizeMode="cover"
                             style={computedStyle}
+                            {...otherProps}
                         />
                     )
                 }

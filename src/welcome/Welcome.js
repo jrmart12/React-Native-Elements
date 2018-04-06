@@ -14,13 +14,6 @@ const images = require("./images");
 
 class Welcome extends React.Component<ThemeProps & NavigationProps<>> {
 
-    componentDidMount() {
-        StatusBar.setBarStyle("dark-content");
-        if (Platform.OS === "android") {
-            StatusBar.setBackgroundColor("white");
-        }
-    }
-
     navigate(themeName: ThemeName) {
         const { navigation, theme } = this.props;
         StatusBar.setBarStyle("light-content");
