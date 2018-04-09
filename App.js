@@ -6,6 +6,7 @@ import {Provider, observer} from "mobx-react/native";
 import {StackNavigator} from "react-navigation";
 import {Font, AppLoading} from "expo";
 import {Feather} from "@expo/vector-icons";
+import ModalHost from "expo/src/modal/ModalHost";
 
 import {Images, createTheme} from "./src/components";
 import {StackNavigatorOptions} from "./src/components/Navigation";
@@ -55,7 +56,9 @@ export default class App extends React.Component<{}> {
         }
         return (
             <Provider theme={createTheme()} player={new Player()}>
-                <MainNavigator {...{onNavigationStateChange}} />
+                <ModalHost>
+                    <MainNavigator {...{onNavigationStateChange}} />
+                </ModalHost>
             </Provider>
         );
     }
