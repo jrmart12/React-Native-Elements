@@ -31,7 +31,10 @@ export default class Avatar extends React.Component<AvatarProps> {
 
     async componentDidMount(): Promise<void> {
         const {uri} = this.props;
-        CacheManager.cache(uri, newURI => (this.uri = newURI));
+        const newURI = await CacheManager.get(uri).getPath();
+        if (newURI) {
+            this.uri = newURI;
+        }
     }
 
     render(): React.Node {

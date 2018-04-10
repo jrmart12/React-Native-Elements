@@ -1,9 +1,9 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View, Image, StatusBar, Platform } from "react-native";
+import {SafeAreaView, ScrollView, StyleSheet, View, Image, StatusBar, Platform} from "react-native";
 
-import { NavigationHelpers, Colors, StyleGuide, Images, Text, withTheme } from "../components";
+import {NavigationHelpers, Colors, StyleGuide, Images, Text, withTheme} from "../components";
 
 import Kit from "./Kit";
 
@@ -13,6 +13,13 @@ import type {NavigationProps} from "../components/Navigation";
 const images = require("./images");
 
 class Welcome extends React.Component<ThemeProps & NavigationProps<>> {
+
+    componentDidMount() {
+        StatusBar.setBarStyle("dark-content");
+        if (Platform.OS === "android") {
+            StatusBar.setBackgroundColor("white");
+        }
+    }
 
     navigate(themeName: ThemeName) {
         const { navigation, theme } = this.props;
