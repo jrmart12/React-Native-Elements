@@ -3,7 +3,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {SafeAreaView, ScrollView, StyleSheet, View, Image, StatusBar, Platform} from "react-native";
 
-import {NavigationHelpers, Colors, StyleGuide, Images, Text, withTheme} from "../components";
+import {Colors, StyleGuide, Images, Text, withTheme} from "../components";
 
 import Kit from "./Kit";
 
@@ -28,7 +28,7 @@ class Welcome extends React.Component<ThemeProps & NavigationProps<>> {
             StatusBar.setBackgroundColor(Colors[themeName].primary);
         }
         theme.switchColors(Colors[themeName]);
-        NavigationHelpers.reset(navigation, themeName);
+        navigation.navigate(themeName);
     }
 
     @autobind

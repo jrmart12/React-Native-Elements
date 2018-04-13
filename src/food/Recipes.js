@@ -2,7 +2,7 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import {Card, Feed, NavigationHelpers} from "../components";
+import {Card, Feed} from "../components";
 
 import FoodAPI from "./api";
 import type {Category} from "./api";
@@ -20,7 +20,7 @@ export default class Recipes extends React.Component<NavigationProps<>> {
     @autobind
     onPress() {
         const {navigation} = this.props;
-        NavigationHelpers.logout(navigation);
+        navigation.navigate("Welcome");
     }
 
     render(): React.Node {

@@ -3,7 +3,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet} from "react-native";
 
-import {Feed, StyleGuide, NavigationHelpers, type NavigationProps} from "../components";
+import {Feed, StyleGuide, type NavigationProps} from "../components";
 
 import PhotograhyAPI, {type Photo} from "./api";
 import {PhotoThumbnail} from "./components";
@@ -19,7 +19,7 @@ export default class Photos extends React.Component<NavigationProps<>> {
     @autobind
     async onPress(): Promise<void> {
         const {navigation} = this.props;
-        NavigationHelpers.logout(navigation);
+        navigation.navigate("Welcome");
     }
 
     render(): React.Node {

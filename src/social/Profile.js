@@ -6,7 +6,7 @@ import {observer} from "mobx-react/native";
 import {StyleSheet, View} from "react-native";
 
 import {
-    NavigationHelpers, Container, Header, NavigationBar, Text, StyleGuide, SegmentedControl, Content, Avatar
+    Container, Header, NavigationBar, Text, StyleGuide, SegmentedControl, Content, Avatar
 } from "../components";
 
 import SocialAPI from "./api";
@@ -27,7 +27,7 @@ export default class Profile extends React.Component<NavigationProps<>> {
     @autobind
     onPress() {
         const {navigation} = this.props;
-        NavigationHelpers.logout(navigation);
+        navigation.navigate("Welcome");
     }
 
     render(): React.Node {

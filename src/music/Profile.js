@@ -7,7 +7,7 @@ import {observer} from "mobx-react/native";
 import {StyleSheet, View} from "react-native";
 
 import {
-    NavigationHelpers, Container, Header, NavigationBar, Text, StyleGuide, SegmentedControl, Content, Avatar,
+    Container, Header, NavigationBar, Text, StyleGuide, SegmentedControl, Content, Avatar,
     type NavigationProps
 } from "../components";
 
@@ -30,7 +30,7 @@ class Profile extends React.Component<PlayerProps & NavigationProps<>> {
         if (player.sound) {
             await player.sound.unloadAsync();
         }
-        NavigationHelpers.logout(navigation);
+        navigation.navigate("Welcome");
     }
 
     render(): React.Node {

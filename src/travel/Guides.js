@@ -3,7 +3,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {View, StyleSheet} from "react-native";
 
-import {Card, Feed, NavigationHelpers} from "../components";
+import {Card, Feed} from "../components";
 
 import TravelAPI, {type Guide} from "./api";
 
@@ -41,7 +41,7 @@ export default class Guides extends React.Component<NavigationProps<>> {
     @autobind
     onPress() {
         const {navigation} = this.props;
-        NavigationHelpers.logout(navigation);
+        navigation.navigate("Welcome");
     }
 
     render(): React.Node {

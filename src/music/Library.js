@@ -3,7 +3,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet} from "react-native";
 
-import {Feed, NavigationHelpers, StyleGuide, type NavigationProps} from "../components";
+import {Feed, StyleGuide, type NavigationProps} from "../components";
 
 import MusicAPI, {type Album as AlbumModel} from "./api";
 import {Album, withPlayer, type PlayerProps} from "./components";
@@ -22,7 +22,7 @@ class Library extends React.Component<PlayerProps & NavigationProps<>> {
         if (player.sound) {
             await player.sound.unloadAsync();
         }
-        NavigationHelpers.logout(navigation);
+        navigation.navigate("Welcome");
     }
 
     render(): React.Node {
