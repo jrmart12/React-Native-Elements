@@ -8,7 +8,7 @@ import {
 import {observable, action} from "mobx";
 import {observer} from "mobx-react/native";
 
-import {NavigationBar, Image, BlurView, IconButton, Footer, type NavigationProps} from "../components";
+import {NavigationBar, Image, BlurView, IconButton, Footer, CacheManager, type NavigationProps} from "../components";
 
 import {Filters, Filter, PhotoActionSheet, Rotation, Crop, type FilterName} from "./components";
 import type {Photo} from "./api";
@@ -21,11 +21,17 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
     filters: PhotoActionSheet;
     crop: PhotoActionSheet;
 
-    @observable aspectRatio: number = 1;
+    @observable aspectRatio: number;
     @observable filter: FilterName;
     @observable areFiltersReady: boolean = false;
     @observable filterAnimation = new Animated.Value(0);
     @observable rotation = new Animated.Value(width / 2);
+    @observable localImagePath: string;
+
+    @action
+    setLocalImagePath(path: string) {
+        this.localImagePath = path;
+    }
 
     @autobind @action
     setFiltersAsReady() {
@@ -94,13 +100,17 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
         this.aspectRatio = width / height;
     }
 
-    componentDidMount() {
+    async componentDidMount(): Promise<void> {
         const {photo} = this.props.navigation.state.params;
         if (Platform.OS === "android") {
             StatusBar.setHidden(true);
         }
-        // Fix getSize is already invoked somewhere in gl-react-expo
-        RNImage.getSize(photo.urls.preview, this.setAspectRatio, () => this.setAspectRatio(1, 1));
+        const path = await CacheManager.get(photo.urls.regular).getPath();
+        if (path) {
+            this.setLocalImagePath(path);
+            // Fix getSize is already invoked somewhere in gl-react-expo
+            RNImage.getSize(path, this.setAspectRatio, () => this.setAspectRatio(1, 1));
+        }
     }
 
     componentWillUnmount() {
@@ -138,12 +148,16 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
                 {
                     <Animated.View style={{ opacity, ...StyleSheet.absoluteFillObject, transform: [{ rotate }] }}>
                         <Crop style={styles.filter}>
-                            <Filter
-                                style={StyleSheet.absoluteFill}
-                                uri={photo.urls.regular}
-                                onDraw={setFiltersAsReady}
-                                {...{aspectRatio, name}}
-                            />
+                            {
+                                aspectRatio && (
+                                    <Filter
+                                        style={StyleSheet.absoluteFill}
+                                        uri={this.localImagePath}
+                                        onDraw={setFiltersAsReady}
+                                        {...{aspectRatio, name}}
+                                    />
+                                )
+                            }
                         </Crop>
                     </Animated.View>
                 }
@@ -175,7 +189,11 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
                     </Footer>
                 }
                 <PhotoActionSheet ref={this.setFiltersRef} title="Filters" onClose={onCloseActionSheet}>
-                    <Filters {...{photo, aspectRatio, switchFilter}} />
+                    {
+                        aspectRatio && (
+                            <Filters {...{uri: this.localImagePath, aspectRatio, switchFilter}} />
+                        )
+                    }
                 </PhotoActionSheet>
                 <PhotoActionSheet ref={this.setCropRef} title="Edit" onClose={onCloseActionSheet}>
                     <Rotation {...{rotation}} />

@@ -4,12 +4,10 @@ import {StyleSheet, ScrollView, TouchableOpacity, View} from "react-native";
 
 import {StyleGuide} from "../../components";
 
-import {type Photo} from "../api";
-
 import Filter, {type FilterName} from "./Filter";
 
 type FiltersProps = {
-    photo: Photo,
+    uri: string,
     aspectRatio: number,
     switchFilter: FilterName => mixed
 };
@@ -17,8 +15,7 @@ type FiltersProps = {
 export default class Filters extends React.PureComponent<FiltersProps> {
 
     render(): React.Node {
-        const {aspectRatio, photo, switchFilter} = this.props;
-        const {small: uri} = photo.urls;
+        const {aspectRatio, uri, switchFilter} = this.props;
         return (
             <ScrollView
                 showsHorizontalScrollIndicator={false}
@@ -30,7 +27,7 @@ export default class Filters extends React.PureComponent<FiltersProps> {
                     filters.map(name => (
                         <TouchableOpacity key={name} onPress={() => switchFilter(name)}>
                             <View>
-                                <Filter style={styles.filter} uri={uri} {...{aspectRatio, name}} />
+                                <Filter style={styles.filter} {...{aspectRatio, name, uri}} />
                             </View>
                         </TouchableOpacity>
                     ))
