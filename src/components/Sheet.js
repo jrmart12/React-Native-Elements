@@ -1,8 +1,7 @@
 // @flow
 import * as React from "react";
-import {StyleSheet, View, TouchableWithoutFeedback, TouchableOpacity, Dimensions} from "react-native";
+import {StyleSheet, View, TouchableWithoutFeedback, TouchableOpacity, Dimensions, SafeAreaView} from "react-native";
 import {Constants} from "expo";
-import {SafeAreaView} from "react-navigation";
 
 import {StyleGuide, type StyleProps} from "./theme";
 import Text from "./Text";

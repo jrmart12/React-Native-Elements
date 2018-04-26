@@ -1,7 +1,8 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {SafeAreaView, ScrollView, StyleSheet, View, Image, StatusBar, Platform} from "react-native";
+import {ScrollView, StyleSheet, View, Image, StatusBar, Platform} from "react-native";
+import {SafeAreaView} from "react-navigation";
 
 import {Colors, StyleGuide, Images, Text, withTheme} from "../components";
 
