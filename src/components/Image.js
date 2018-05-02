@@ -22,6 +22,8 @@ type ImageState = {
 
 export default class Image extends React.Component<ImageProps, ImageState> {
 
+    mounted = true;
+
     state = {
         uri: undefined,
         intensity: new Animated.Value(100)
@@ -31,7 +33,7 @@ export default class Image extends React.Component<ImageProps, ImageState> {
         if (uri) {
             const entry = CacheManager.get(uri);
             const path = await entry.getPath();
-            if (path) {
+            if (this.mounted) {
                 this.setState({ uri: path });
             }
         }
@@ -53,9 +55,7 @@ export default class Image extends React.Component<ImageProps, ImageState> {
     }
 
     componentWillUnmount() {
-        const {uri} = this.props;
-        const entry = CacheManager.get(uri);
-        entry.cancel();
+        this.mounted = false;
     }
 
     render(): React.Node {
