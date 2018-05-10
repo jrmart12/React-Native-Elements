@@ -3,7 +3,7 @@
 ```json
 {
     "name": "react-native-elements",
-    "version": "1.0.1",
+    "version": "1.0.4",
     "private": true,
     "devDependencies": {
         "babel-eslint": "^8.2.1",
@@ -14,10 +14,10 @@
         "eslint-plugin-jsx-a11y": "^6.0.2",
         "eslint-plugin-react": "^7.4.0",
         "eslint-plugin-react-native": "^3.2.1",
-        "exp": "51.4.0",
+        "exp": "53.0.0",
         "flow-bin": "0.63.1",
         "flow-result-checker": "^0.3.0",
-        "jest-expo": "^26.0.0",
+        "jest-expo": "^27.0.0",
         "react-native-scripts": "1.11.1",
         "react-test-renderer": "16.0.0-alpha.12"
     },
@@ -45,20 +45,20 @@
         "@expo/vector-icons": "6.3.1",
         "autobind-decorator": "^1.4.0",
         "crypto-js": "^3.1.9-1",
-        "expo": "^26.0.0",
-        "gl-react": "^3.13.0",
-        "gl-react-expo": "^3.6.0",
+        "expo": "^27.0.0",
+        "gl-react": "^3.15.0",
+        "gl-react-expo": "^3.16.3",
         "jest-junit-reporter": "^1.1.0",
         "lodash": "^4.17.4",
         "mobx": "^3.4.1",
         "mobx-react": "^4.3.5",
         "moment": "^2.18.1",
-        "react": "16.3.0-alpha.1",
-        "react-native": "https://github.com/expo/react-native/archive/sdk-26.0.0.tar.gz",
-        "react-native-datepicker": "^1.6.0",
+        "react": "16.3.1",
+        "react-native": "https://github.com/expo/react-native/archive/sdk-27.0.0.tar.gz",
+        "react-native-datepicker": "1.6.0",
         "react-native-keyboard-spacer": "^0.4.1",
         "react-native-maps-super-cluster": "^1.3.1",
-        "react-navigation": "1.5.8"
+        "react-navigation": "1.5.11"
     }
 }
 ```

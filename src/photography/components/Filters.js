@@ -8,14 +8,13 @@ import Filter, {type FilterName} from "./Filter";
 
 type FiltersProps = {
     uri: string,
-    aspectRatio: number,
     switchFilter: FilterName => mixed
 };
 
 export default class Filters extends React.PureComponent<FiltersProps> {
 
     render(): React.Node {
-        const {aspectRatio, uri, switchFilter} = this.props;
+        const {uri, switchFilter} = this.props;
         return (
             <ScrollView
                 showsHorizontalScrollIndicator={false}
@@ -27,7 +26,7 @@ export default class Filters extends React.PureComponent<FiltersProps> {
                     filters.map(name => (
                         <TouchableOpacity key={name} onPress={() => switchFilter(name)}>
                             <View>
-                                <Filter style={styles.filter} {...{aspectRatio, name, uri}} />
+                                <Filter style={styles.filter} {...{name, uri}} />
                             </View>
                         </TouchableOpacity>
                     ))

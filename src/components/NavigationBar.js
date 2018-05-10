@@ -4,7 +4,7 @@ import autobind from "autobind-decorator";
 import {SafeAreaView, View, Animated, StyleSheet} from "react-native";
 import {LinearGradient} from "expo";
 
-import type {StyleObj as Style} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+import type {____ViewStyleProp_Internal as Style} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 import LeftAction from "./LeftAction";
 import Text from "./Text";

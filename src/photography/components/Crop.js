@@ -75,7 +75,7 @@ class Crop extends React.PureComponent<CropProps> {
     componentDidMount() {
         const {style} = this.props;
         // $FlowFixMe
-        const {width, height} = RNStyleSheet.flatten(style);
+        const {width, height} = (RNStyleSheet.flatten(style): { width: number, height: number });
         this.widthBoundary = width - boundary;
         this.heightBoundary = height - boundary;
 

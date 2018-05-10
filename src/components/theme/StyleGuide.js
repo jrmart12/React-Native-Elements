@@ -1,8 +1,8 @@
 // @flow
-import type {StyleObj} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+import type {____ViewStyleProp_Internal as Style} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 export type StyleProps = {
-    style?: StyleObj
+    style?: Style
 };
 
 export type Typography = {

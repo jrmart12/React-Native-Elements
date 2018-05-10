@@ -18,8 +18,11 @@ import {PhotographyNavigator} from "./src/photography";
 import {TravelNavigator} from "./src/travel";
 import {Player} from "./src/music/components";
 
+// $FlowFixMe
 const SFProTextBold = require("./fonts/SF-Pro-Text-Bold.otf");
+// $FlowFixMe
 const SFProTextSemibold = require("./fonts/SF-Pro-Text-Semibold.otf");
+// $FlowFixMe
 const SFProTextRegular = require("./fonts/SF-Pro-Text-Regular.otf");
 
 useStrict(true);

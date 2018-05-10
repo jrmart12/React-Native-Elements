@@ -10,7 +10,6 @@ import GLImage from "./GLImage";
 export type FilterName = "saturate" | "sepia" | "warm" | "walden" | "brannan" | "valencia";
 type FilterProps = StyleProps & {
     uri: string,
-    aspectRatio: number,
     name: FilterName,
     onDraw?: () => mixed
 };
@@ -18,7 +17,7 @@ type FilterProps = StyleProps & {
 export default class Filter extends React.PureComponent<FilterProps> {
 
     render(): React.Node {
-        const {style, uri, aspectRatio, name, onDraw} = this.props;
+        const {style, uri, name, onDraw} = this.props;
         const source = { uri };
         return (
             // $FlowFixMe
@@ -29,7 +28,7 @@ export default class Filter extends React.PureComponent<FilterProps> {
                             <Walden on={name === "walden"}>
                                 <Brannan on={name === "brannan"}>
                                     <Valencia on={name === "valencia"}>
-                                        <GLImage {...{source, aspectRatio, onDraw}} />
+                                        <GLImage {...{source, onDraw}} />
                                     </Valencia>
                                 </Brannan>
                             </Walden>
