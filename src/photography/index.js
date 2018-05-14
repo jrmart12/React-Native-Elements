@@ -1,5 +1,5 @@
 // @flow
-import {TabNavigator, StackNavigator} from "react-navigation";
+import {createStackNavigator, createBottomTabNavigator} from "react-navigation";
 
 import {TabNavigatorOptions, StackNavigatorOptions} from "../components/Navigation";
 
@@ -17,23 +17,23 @@ const tabs = [
     { key: "Places", label: "Places", icon: "map" }
 ];
 
-const AlbumsNavigator = StackNavigator({
+const AlbumsNavigator = createStackNavigator({
     Albums: { screen: Albums },
     Album: { screen: Album }
 }, StackNavigatorOptions);
 
-const PlacesNavigator = StackNavigator({
+const PlacesNavigator = createStackNavigator({
     Places: { screen: Places },
     Place: { screen: Place }
 }, StackNavigatorOptions);
 
-const PhotosTabNavigator = TabNavigator({
+const PhotosTabNavigator = createBottomTabNavigator({
     Photos: { screen: Photos },
     Albums: { screen: AlbumsNavigator },
     Places: { screen: PlacesNavigator }
 }, TabNavigatorOptions(tabs));
 
-export const PhotographyNavigator = StackNavigator({
+export const PhotographyNavigator = createStackNavigator({
     Photos: { screen: PhotosTabNavigator },
     Photo: { screen: Photo },
     Camera: { screen: Camera }

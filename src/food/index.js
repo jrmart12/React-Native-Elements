@@ -1,5 +1,5 @@
 // @flow
-import {TabNavigator, StackNavigator} from "react-navigation";
+import {createStackNavigator, createBottomTabNavigator} from "react-navigation";
 
 import {StackNavigatorOptions, TabNavigatorOptions} from "../components/Navigation";
 
@@ -14,18 +14,18 @@ const tabs = [
     { key: "Restaurants", label: "Restaurants", icon: "map" }
 ];
 
-const RecipesNavigator = StackNavigator({
+const RecipesNavigator = createStackNavigator({
     Recipes: { screen: Recipes },
     Category: { screen: Category },
     Recipe: { screen: Recipe }
 }, StackNavigatorOptions);
 
-const RestaurantsNavigator = StackNavigator({
+const RestaurantsNavigator = createStackNavigator({
     Restaurants: { screen: Restaurants },
     Restaurant: { screen: Restaurant }
 }, StackNavigatorOptions);
 
-export const FoodNavigator = TabNavigator({
+export const FoodNavigator = createBottomTabNavigator({
     Recipes: { screen: RecipesNavigator },
     Restaurants: { screen: RestaurantsNavigator }
 }, TabNavigatorOptions(tabs));

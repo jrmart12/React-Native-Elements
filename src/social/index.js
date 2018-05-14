@@ -1,5 +1,5 @@
 // @flow
-import {TabNavigator, StackNavigator} from "react-navigation";
+import {createStackNavigator, createBottomTabNavigator} from "react-navigation";
 
 import {TabNavigatorOptions, StackNavigatorOptions} from "../components/Navigation";
 
@@ -15,13 +15,13 @@ const tabs = [
     { key: "Profile", label: "Profile", icon: "user" }
 ];
 
-const SocialTabNavigator = TabNavigator({
+const SocialTabNavigator = createBottomTabNavigator({
     Timeline: { screen: Timeline },
     Messages: { screen: Messages },
     Profile: { screen: Profile }
 }, TabNavigatorOptions(tabs));
 
-export const SocialNavigator = StackNavigator({
+export const SocialNavigator = createStackNavigator({
     Home: { screen: SocialTabNavigator },
     Story: { screen: Story },
     Message: { screen: Message }

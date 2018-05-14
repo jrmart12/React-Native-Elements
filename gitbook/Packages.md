@@ -3,7 +3,7 @@
 ```json
 {
     "name": "react-native-elements",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "private": true,
     "devDependencies": {
         "babel-eslint": "^8.2.1",
@@ -14,7 +14,7 @@
         "eslint-plugin-jsx-a11y": "^6.0.2",
         "eslint-plugin-react": "^7.4.0",
         "eslint-plugin-react-native": "^3.2.1",
-        "exp": "53.0.0",
+        "exp": "53.1.0",
         "flow-bin": "0.63.1",
         "flow-result-checker": "^0.3.0",
         "jest-expo": "^27.0.0",
@@ -58,7 +58,7 @@
         "react-native-datepicker": "1.6.0",
         "react-native-keyboard-spacer": "^0.4.1",
         "react-native-maps-super-cluster": "^1.3.1",
-        "react-navigation": "1.5.11"
+        "react-navigation": "2.0.1"
     }
 }
 ```

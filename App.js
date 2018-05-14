@@ -3,7 +3,7 @@ import * as React from "react";
 import {StatusBar, Platform} from "react-native";
 import {useStrict, observable, action} from "mobx";
 import {Provider, observer} from "mobx-react/native";
-import {SwitchNavigator} from "react-navigation";
+import {createSwitchNavigator} from "react-navigation";
 import {Font, AppLoading} from "expo";
 import {Feather} from "@expo/vector-icons";
 import ModalHost from "expo/src/modal/ModalHost";
@@ -66,7 +66,7 @@ export default class App extends React.Component<{}> {
     }
 }
 
-const MainNavigator = SwitchNavigator({
+const MainNavigator = createSwitchNavigator({
     Welcome: { screen: Welcome },
     Food: { screen: FoodNavigator },
     Social: { screen: SocialNavigator },

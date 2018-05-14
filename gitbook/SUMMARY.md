@@ -6,5 +6,5 @@
 * [Installation](Installation.md)
 * [Packages](Packages.md)
 * [Changelog](Changelog.md)
-* [Frequently asked questions](FAQ.md)
+* [Frequently Asked Questions](FAQ.md)
 * [License](License.md)

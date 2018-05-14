@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react";
-import {TabNavigator, StackNavigator} from "react-navigation";
+import {createStackNavigator, createBottomTabNavigator} from "react-navigation";
 
 import {StackNavigatorOptions, animationEnabled} from "../components/Navigation";
 
@@ -20,23 +20,23 @@ const tabs = [
     { key: "MusicalProfile", label: "Profile", icon: "user" }
 ];
 
-const LibraryNavigator = StackNavigator({
+const LibraryNavigator = createStackNavigator({
     Library: { screen: Library },
     Album: { screen: Album }
 }, StackNavigatorOptions);
 
-const DiscoveryNavigator = StackNavigator({
+const DiscoveryNavigator = createStackNavigator({
     Discovery: { screen: Discovery },
     Playlist: { screen: Playlist }
 }, StackNavigatorOptions);
 
-const ProfileNavigator = StackNavigator({
+const ProfileNavigator = createStackNavigator({
     MusicalProfile: { screen: Profile },
     ProfileAlbum: { screen: Album },
     ProfilePlaylist: { screen: Playlist }
 }, StackNavigatorOptions);
 
-export const MusicNavigator = TabNavigator({
+export const MusicNavigator = createBottomTabNavigator({
     Library: { screen: LibraryNavigator },
     Discovery: { screen: DiscoveryNavigator },
     MusicalProfile: { screen: ProfileNavigator }
