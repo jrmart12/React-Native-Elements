@@ -22,6 +22,12 @@ type ImageState = {
 
 export default class Image extends React.Component<ImageProps, ImageState> {
 
+    static defaultProps = {
+        style: undefined,
+        defaultSource: undefined,
+        preview: undefined
+    };
+
     mounted = true;
 
     state = {

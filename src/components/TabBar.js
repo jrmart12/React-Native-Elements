@@ -1,6 +1,7 @@
 // @flow
 import * as React from "react";
 import {StyleSheet, View, TouchableWithoutFeedback, SafeAreaView} from "react-native";
+import {StackActions} from "react-navigation";
 
 import Icon from "./Icon";
 import {StyleGuide} from "./theme";
@@ -27,6 +28,8 @@ export default class TabBar extends React.Component<TabBarProps> {
         const activeKey = tabs[navigation.state.index].key;
         if (activeKey !== key) {
             navigation.navigate(key);
+        } else {
+            navigation.dispatch(StackActions.pop({ n: 1 }));
         }
     }
 

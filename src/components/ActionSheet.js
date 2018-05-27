@@ -25,7 +25,9 @@ type ActionSheetProps = {
 export default class ActionSheet extends React.Component<ActionSheetProps> {
 
     static defaultProps = {
-        noSafeArea: false
+        noSafeArea: false,
+        subtitle: undefined,
+        rightAction: undefined
     };
 
     @observable animation: Animated.Value = new Animated.Value(0);

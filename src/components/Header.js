@@ -19,7 +19,9 @@ type HeaderProps = {
 export default class Header extends React.PureComponent<HeaderProps> {
 
     static defaultProps = {
-        heightRatio: 0.68
+        heightRatio: 0.68,
+        title: undefined,
+        children: undefined
     }
 
     render(): React.Node {
