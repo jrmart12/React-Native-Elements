@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
         height: 30
     },
     visit: {
+        flex: 1,
         justifyContent: "center"
     }
 });

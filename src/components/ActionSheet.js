@@ -15,6 +15,7 @@ type ActionSheetProps = {
     subtitle?: string,
     children: React.Node,
     noSafeArea: boolean,
+    scrollable: boolean,
     rightAction?: {
         label: string,
         onPress: () => mixed
@@ -25,6 +26,7 @@ type ActionSheetProps = {
 export default class ActionSheet extends React.Component<ActionSheetProps> {
 
     static defaultProps = {
+        scrollable: false,
         noSafeArea: false,
         subtitle: undefined,
         rightAction: undefined
@@ -63,7 +65,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
 
     render(): React.Node {
         const {toggle} = this;
-        const {title, subtitle, rightAction, children, noSafeArea} = this.props;
+        const {title, subtitle, rightAction, children, noSafeArea, scrollable} = this.props;
         const opacity = this.animation.interpolate({
             inputRange: [0, 1],
             outputRange: [0, 0.5]
@@ -101,7 +103,7 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
                     }
                     <AnimatedSheet
                         style={{ transform: [{ translateY }] }}
-                        {...{toggle, title, subtitle, rightAction, noSafeArea}}
+                        {...{toggle, title, subtitle, rightAction, noSafeArea, scrollable}}
                     >
                         {children}
                     </AnimatedSheet>

@@ -55,7 +55,7 @@ export default class RestaurantComp extends React.Component<NavigationProps<{ re
                         </BaseCard>
                     </View>
                 </Content>
-                <ActionSheet title="Reservation" ref={this.setReservationRef}>
+                <ActionSheet title="Reservation" ref={this.setReservationRef} scrollable>
                     <RestaurantAddress {...{restaurant}} />
                     <View style={styles.gutter}>
                         <DatePicker />

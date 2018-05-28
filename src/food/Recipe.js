@@ -34,7 +34,7 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
                     <Button primary label="See Ingredients" onPress={this.toggleIngredientList} />
                     <List rows={recipe.instructions} renderRow={(step, i) => <Step index={i + 1} {...{step}} />} />
                 </Content>
-                <ActionSheet title="Ingredients" ref={this.setIngredientListRef}>
+                <ActionSheet title="Ingredients" ref={this.setIngredientListRef} scrollable>
                     {
                         recipe.ingredients.map((ingredient, key) => <Ingredient {...{ingredient, key}} />)
                     }

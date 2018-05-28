@@ -1,5 +1,11 @@
 # Changelog
 
+# 1.0.5
+* Minor bug fixes
+
+# 1.0.4
+* Minor navigation improvement
+
 # 1.0.3
 * Minor bug fixes
 

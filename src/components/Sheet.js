@@ -1,6 +1,8 @@
 // @flow
 import * as React from "react";
-import {StyleSheet, View, TouchableWithoutFeedback, TouchableOpacity, Dimensions, SafeAreaView} from "react-native";
+import {
+    StyleSheet, View, TouchableWithoutFeedback, TouchableOpacity, Dimensions, SafeAreaView, ScrollView
+} from "react-native";
 import {Constants} from "expo";
 
 import {StyleGuide, type StyleProps} from "./theme";
@@ -12,6 +14,7 @@ export type SheetProps = StyleProps & {
     subtitle?: string,
     children: React.Node,
     noSafeArea: boolean,
+    scrollable: boolean,
     rightAction?: {
         label: string,
         onPress: () => void
@@ -22,11 +25,12 @@ export type SheetProps = StyleProps & {
 export default class Sheet extends React.PureComponent<SheetProps> {
 
     static defaultProps = {
-        noSafeArea: false
+        noSafeArea: false,
+        scrollable: false
     };
 
     render(): React.Node {
-        const {style, toggle, title, subtitle, rightAction, noSafeArea} = this.props;
+        const {style, toggle, title, subtitle, rightAction, noSafeArea, scrollable} = this.props;
         const children = noSafeArea ? this.props.children : <SafeAreaView>{this.props.children}</SafeAreaView>;
         return (
             <View style={[styles.content, style]}>
@@ -54,7 +58,7 @@ export default class Sheet extends React.PureComponent<SheetProps> {
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
-                {children}
+                {scrollable ? (<ScrollView>{children}</ScrollView>) : children}
             </View>
         );
     }

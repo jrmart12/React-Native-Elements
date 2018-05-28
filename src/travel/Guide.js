@@ -44,7 +44,7 @@ export default class GuideScreen extends React.PureComponent<NavigationProps<{ g
                         }
                     </View>
                 </Content>
-                <ActionSheet title="Reservation" ref={this.setReservationRef}>
+                <ActionSheet title="Reservation" ref={this.setReservationRef} scrollable>
                     {
                         guide.visits.map((visit, index) => (
                             <Visit
