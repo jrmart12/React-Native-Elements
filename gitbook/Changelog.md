@@ -1,5 +1,8 @@
 # Changelog
 
+# 1.0.7
+* Minor bug fixes and improvements with the `<ActionSheet>` component.
+
 # 1.0.5
 * Minor bug fixes
 

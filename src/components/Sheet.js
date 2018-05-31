@@ -58,7 +58,7 @@ export default class Sheet extends React.PureComponent<SheetProps> {
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
-                {scrollable ? (<ScrollView>{children}</ScrollView>) : children}
+                {scrollable ? (<ScrollView bounces={false}>{children}</ScrollView>) : children}
             </View>
         );
     }
