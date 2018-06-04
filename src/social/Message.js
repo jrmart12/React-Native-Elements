@@ -60,7 +60,7 @@ export default class Message extends React.Component<NavigationProps<{ id: strin
         const title = user.name;
         return (
             <Container>
-                <Feed data={messages.slice()} {...{renderItem, back, title, navigation}} />
+                <Feed data={messages.slice().reverse()} inverted {...{renderItem, back, title, navigation}} />
                 <SafeAreaView style={styles.inputBox}>
                     <View style={styles.innerInputBox}>
                         <TextInput
@@ -70,6 +70,7 @@ export default class Message extends React.Component<NavigationProps<{ id: strin
                             onSubmitEditing={this.postMessage}
                             onChangeText={this.setMessage}
                             value={this.message}
+                            blurOnSubmit={false}
                         />
                         <IconButton name="arrow-up" onPress={this.postMessage} backgroundPrimary rounded />
                     </View>

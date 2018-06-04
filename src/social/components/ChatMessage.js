@@ -2,7 +2,7 @@
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
-import {BaseCard, Text, Avatar} from "../../components";
+import {BaseCard, Text, Avatar, StyleGuide} from "../../components";
 import SocialAPI from "../api";
 
 import type {Message} from "../api";
@@ -22,7 +22,7 @@ export default class ChatMessage extends React.PureComponent<ChatMessageProps> {
         const showAvatar = !nextMessage || (message.me ? !nextMessage.me : nextMessage.me);
         const user = message.me ? SocialAPI.me() : SocialAPI.user(SocialAPI.messageThread(id).user);
         return (
-            <View style={{ flexDirection }}>
+            <View style={{ flexDirection, marginBottom: StyleGuide.spacing.small }}>
                 <View style={styles.user}>
                     {showAvatar && <Avatar size={48} uri={user.picture} />}
                 </View>
@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     baseCard: {
         minHeight: 48,
         justifyContent: "center",
-        flex: 1
+        flex: 1,
+        marginTop: 0
     },
     user: {
         width: 80,

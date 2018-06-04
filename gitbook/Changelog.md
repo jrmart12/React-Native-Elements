@@ -1,5 +1,8 @@
 # Changelog
 
+# 1.0.8
+* Minor UX improvement in the chat messages
+
 # 1.0.7
 * Minor bug fixes and improvements with the `<ActionSheet>` component.
 

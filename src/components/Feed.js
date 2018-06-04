@@ -22,7 +22,8 @@ type FeedProps<T> = ThemeProps & StyleProps & NavigationProps<*> & {
     header?: React.Node,
     back?: string,
     rightAction?: Action,
-    numColumns?: number
+    numColumns?: number,
+    inverted?: boolean
 };
 
 const keyExtractor = <T: Item>(item: T): string => item.id;
@@ -40,7 +41,7 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
 
     render(): React.Node {
         const {renderItem, scrollAnimation} = this;
-        const {data, title, navigation, theme, back, rightAction, header, numColumns, style} = this.props;
+        const {data, title, navigation, theme, back, rightAction, header, numColumns, style, inverted} = this.props;
         const translateY = scrollAnimation.interpolate({
             inputRange: [55, 56, 57],
             outputRange: [55, 0, 0]
@@ -85,7 +86,7 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
                     )}
                     scrollEventThrottle={1}
                     columnWrapperStyle={(numColumns && numColumns > 0) ? styles.columnWrapperStyle : undefined}
-                    {...{data, keyExtractor, renderItem, onScroll, numColumns}}
+                    {...{data, keyExtractor, renderItem, onScroll, numColumns, inverted}}
                 />
             </View>
         );
