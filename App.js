@@ -5,10 +5,9 @@ import {useStrict, observable, action} from "mobx";
 import {Provider, observer} from "mobx-react/native";
 import {createSwitchNavigator} from "react-navigation";
 import {Font, AppLoading} from "expo";
-import {Feather} from "@expo/vector-icons";
 import ModalHost from "expo/src/modal/ModalHost";
 
-import {Images, createTheme} from "./src/components";
+import {Images, loadIcons, createTheme} from "./src/components";
 
 import {Welcome} from "./src/welcome";
 import {FoodNavigator} from "./src/food";
@@ -46,7 +45,7 @@ export default class App extends React.Component<{}> {
             "SFProText-Regular": SFProTextRegular
         });
         const images = Images.downloadAsync();
-        const icons = Font.loadAsync(Feather.font);
+        const icons = loadIcons();
         await Promise.all([fonts, ...images, icons]);
         this.ready();
     }

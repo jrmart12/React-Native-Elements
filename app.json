@@ -1,9 +1,9 @@
 {
     "expo": {
         "name": "react-native-elements",
-        "version": "1.0.4",
+        "version": "1.0.9",
         "description": "Sketch Elements for React Native: https://react-native.shop/elements",
-        "sdkVersion": "27.0.0",
+        "sdkVersion": "28.0.0",
         "orientation": "portrait",
         "privacy": "public",
         "icon": "./app.png",

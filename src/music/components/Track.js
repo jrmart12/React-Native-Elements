@@ -28,7 +28,7 @@ export default class TrackComp extends React.PureComponent<TrackProps> {
             <View style={styles.container}>
                 <Text style={styles.step}>{`${index}`}</Text>
                 <Text style={styles.track}>{track.name}</Text>
-                <IconButton name="more-horizontal" primary {...{onPress}} />
+                <IconButton name="options" primary {...{onPress}} />
             </View>
         );
     }

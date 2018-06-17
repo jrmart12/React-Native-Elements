@@ -72,7 +72,7 @@ export default class Message extends React.Component<NavigationProps<{ id: strin
                             value={this.message}
                             blurOnSubmit={false}
                         />
-                        <IconButton name="arrow-up" onPress={this.postMessage} backgroundPrimary rounded />
+                        <IconButton name="send" onPress={this.postMessage} backgroundPrimary rounded />
                     </View>
                 </SafeAreaView>
                 <KeyboardSpacer />

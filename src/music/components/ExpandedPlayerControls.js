@@ -89,10 +89,9 @@ class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps
                             primary={this.repeat}
                         />
                         <IconButton
-                            name="fast-forward"
+                            name="previous"
                             disabled={!isSongPlaying || !player.isLoaded}
                             onPress={this.replay}
-                            style={styles.flip}
                             primary
                         />
                         {
@@ -110,7 +109,7 @@ class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps
                             )
                         }
                         <IconButton
-                            name="fast-forward"
+                            name="next"
                             disabled={!isSongPlaying || !player.isLoaded}
                             onPress={this.shuffle}
                             primary
@@ -160,9 +159,6 @@ const styles = StyleSheet.create({
     slider: {
         marginVertical: StyleGuide.spacing.base,
         marginHorizontal: StyleGuide.spacing.small
-    },
-    flip: {
-        transform: [{ rotate: "180deg" }]
     },
     progressBar: {
         borderBottomWidth: 2,

@@ -8,6 +8,7 @@ import {Card, Feed} from "../components";
 import TravelAPI, {type Guide} from "./api";
 
 import type {NavigationProps} from "../components";
+import type {Action} from "../components/Model";
 
 type Chunk = {
     id: string,
@@ -51,8 +52,8 @@ export default class Guides extends React.Component<NavigationProps<>> {
             { id: guides.map(guide => guide.id).join(""), guides }
         ));
         const title = "Guides";
-        const rightAction = {
-            icon: "log-out",
+        const rightAction: Action = {
+            icon: "sign-out",
             onPress
         };
         return (

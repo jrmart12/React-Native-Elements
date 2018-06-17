@@ -41,7 +41,7 @@ class Profile extends React.Component<PlayerProps & NavigationProps<>> {
         return (
             <Container>
                 <Header picture={me.cover} heightRatio={1}>
-                    <NavigationBar type="transparent" rightAction={{ icon: "log-out", onPress }} {...{navigation}} />
+                    <NavigationBar type="transparent" rightAction={{ icon: "sign-out", onPress }} {...{navigation}} />
                     <View style={styles.container}>
                         <Avatar uri={me.picture} size={90} style={styles.avatar} />
                         <Text color="white" type="title3" style={styles.text}>{me.name}</Text>

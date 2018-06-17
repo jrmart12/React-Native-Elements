@@ -29,7 +29,7 @@ export default class Albums extends React.PureComponent<NavigationProps<>> {
                                 {`${group.photos.length} photo${group.photos.length > 1 ? "s" : ""}`}
                             </Text>
                         </View>
-                        <Icon name="chevron-right" />
+                        <Icon name="arrow-right" />
                     </View>
                 </TouchableOpacity>
                 <View style={styles.thumbnail}>

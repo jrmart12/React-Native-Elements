@@ -37,7 +37,7 @@ export default class Sheet extends React.PureComponent<SheetProps> {
                 <TouchableWithoutFeedback onPress={toggle}>
                     <View style={styles.header}>
                         <TouchableOpacity style={styles.left} onPress={toggle}>
-                            <Icon name="chevron-down" primary />
+                            <Icon name="arrow-down" primary />
                         </TouchableOpacity>
                         <View style={styles.center}>
                             <Text type="headline" style={styles.title} numberOfLines={1} primary>{title}</Text>

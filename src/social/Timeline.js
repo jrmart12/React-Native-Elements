@@ -35,7 +35,7 @@ export default class Timeline extends React.Component<NavigationProps<>> {
         const data = SocialAPI.posts;
         const title = "Timeline";
         const rightAction = {
-            icon: "edit",
+            icon: "write",
             onPress
         };
         const postAction = {

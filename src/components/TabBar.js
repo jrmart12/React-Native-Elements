@@ -3,11 +3,10 @@ import * as React from "react";
 import {StyleSheet, View, TouchableWithoutFeedback, SafeAreaView} from "react-native";
 import {StackActions} from "react-navigation";
 
-import Icon from "./Icon";
+import Icon, {type IconName} from "./Icon";
 import {StyleGuide} from "./theme";
 
 import type {NavigationProps} from "./Navigation";
-import type {IconName} from "./Model";
 
 export type Tab = {
     key: string,

@@ -40,7 +40,7 @@ export default class IngredientComp extends React.Component<IngredientProps, Ing
                 <TouchableOpacity onPress={this.toggle}>
                     <View style={[styles.content, checked ? styles.semiOpaque : styles.opaque]}>
                         <View style={styles.radio}>
-                            <Icon name={checked ? "check-circle" : "circle"} primary />
+                            <Icon name={checked ? "circle" : "circle-empty"} primary />
                         </View>
                         <View style={styles.text}>
                             <Text>{ingredient.name}</Text>

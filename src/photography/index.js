@@ -12,8 +12,8 @@ import Place from "./Place";
 import Camera from "./Camera";
 
 const tabs = [
-    { key: "Photos", label: "Photos", icon: "grid" },
-    { key: "Albums", label: "Albums", icon: "layers" },
+    { key: "Photos", label: "Photos", icon: "photos" },
+    { key: "Albums", label: "Albums", icon: "albums" },
     { key: "Places", label: "Places", icon: "map" }
 ];
 

@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.0.9
+* Upgrade to Expo 28
+* Add Icon font from Sketch file
+
 # 1.0.8
 * Minor UX improvement in the chat messages
 

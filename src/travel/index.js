@@ -11,8 +11,8 @@ import Guides from "./Guides";
 import Guide from "./Guide";
 
 const tabs = [
-    { key: "Guides", label: "Guides", icon: "book" },
-    { key: "Cities", label: "Cities", icon: "map" }
+    { key: "Guides", label: "Guides", icon: "feed" },
+    { key: "Cities", label: "Cities", icon: "cities" }
 ];
 
 const CitiesNavigator = createStackNavigator({

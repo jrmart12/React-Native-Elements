@@ -16,8 +16,8 @@ import type {NavigationProps} from "../components/Navigation";
 
 const tabs = [
     { key: "Library", label: "Library", icon: "music" },
-    { key: "Discovery", label: "Discovery", icon: "book" },
-    { key: "MusicalProfile", label: "Profile", icon: "user" }
+    { key: "Discovery", label: "Discovery", icon: "feed" },
+    { key: "MusicalProfile", label: "Profile", icon: "account" }
 ];
 
 const LibraryNavigator = createStackNavigator({

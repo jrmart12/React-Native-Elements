@@ -23,13 +23,12 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
         const recipe = FoodAPI.recipes[category.id].filter(r => r.id === recipeId)[0];
         const people = `${recipe.people} ${recipe.people > 1 ? "people" : "person"}`;
         const minutes = `${recipe.minutes} minutes`;
-        const icon = recipe.people > 1 ? "user" : "users";
         return (
             <Container>
                 <Header title={recipe.title} picture={recipe.picture}>
                     <NavigationBar type="transparent" back={category.title} {...{navigation}} />
                 </Header>
-                <DetailsBar details={[{ icon, caption: people }, { icon: "clock", caption: minutes }]} />
+                <DetailsBar details={[{ icon: "restaurant", caption: people }, { icon: "time", caption: minutes }]} />
                 <Content style={styles.gutter}>
                     <Button primary label="See Ingredients" onPress={this.toggleIngredientList} />
                     <List rows={recipe.instructions} renderRow={(step, i) => <Step index={i + 1} {...{step}} />} />

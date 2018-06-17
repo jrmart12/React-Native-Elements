@@ -31,7 +31,7 @@ class Library extends React.Component<PlayerProps & NavigationProps<>> {
         const data = MusicAPI.albums;
         const title = "Library";
         const rightAction = {
-            icon: "log-out",
+            icon: "sign-out",
             onPress
         };
         return (

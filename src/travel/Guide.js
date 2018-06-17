@@ -24,8 +24,8 @@ export default class GuideScreen extends React.PureComponent<NavigationProps<{ g
                 </Header>
                 <DetailsBar
                     details={[
-                        { icon: "clock", caption: `${guide.duration} day${guide.duration > 1 ? "s" : ""}` },
-                        { icon: "sun", caption: "Temperature" }
+                        { icon: "time", caption: `${guide.duration} day${guide.duration > 1 ? "s" : ""}` },
+                        { icon: "climate", caption: "Temperature" }
                     ]}
                 />
                 <Content style={styles.gutter}>

@@ -3,9 +3,7 @@ import * as React from "react";
 import {StyleSheet, View, TouchableHighlight} from "react-native";
 
 import Text from "./Text";
-import Icon from "./Icon";
-
-import type {IconName} from "./Model";
+import Icon, {type IconName} from "./Icon";
 
 type LeftActionProps = {
     name: IconName,

@@ -39,28 +39,20 @@ export default class ActionSheet extends React.Component<ActionSheetProps> {
     @action hide() { this.visible = false; }
 
     @autobind toggle() {
-        if (!this.visible) {
-            this.animation.stopAnimation();
-            this.show();
-            Animated.timing(
-                this.animation,
-                {
-                    toValue: 1,
-                    duration,
-                    useNativeDriver
-                }
-            ).start();
+        this.animation.stopAnimation();
+        if (this.visible) {
+            this.hide();
         } else {
-            this.animation.stopAnimation();
-            Animated.timing(
-                this.animation,
-                {
-                    toValue: 0,
-                    duration,
-                    useNativeDriver
-                }
-            ).start(() => this.hide());
+            this.show();
         }
+        Animated.timing(
+            this.animation,
+            {
+                toValue: this.visible ? 1 : 0,
+                duration,
+                useNativeDriver
+            }
+        ).start();
     }
 
     render(): React.Node {

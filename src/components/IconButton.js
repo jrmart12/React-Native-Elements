@@ -2,10 +2,9 @@
 import * as React from "react";
 import {TouchableOpacity, View} from "react-native";
 
-import Icon from "./Icon";
+import Icon, {type IconName} from "./Icon";
 import {withTheme} from "./theme";
 
-import type {IconName} from "./Model";
 import type {ThemeProps, StyleProps} from "./theme";
 
 type IconButtonProps = StyleProps & ThemeProps & {

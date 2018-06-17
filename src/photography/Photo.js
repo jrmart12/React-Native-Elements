@@ -155,7 +155,7 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
                 {
                     <Footer>
                         {
-                            areFiltersReady && <IconButton name="sliders" onPress={toggleFilters} />
+                            areFiltersReady && <IconButton name="filters" onPress={toggleFilters} />
                         }
                         {
                             areFiltersReady && <IconButton name="crop" onPress={toggleCrop} />

@@ -73,7 +73,7 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
                 <View style={styles.content}>
                     <TransparentHeader>
                         <View style={styles.topLeft}>
-                            <IconButton name="x" onPress={this.goBack} style={styles.goBack} />
+                            <IconButton name="cross" onPress={this.goBack} style={styles.goBack} />
                             <Handle {...{user}} handleColor="white" />
                         </View>
                         <TouchableOpacity onPress={this.toggleComments}>
@@ -84,7 +84,7 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
                         </TouchableOpacity>
                     </TransparentHeader>
                     <Footer>
-                        <IconButton name="edit" onPress={this.toggleNewMessage} />
+                        <IconButton name="write" onPress={this.toggleNewMessage} />
                     </Footer>
                     <ActionSheet title="Comments" ref={this.commentsRef} noSafeArea>
                         <Content style={styles.comments}>

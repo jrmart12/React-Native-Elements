@@ -10,9 +10,9 @@ import Message from "./Message";
 import Profile from "./Profile";
 
 const tabs = [
-    { key: "Timeline", label: "Timeline", icon: "home" },
-    { key: "Messages", label: "Messages", icon: "mail" },
-    { key: "Profile", label: "Profile", icon: "user" }
+    { key: "Timeline", label: "Timeline", icon: "feed" },
+    { key: "Messages", label: "Messages", icon: "message" },
+    { key: "Profile", label: "Profile", icon: "account" }
 ];
 
 const SocialTabNavigator = createBottomTabNavigator({

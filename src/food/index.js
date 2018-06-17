@@ -10,8 +10,8 @@ import Restaurants from "./Restaurants";
 import Restaurant from "./Restaurant";
 
 const tabs = [
-    { key: "Recipes", label: "Recipes", icon: "book" },
-    { key: "Restaurants", label: "Restaurants", icon: "map" }
+    { key: "Recipes", label: "Recipes", icon: "restaurant" },
+    { key: "Restaurants", label: "Restaurants", icon: "feed" }
 ];
 
 const RecipesNavigator = createStackNavigator({

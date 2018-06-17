@@ -41,10 +41,10 @@ export default class CityScreen extends React.PureComponent<NavigationProps<{ ci
                 <Content>
                     <View style={styles.buttons}>
                         <View style={styles.leftButton}>
-                            <Button icon="book" onPress={this.goToRestaurant} primary />
+                            <Button icon="restaurant" onPress={this.goToRestaurant} primary />
                         </View>
                         <View style={styles.RightButton}>
-                            <Button icon="home" onPress={this.goToHotels} primary />
+                            <Button icon="hotel" onPress={this.goToHotels} primary />
                         </View>
                     </View>
                     <BaseCard>

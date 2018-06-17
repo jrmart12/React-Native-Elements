@@ -75,8 +75,9 @@ class CameraScreen extends React.Component<CameraProps> {
                     <View style={styles.header}>
                         <IconButton name="grid" onPress={toggleGrid} />
                         <IconButton
-                            name={flashMode === Camera.Constants.FlashMode.on ? "zap" : "slash"}
+                            name="flash"
                             onPress={toggleFlash}
+                            color={flashMode === Camera.Constants.FlashMode.on ? "white" : "rgba(255, 255, 255, 0.5)"}
                         />
                     </View>
                     {
@@ -98,7 +99,7 @@ class CameraScreen extends React.Component<CameraProps> {
                         )
                     }
                     <View style={styles.footer}>
-                        <IconButton name="x" onPress={goBack} />
+                        <IconButton name="cross" onPress={goBack} />
                         <TouchableOpacity onPress={notImplementedYet}>
                             <View style={styles.snapButton}>
                                 <View style={[styles.innerSnapButton, { backgroundColor: theme.palette.primary }]}>
@@ -106,7 +107,7 @@ class CameraScreen extends React.Component<CameraProps> {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <IconButton name="rotate-ccw" onPress={toggleCamera} />
+                        <IconButton name="reverse" onPress={toggleCamera} />
                     </View>
                 </SafeAreaView>
             </Camera>

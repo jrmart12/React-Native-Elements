@@ -29,7 +29,7 @@ export default class Recipes extends React.Component<NavigationProps<>> {
         const data = FoodAPI.categories;
         const title = "Recipes";
         const rightAction = {
-            icon: "log-out",
+            icon: "sign-out",
             onPress
         };
         return (

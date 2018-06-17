@@ -18,7 +18,7 @@ export {default as Content} from "./Content";
 export {default as List} from "./List";
 export {default as ActionSheet} from "./ActionSheet";
 export {default as Sheet} from "./Sheet";
-export {default as Icon} from "./Icon";
+export {default as Icon, loadIcons} from "./Icon";
 export {default as Activity} from "./Activity";
 export {default as Ratings} from "./Ratings";
 export {default as BaseCard} from "./BaseCard";

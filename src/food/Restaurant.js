@@ -23,7 +23,7 @@ export default class RestaurantComp extends React.Component<NavigationProps<{ re
         const {ratings, title, picture, coordinate, description} = restaurant;
         const details = [
             {
-                comp: <Ratings name="dollar" ratings={restaurant.price.expensive} total={4} />,
+                icon: "money",
                 caption: `CHF${restaurant.price.from} - ${restaurant.price.to}`
             },
             {
@@ -31,7 +31,7 @@ export default class RestaurantComp extends React.Component<NavigationProps<{ re
                 caption: `${restaurant.reviews} reviews`
             },
             {
-                icon: "clock",
+                icon: "time",
                 caption: `${restaurant.openings.from} - ${restaurant.openings.to}`
             }
         ];

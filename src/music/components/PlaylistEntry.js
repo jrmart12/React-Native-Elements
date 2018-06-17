@@ -30,7 +30,7 @@ export default class TrackComp extends React.PureComponent<TrackProps> {
                     <Text numberOfLines={1}>{entry.track.name}</Text>
                     <Text type="footnote" numberOfLines={1}>{entry.album.artist}</Text>
                 </View>
-                <IconButton name="more-horizontal" onPress={onPress} primary />
+                <IconButton name="options" onPress={onPress} primary />
             </View>
         );
     }
