@@ -44,4 +44,5 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
                 $(npm bin)/exp login --username $EXPO_USERNAME --password $EXPO_PASSWORD
                 yarn deploy
+                $(npm bin)/build:ios
             fi
