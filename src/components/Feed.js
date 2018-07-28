@@ -1,7 +1,7 @@
 // @flow
 import autobind from "autobind-decorator";
 import * as React from "react";
-import {FlatList, StyleSheet, View, Animated} from "react-native";
+import {FlatList, StyleSheet, View, Animated, Dimensions} from "react-native";
 import {observable} from "mobx";
 import {observer} from "mobx-react/native";
 
@@ -26,6 +26,7 @@ type FeedProps<T> = ThemeProps & StyleProps & NavigationProps<*> & {
     inverted?: boolean
 };
 
+const {height} = Dimensions.get("window");
 const keyExtractor = <T: Item>(item: T): string => item.id;
 
 @observer
@@ -46,6 +47,11 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
             inputRange: [55, 56, 57],
             outputRange: [55, 0, 0]
         });
+        const backgroundScroll = scrollAnimation.interpolate({
+            inputRange: [0, height],
+            outputRange: [0, -height],
+            extrapolate: "clamp"
+        });
         const onScroll = Animated.event(
             [{
                 nativeEvent: {
@@ -64,7 +70,9 @@ class Feed<T: Item> extends React.Component<FeedProps<T>> {
                 <View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: bottom }}>
                     {
                         !back && (
-                            <View style={[styles.halfFlex, { backgroundColor: top }]} />
+                            <Animated.View
+                                style={{ flex: 1, backgroundColor: top, transform: [{ translateY: backgroundScroll}] }}
+                            />
                         )
                     }
                 </View>
@@ -97,9 +105,6 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const styles = StyleSheet.create({
     flex: {
         flex: 1
-    },
-    halfFlex: {
-        flex: 0.5
     },
     container: {
         flexGrow: 1,
