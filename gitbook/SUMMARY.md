@@ -7,4 +7,5 @@
 * [Packages](Packages.md)
 * [Changelog](Changelog.md)
 * [License](License.md)
+* [Building A Seed Project](BuildingASeedProject.md)
 * [Frequently Asked Questions](FAQ.md)
