@@ -1,10 +1,8 @@
 // @flow
 import moment from "moment";
-import autobind from "autobind-decorator";
+
 import * as React from "react";
 import {StyleSheet, SafeAreaView, TextInput, View} from "react-native";
-import {observable, action} from "mobx";
-import {observer} from "mobx-react/native";
 
 import {Feed, Container, IconButton, KeyboardSpacer, StyleGuide} from "../components";
 import SocialAPI from "./api";
@@ -13,46 +11,48 @@ import {ChatMessage} from "./components";
 import type {NavigationProps} from "../components/Navigation";
 import type {Message as MessageModel} from "./api";
 
+type MessageState = {
+    message: string,
+    messages: MessageModel[]
+};
 
-@observer
-export default class Message extends React.Component<NavigationProps<{ id: string }>> {
+export default class Message extends React.Component<NavigationProps<{ id: string }>, MessageState> {
 
-    @observable message: string;
-    @observable messages: MessageModel[] = [];
+    state = {
+        messages: [],
+        message: ""
+    };
 
-    @autobind @action
-    postMessage() {
-        this.messages.push({
+    postMessage = () => {
+        const {messages, message} = this.state;
+        messages.push({
             id: moment().format("X"),
             me: true,
-            message: this.message,
+            message,
             timestamp: parseInt(moment().format("X"), 10)
         });
-        this.message = "";
+        this.setState({ messages: messages.slice(), message: "" });
     }
 
-    @autobind @action
-    setMessage(message: string) {
-        this.message = message;
-    }
+    setMessage = (message: string) => this.setState({ message });
 
-    @action
     componentDidMount() {
         const {navigation} = this.props;
         const {id} = navigation.state.params;
-        this.messages = SocialAPI.messageThread(id).messages;
+        const {messages} = SocialAPI.messageThread(id);
+        this.setState({ messages });
     }
 
-    @autobind
-    renderItem(message: MessageModel): React.Node {
+    renderItem = (message: MessageModel): React.Node => {
         const {navigation} = this.props;
         const {id} = navigation.state.params;
         return <ChatMessage {...{id, message}} />;
     }
 
     render(): React.Node {
-        const {renderItem, messages} = this;
+        const {renderItem} = this;
         const {navigation} = this.props;
+        const {messages, message} = this.state;
         const {id} = navigation.state.params;
         const thread = SocialAPI.messageThread(id);
         const user = SocialAPI.user(thread.user);
@@ -69,7 +69,7 @@ export default class Message extends React.Component<NavigationProps<{ id: strin
                             style={styles.input}
                             onSubmitEditing={this.postMessage}
                             onChangeText={this.setMessage}
-                            value={this.message}
+                            value={message}
                             blurOnSubmit={false}
                         />
                         <IconButton name="send" onPress={this.postMessage} backgroundPrimary rounded />

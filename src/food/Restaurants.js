@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 
 import {GeoFeed, Activity} from "../components";
@@ -10,8 +9,7 @@ import type {Restaurant} from "./api";
 
 export default class Restaurants extends React.Component<NavigationProps<>> {
 
-    @autobind
-    renderItem(restaurant: Restaurant): React.Node {
+    renderItem = (restaurant: Restaurant): React.Node => {
         const {navigation} = this.props;
         return <Activity {...restaurant} onPress={() => navigation.navigate("Restaurant", { restaurant })} />;
     }

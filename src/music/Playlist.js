@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet} from "react-native";
 
@@ -12,18 +11,11 @@ type PlaylistScreenParams = { playlist: Playlist, back: string };
 
 export default class PlaylistScreen extends React.PureComponent<NavigationProps<PlaylistScreenParams>> {
 
-    playerActionSheet: PlayerActionSheet;
+    // $FlowFixMe
+    playerActionSheet = React.createRef();
 
-    @autobind
-    setPlayerActionSheet(playerActionSheet: ?PlayerActionSheet) {
-        if (playerActionSheet) {
-            this.playerActionSheet = playerActionSheet;
-        }
-    }
-
-    @autobind
-    toggle(track: Track) {
-        this.playerActionSheet.toggle(track);
+    toggle = (playlist: Playlist, track: Track) => {
+        this.playerActionSheet.current.toggle(playlist, track);
     }
 
     render(): React.Node {
@@ -36,10 +28,10 @@ export default class PlaylistScreen extends React.PureComponent<NavigationProps<
                 <Content style={styles.gutter}>
                     <List
                         rows={playlist.entries}
-                        renderRow={entry => <PlaylistEntry onPress={this.toggle} {...{entry}} />}
+                        renderRow={entry => <PlaylistEntry onPress={this.toggle} {...{playlist, entry}} />}
                     />
                 </Content>
-                <PlayerActionSheet ref={this.setPlayerActionSheet} {...{playlist}} />
+                <PlayerActionSheet ref={this.playerActionSheet} />
             </Container>
         );
     }

@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {View, StyleSheet} from "react-native";
 
@@ -12,6 +11,7 @@ import {Visit} from "./components";
 
 export default class GuideScreen extends React.PureComponent<NavigationProps<{ guide: Guide }>> {
 
+    // TODO: use createRef()
     reservation: ActionSheet;
 
     render(): React.Node {
@@ -66,13 +66,9 @@ export default class GuideScreen extends React.PureComponent<NavigationProps<{ g
         );
     }
 
-    @autobind
-    toggleReservation() {
-        this.reservation.toggle();
-    }
+    toggleReservation = () => this.reservation.toggle();
 
-    @autobind
-    setReservationRef(reservation: ?ActionSheet) {
+    setReservationRef = (reservation: ?ActionSheet) => {
         if (reservation) {
             this.reservation = reservation;
         }

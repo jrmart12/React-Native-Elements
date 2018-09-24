@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as _ from "lodash";
 import * as React from "react";
 
@@ -13,8 +12,7 @@ import type {MessageThread} from "./api";
 
 export default class Messages extends React.Component<NavigationProps<>> {
 
-    @autobind
-    renderItem(thread: MessageThread): React.Node {
+    renderItem = (thread: MessageThread): React.Node => {
         const {navigation} = this.props;
         const {user, id} = thread;
         const {timestamp, message} = _.last(thread.messages);

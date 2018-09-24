@@ -1,10 +1,7 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as _ from "lodash";
 import * as React from "react";
 import {Animated, Dimensions} from "react-native";
-import {observable, action} from "mobx";
-import {observer} from "mobx-react/native";
 
 import {Text} from "../../components";
 
@@ -12,14 +9,18 @@ type DegreesProps = {
     rotation: Animated.Value
 };
 
-@observer
-export default class Degrees extends React.Component<DegreesProps> {
+type DegreesState = {
+    degrees: number
+};
 
-    @observable degrees: number;
+export default class Degrees extends React.Component<DegreesProps, DegreesState> {
 
-    @autobind @action
-    setDegrees(value: { value: number }) {
-        this.degrees = _.round(((value.value / viewport) * 50) - 25);
+    state = {
+        degrees: -25
+    }
+
+    setDegrees = (value: { value: number }) => {
+        this.setState({ degrees: _.round(((value.value / viewport) * 50) - 25) });
     }
 
     componentDidMount() {
@@ -27,8 +28,9 @@ export default class Degrees extends React.Component<DegreesProps> {
     }
 
     render(): React.Node {
+        const {degrees} = this.state;
         return (
-            <Text align="center" primary>{`${this.degrees}°`}</Text>
+            <Text align="center" primary>{`${degrees}°`}</Text>
         );
     }
 }

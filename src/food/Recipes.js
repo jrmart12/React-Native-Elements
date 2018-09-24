@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 
 import {Card, Feed} from "../components";
@@ -11,14 +10,12 @@ import type {NavigationProps} from "../components";
 
 export default class Recipes extends React.Component<NavigationProps<>> {
 
-    @autobind
-    renderItem(category: Category): React.Node {
+    renderItem = (category: Category): React.Node => {
         const {navigation} = this.props;
         return <Card {...category} onPress={() => navigation.navigate("Category", { categoryId: category.id })} />;
     }
 
-    @autobind
-    onPress() {
+    onPress = () => {
         const {navigation} = this.props;
         navigation.navigate("Welcome");
     }

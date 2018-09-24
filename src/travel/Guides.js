@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {View, StyleSheet} from "react-native";
 
@@ -17,8 +16,7 @@ type Chunk = {
 
 export default class Guides extends React.Component<NavigationProps<>> {
 
-    @autobind
-    renderItem(chunk: Chunk): React.Node {
+    renderItem = (chunk: Chunk): React.Node => {
         const {navigation} = this.props;
         return (
             <View style={styles.row}>
@@ -39,8 +37,7 @@ export default class Guides extends React.Component<NavigationProps<>> {
         );
     }
 
-    @autobind
-    onPress() {
+    onPress = () => {
         const {navigation} = this.props;
         navigation.navigate("Welcome");
     }

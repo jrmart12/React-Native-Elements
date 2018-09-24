@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet} from "react-native";
 
@@ -10,8 +9,7 @@ import {Playlist, withPlayer, type PlayerProps} from "./components";
 
 class Library extends React.Component<PlayerProps & NavigationProps<>> {
 
-    @autobind
-    renderItem(playlist: PlaylistModel): React.Node {
+    renderItem = (playlist: PlaylistModel): React.Node => {
         const {navigation} = this.props;
         return <Playlist {...{playlist, navigation}} />;
     }

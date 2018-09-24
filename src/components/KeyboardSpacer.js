@@ -3,11 +3,19 @@ import * as React from "react";
 import {Platform} from "react-native";
 import KeyboardSpacer from "react-native-keyboard-spacer";
 
-// eslint-disable-next-line react/prefer-stateless-function
-export default class KeyboardSpacerComp extends React.PureComponent<{}> {
+type KeyboardSpacerProps = {
+    enableOnAndroid: boolean
+};
+
+export default class KeyboardSpacerComp extends React.PureComponent<KeyboardSpacerProps> {
+
+    static defaultProps = {
+        enableOnAndroid: false
+    };
 
     render(): React.Node {
-        if (Platform.OS === "ios") {
+        const {enableOnAndroid} = this.props;
+        if (Platform.OS === "ios" || enableOnAndroid) {
             return <KeyboardSpacer />;
         }
         return null;

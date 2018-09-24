@@ -1,26 +1,24 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet} from "react-native";
 
 import {Feed, StyleGuide, type NavigationProps} from "../components";
 
 import MusicAPI, {type Album as AlbumModel} from "./api";
-import {Album, withPlayer, type PlayerProps} from "./components";
+import {PlayerProvider, Album, withPlayer, type PlayerProps} from "./components";
 
 class Library extends React.Component<PlayerProps & NavigationProps<>> {
 
-    @autobind
-    renderItem(album: AlbumModel): React.Node {
+    renderItem = (album: AlbumModel): React.Node => {
         const {navigation} = this.props;
         return <Album {...{album, navigation}} />;
     }
 
-    @autobind
-    async onPress(): Promise<void> {
-        const {navigation, player} = this.props;
-        if (player.sound) {
-            await player.sound.unloadAsync();
+    onPress = async (): Promise<void> => {
+        const playerProvider = PlayerProvider.getInstance();
+        const {navigation} = this.props;
+        if (playerProvider.sound) {
+            await playerProvider.sound.unloadAsync();
         }
         navigation.navigate("Welcome");
     }

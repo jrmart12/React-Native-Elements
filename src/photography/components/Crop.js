@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {View, PanResponder, StyleSheet as RNStyleSheet} from "react-native";
 
@@ -39,8 +38,7 @@ class Crop extends React.PureComponent<CropProps> {
         right: 0
     };
 
-    @autobind
-    setCrop(crop: ?View) {
+    setCrop = (crop: ?View) => {
         if (crop) {
             this.crop = crop;
         }

@@ -1,23 +1,26 @@
 // @flow
 import * as React from "react";
 import {StyleSheet, View, ActivityIndicator, Linking} from "react-native";
-import {observable, runInAction} from "mobx";
-import {observer} from "mobx-react/native";
 
 import {Text, Button, StyleGuide} from "../../components";
 
-@observer
-export default class EnableCameraPermission extends React.Component<{}> {
+type EnableCameraPermissionState = {
+  canOpen: boolean | null
+};
 
-    @observable canOpen: boolean | null = null;
+export default class EnableCameraPermission extends React.Component<{}, EnableCameraPermissionState> {
+
+    state = {
+        canOpen: null
+    };
 
     async componentDidMount(): Promise<void> {
         const canOpen = await Linking.canOpenURL("app-settings:");
-        runInAction(() => this.canOpen = canOpen);
+        this.setState({ canOpen });
     }
 
     render(): React.Node {
-        const {canOpen} = this;
+        const {canOpen} = this.state;
         if (canOpen === null) {
             return (
                 <View style={styles.loading}>

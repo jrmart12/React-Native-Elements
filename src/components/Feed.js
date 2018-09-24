@@ -1,9 +1,6 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {FlatList, StyleSheet, View, Animated, Dimensions} from "react-native";
-import {observable} from "mobx";
-import {observer} from "mobx-react/native";
 
 import NavigationBar from "./NavigationBar";
 import Text from "./Text";
@@ -26,23 +23,28 @@ type FeedProps<T> = ThemeProps & StyleProps & NavigationProps<*> & {
     inverted?: boolean
 };
 
+type FeedState = {
+    scrollAnimation: Animated.Value
+};
+
 const {height} = Dimensions.get("window");
 const keyExtractor = <T: Item>(item: T): string => item.id;
 
-@observer
-class Feed<T: Item> extends React.Component<FeedProps<T>> {
+class Feed<T: Item> extends React.Component<FeedProps<T>, FeedState> {
 
-    @observable scrollAnimation = new Animated.Value(0);
+    state = {
+        scrollAnimation: new Animated.Value(0)
+    };
 
-    @autobind
-    renderItem(item: { item: T }): React.Node {
+    renderItem = (item: { item: T }): React.Node => {
         const {renderItem} = this.props;
         return renderItem(item.item);
     }
 
     render(): React.Node {
-        const {renderItem, scrollAnimation} = this;
+        const {renderItem} = this;
         const {data, title, navigation, theme, back, rightAction, header, numColumns, style, inverted} = this.props;
+        const {scrollAnimation} = this.state;
         const translateY = scrollAnimation.interpolate({
             inputRange: [55, 56, 57],
             outputRange: [55, 0, 0]

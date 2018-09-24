@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react";
-import autobind from "autobind-decorator";
-import {SafeAreaView, View, Animated, StyleSheet} from "react-native";
+
+import {View, Animated, StyleSheet} from "react-native";
 import {LinearGradient} from "expo";
 
 import type {____ViewStyleProp_Internal as Style} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
@@ -9,6 +9,7 @@ import type {____ViewStyleProp_Internal as Style} from "react-native/Libraries/S
 import LeftAction from "./LeftAction";
 import Text from "./Text";
 import IconButton from "./IconButton";
+import SafeAreaView from "./SafeAreaView";
 import {withTheme, StyleGuide} from "./theme";
 
 import type {ThemeProps} from "./theme";
@@ -38,8 +39,7 @@ class NavigationBar extends React.Component<NavigationBarProps> {
         expanded: false
     };
 
-    @autobind
-    goBack() {
+    goBack = () => {
         const {navigation} = this.props;
         navigation.goBack();
     }
@@ -53,7 +53,7 @@ class NavigationBar extends React.Component<NavigationBarProps> {
             backgroundColor: type === "opaque" ? theme.palette.primary : "transparent"
         };
         const navBar = (
-            <SafeAreaView style={containerStyle}>
+            <SafeAreaView style={containerStyle} top>
                 <View style={styles.content}>
                     <View style={[styles.leftBlock]}>
                         {back && <LeftAction onPress={this.goBack} name="arrow-left" label={back} />}

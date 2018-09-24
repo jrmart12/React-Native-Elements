@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {View, StyleSheet} from "react-native";
 import {LinearGradient, MapView} from "expo";
@@ -24,6 +23,7 @@ class Map extends React.Component<MapProps> {
         height: 320
     };
 
+    // TODO: use createRef()
     map: MapView;
 
     componentDidMount() {
@@ -38,8 +38,7 @@ class Map extends React.Component<MapProps> {
         });
     }
 
-    @autobind
-    setMapRef(map: MapView | null) {
+    setMapRef = (map: MapView | null) => {
         this.map = map;
     }
 

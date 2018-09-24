@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
@@ -14,6 +13,7 @@ import type {NavigationProps} from "../components/";
 
 export default class RecipeComp extends React.Component<NavigationProps<{ categoryId: string, recipeId: string }>> {
 
+    // TODO: use createRef()
     ingredientList: ActionSheet;
 
     render(): React.Node {
@@ -45,13 +45,11 @@ export default class RecipeComp extends React.Component<NavigationProps<{ catego
         );
     }
 
-    @autobind
-    toggleIngredientList() {
+    toggleIngredientList = () => {
         this.ingredientList.toggle();
     }
 
-    @autobind
-    setIngredientListRef(ingredientList: ?ActionSheet) {
+    setIngredientListRef = (ingredientList: ?ActionSheet) => {
         if (ingredientList) {
             this.ingredientList = ingredientList;
         }

@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet} from "react-native";
 
@@ -10,8 +9,7 @@ import {PhotoThumbnail} from "./components";
 
 export default class Album extends React.Component<NavigationProps<{ album: string }>> {
 
-    @autobind
-    renderItem(photo: Photo): React.Node {
+    renderItem = (photo: Photo): React.Node => {
         const {navigation} = this.props;
         return <PhotoThumbnail from="Photos" {...{photo, navigation}} />;
     }

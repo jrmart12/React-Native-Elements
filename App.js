@@ -1,13 +1,11 @@
 // @flow
 import * as React from "react";
 import {StatusBar, Platform} from "react-native";
-import {useStrict, observable, action} from "mobx";
-import {Provider, observer} from "mobx-react/native";
 import {createSwitchNavigator} from "react-navigation";
 import {Font, AppLoading} from "expo";
 import ModalHost from "expo/src/modal/ModalHost";
 
-import {Images, loadIcons, createTheme} from "./src/components";
+import {Images, loadIcons, ThemeProvider} from "./src/components";
 
 import {Welcome} from "./src/welcome";
 import {FoodNavigator} from "./src/food";
@@ -15,7 +13,7 @@ import {SocialNavigator} from "./src/social";
 import {MusicNavigator} from "./src/music";
 import {PhotographyNavigator} from "./src/photography";
 import {TravelNavigator} from "./src/travel";
-import {Player} from "./src/music/components";
+import {PlayerProvider} from "./src/music/components";
 
 // $FlowFixMe
 const SFProTextBold = require("./fonts/SF-Pro-Text-Bold.otf");
@@ -24,15 +22,20 @@ const SFProTextSemibold = require("./fonts/SF-Pro-Text-Semibold.otf");
 // $FlowFixMe
 const SFProTextRegular = require("./fonts/SF-Pro-Text-Regular.otf");
 
-useStrict(true);
-
 const onNavigationStateChange = () => undefined;
 
-@observer
-export default class App extends React.Component<{}> {
+type AppProps = {};
+type AppState = {
+    isReady: boolean
+};
 
-    @observable isReady = false;
-    @action ready() { this.isReady = true; }
+export default class App extends React.Component<AppProps, AppState> {
+
+    state = {
+        isReady: false
+    };
+
+    ready() { this.setState({ isReady: true }); }
 
     async componentDidMount(): Promise<void> {
         StatusBar.setBarStyle("dark-content");
@@ -51,16 +54,33 @@ export default class App extends React.Component<{}> {
     }
 
     render(): React.Node {
-        const {isReady} = this;
+        const {isReady} = this.state;
+        const statusBar = (
+            <StatusBar
+                translucent
+                backgroundColor="transparent"
+                barStyle="light-content"
+            />
+        );
         if (!isReady) {
-            return <AppLoading />;
+            return (
+                <React.Fragment>
+                    {statusBar}
+                    <AppLoading />
+                </React.Fragment>
+            );
         }
         return (
-            <Provider theme={createTheme()} player={new Player()}>
-                <ModalHost>
-                    <MainNavigator {...{onNavigationStateChange}} />
-                </ModalHost>
-            </Provider>
+            <React.Fragment>
+                {statusBar}
+                <ThemeProvider>
+                    <PlayerProvider>
+                        <ModalHost>
+                            <MainNavigator {...{onNavigationStateChange}} />
+                        </ModalHost>
+                    </PlayerProvider>
+                </ThemeProvider>
+            </React.Fragment>
         );
     }
 }

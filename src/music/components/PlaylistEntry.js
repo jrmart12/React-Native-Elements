@@ -1,23 +1,22 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
 import {Text, IconButton, Image, StyleGuide} from "../../components";
 
-import type {Track, PlaylistEntry} from "../api";
+import type {Playlist, Track, PlaylistEntry} from "../api";
 
 type TrackProps = {
+    playlist: Playlist,
     entry: PlaylistEntry,
-    onPress: Track => mixed
+    onPress: (Playlist, Track) => mixed
 };
 
 export default class TrackComp extends React.PureComponent<TrackProps> {
 
-    @autobind
-    onPress() {
-        const {onPress, entry} = this.props;
-        onPress(entry.track);
+    onPress = () => {
+        const {onPress, playlist, entry} = this.props;
+        onPress(playlist, entry.track);
     }
 
     render(): React.Node {

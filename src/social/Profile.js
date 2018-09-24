@@ -1,8 +1,5 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
-import {observable, action} from "mobx";
-import {observer} from "mobx-react/native";
 import {StyleSheet, View} from "react-native";
 
 import {
@@ -14,25 +11,27 @@ import {Post} from "./components";
 
 import type {NavigationProps} from "../components";
 
-@observer
-export default class Profile extends React.Component<NavigationProps<>> {
+type ProfileState = {
+    selectedIndex: number
+};
 
-    @observable selectedIndex = 0;
+export default class Profile extends React.Component<NavigationProps<>, ProfileState> {
 
-    @autobind @action
-    onChange(index: number) {
-        this.selectedIndex = index;
-    }
+    state = {
+        selectedIndex: 0
+    };
 
-    @autobind
-    onPress() {
+    onChange = (selectedIndex: number) => this.setState({ selectedIndex });
+
+    onPress = () => {
         const {navigation} = this.props;
         navigation.navigate("Welcome");
     }
 
     render(): React.Node {
-        const {onPress, selectedIndex, onChange} = this;
+        const {onPress, onChange} = this;
         const {navigation} = this.props;
+        const {selectedIndex} = this.state;
         const {myPosts} = SocialAPI;
         const me = SocialAPI.me();
         return (

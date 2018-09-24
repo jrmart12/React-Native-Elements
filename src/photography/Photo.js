@@ -1,12 +1,9 @@
 // @flow
-import autobind from "autobind-decorator";
 import moment from "moment";
 import * as React from "react";
 import {
     StyleSheet, View, Platform, StatusBar, Dimensions, ActivityIndicator, Animated
 } from "react-native";
-import {observable, action} from "mobx";
-import {observer} from "mobx-react/native";
 
 import {NavigationBar, Image, BlurView, IconButton, Footer, type NavigationProps} from "../components";
 
@@ -14,41 +11,43 @@ import {Filters, Filter, PhotoActionSheet, Rotation, Crop, type FilterName} from
 import type {Photo} from "./api";
 
 type PhotoScreenProps = NavigationProps<{ photo: Photo, from: string }>;
+type PhotoScreenState = {
+    filter: FilterName,
+    areFiltersReady: boolean,
+    filterAnimation: Animated.Value,
+    rotation: Animated.Value
+};
 
-@observer
-export default class PhotoScreen extends React.Component<PhotoScreenProps> {
+export default class PhotoScreen extends React.Component<PhotoScreenProps, PhotoScreenState> {
 
+    // TODO: createRef()
     filters: PhotoActionSheet;
     crop: PhotoActionSheet;
 
-    @observable filter: FilterName;
-    @observable areFiltersReady: boolean = false;
-    @observable filterAnimation = new Animated.Value(0);
-    @observable rotation = new Animated.Value(width / 2);
+    state: $Shape<PhotoScreenState> = {
+        areFiltersReady: false,
+        filterAnimation: new Animated.Value(0),
+        rotation: new Animated.Value(width / 2)
+    };
 
-    @autobind @action
-    setFiltersAsReady() {
-        this.areFiltersReady = true;
-    }
+    setFiltersAsReady = () => this.setState({ areFiltersReady: true });
 
-    @autobind
-    setFiltersRef(filters: ?PhotoActionSheet) {
+    setFiltersRef = (filters: ?PhotoActionSheet) => {
         if (filters) {
             this.filters = filters;
         }
     }
 
-    @autobind
-    setCropRef(crop: ?PhotoActionSheet) {
+    setCropRef = (crop: ?PhotoActionSheet) => {
         if (crop) {
             this.crop = crop;
         }
     }
 
-    @autobind
-    toggleFilters() {
+    toggleFilters = () => {
+        const {filterAnimation} = this.state;
         Animated.timing(
-            this.filterAnimation,
+            filterAnimation,
             {
                 toValue: 1,
                 duration,
@@ -58,122 +57,108 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps> {
         this.filters.toggle();
     }
 
-    @autobind
-    toggleCrop() {
-        Animated.timing(
-            this.filterAnimation,
-            {
-                toValue: 1,
-                duration,
-                useNativeDriver
-            }
-        ).start();
-        this.crop.toggle();
-    }
+     toggleCrop = () => {
+         const {filterAnimation} = this.state;
+         Animated.timing(
+             filterAnimation,
+             {
+                 toValue: 1,
+                 duration,
+                 useNativeDriver
+             }
+         ).start();
+         this.crop.toggle();
+     }
 
-    @autobind
-    onCloseActionSheet() {
-        Animated.timing(
-            this.filterAnimation,
-            {
-                toValue: 0,
-                duration,
-                useNativeDriver
-            }
-        ).start();
-    }
+     onCloseActionSheet = () => {
+         const {filterAnimation} = this.state;
+         Animated.timing(
+             filterAnimation,
+             {
+                 toValue: 0,
+                 duration,
+                 useNativeDriver
+             }
+         ).start();
+     }
 
-    @autobind @action
-    switchFilter(filter: FilterName) {
-        this.filter = filter;
-    }
+     switchFilter = (filter: FilterName) => this.setState({ filter });
 
-    async componentDidMount(): Promise<void> {
-        if (Platform.OS === "android") {
-            StatusBar.setHidden(true);
-        }
-    }
-
-    componentWillUnmount() {
-        if (Platform.OS === "android") {
-            StatusBar.setHidden(false);
-        }
-    }
-
-    render(): React.Node {
-        const {
-            toggleFilters, toggleCrop, switchFilter, areFiltersReady, setFiltersAsReady, filter: name,
-            onCloseActionSheet, rotation
-        } = this;
-        const {navigation} = this.props;
-        const {photo, from} = navigation.state.params;
-        const date = moment(photo.created_at).format("DD MMMM YYYY · HH:mm");
-        const title = photo.location ? photo.location.name : "";
-        const subtitle = date;
-        const opacity = this.filterAnimation.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, 1]
-        });
-        const intensity = this.filterAnimation.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, 100]
-        });
-        const rotate = this.rotation.interpolate({
-            inputRange: [0, viewport],
-            outputRange: ["-25deg", "25deg"]
-        });
-        return (
-            <View style={styles.container}>
-                <Image preview={photo.urls.preview} uri={photo.urls.regular} style={styles.image} />
-                <BlurView style={StyleSheet.absoluteFill} {...{intensity}} />
-                {
-                    <Animated.View style={{ opacity, ...StyleSheet.absoluteFillObject, transform: [{ rotate }] }}>
-                        <Crop style={styles.filter}>
-                            <Filter
-                                style={StyleSheet.absoluteFill}
-                                uri={photo.urls.regular}
-                                onDraw={setFiltersAsReady}
-                                {...{name}}
-                            />
-                        </Crop>
-                    </Animated.View>
-                }
-                {
-                    !areFiltersReady && <View />
-                }
-                {
-                    areFiltersReady && (
-                        <NavigationBar
-                            type="transparent"
-                            back={from}
-                            withGradient
-                            largeTitle
-                            {...{navigation, title, subtitle}}
-                        />
-                    )
-                }
-                {
-                    <Footer>
-                        {
-                            areFiltersReady && <IconButton name="filters" onPress={toggleFilters} />
-                        }
-                        {
-                            areFiltersReady && <IconButton name="crop" onPress={toggleCrop} />
-                        }
-                        {
-                            !areFiltersReady && <ActivityIndicator color="white" />
-                        }
-                    </Footer>
-                }
-                <PhotoActionSheet ref={this.setFiltersRef} title="Filters" onClose={onCloseActionSheet}>
-                    <Filters {...{uri: photo.urls.regular, switchFilter}} />
-                </PhotoActionSheet>
-                <PhotoActionSheet ref={this.setCropRef} title="Edit" onClose={onCloseActionSheet}>
-                    <Rotation {...{rotation}} />
-                </PhotoActionSheet>
-            </View>
-        );
-    }
+     render(): React.Node {
+         const {
+             toggleFilters, toggleCrop, switchFilter, setFiltersAsReady, onCloseActionSheet
+         } = this;
+         const {navigation} = this.props;
+         const {areFiltersReady, rotation, filterAnimation, filter: name} = this.state;
+         const {photo, from} = navigation.state.params;
+         const date = moment(photo.created_at).format("DD MMMM YYYY · HH:mm");
+         const title = photo.location ? photo.location.name : "";
+         const subtitle = date;
+         const opacity = filterAnimation.interpolate({
+             inputRange: [0, 1],
+             outputRange: [0, 1]
+         });
+         const intensity = filterAnimation.interpolate({
+             inputRange: [0, 1],
+             outputRange: [0, 100]
+         });
+         const rotate = rotation.interpolate({
+             inputRange: [0, viewport],
+             outputRange: ["-25deg", "25deg"]
+         });
+         return (
+             <View style={styles.container}>
+                 <StatusBar hidden />
+                 <Image preview={photo.urls.preview} uri={photo.urls.regular} style={styles.image} />
+                 <BlurView style={StyleSheet.absoluteFill} {...{intensity}} />
+                 {
+                     <Animated.View style={{ opacity, ...StyleSheet.absoluteFillObject, transform: [{ rotate }] }}>
+                         <Crop style={styles.filter}>
+                             <Filter
+                                 style={StyleSheet.absoluteFill}
+                                 uri={photo.urls.regular}
+                                 onDraw={setFiltersAsReady}
+                                 {...{name}}
+                             />
+                         </Crop>
+                     </Animated.View>
+                 }
+                 {
+                     !areFiltersReady && <View />
+                 }
+                 {
+                     areFiltersReady && (
+                         <NavigationBar
+                             type="transparent"
+                             back={from}
+                             withGradient
+                             largeTitle
+                             {...{navigation, title, subtitle}}
+                         />
+                     )
+                 }
+                 {
+                     <Footer>
+                         {
+                             areFiltersReady && <IconButton name="filters" onPress={toggleFilters} />
+                         }
+                         {
+                             areFiltersReady && <IconButton name="crop" onPress={toggleCrop} />
+                         }
+                         {
+                             !areFiltersReady && <ActivityIndicator color="white" />
+                         }
+                     </Footer>
+                 }
+                 <PhotoActionSheet ref={this.setFiltersRef} title="Filters" onClose={onCloseActionSheet}>
+                     <Filters {...{uri: photo.urls.regular, switchFilter}} />
+                 </PhotoActionSheet>
+                 <PhotoActionSheet ref={this.setCropRef} title="Edit" onClose={onCloseActionSheet}>
+                     <Rotation {...{rotation}} />
+                 </PhotoActionSheet>
+             </View>
+         );
+     }
 }
 
 const duration = 300;

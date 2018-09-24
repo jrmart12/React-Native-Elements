@@ -1,9 +1,7 @@
 // @flow
 import * as _ from "lodash";
-import autobind from "autobind-decorator";
+
 import * as React from "react";
-import {observable, action} from "mobx";
-import {observer} from "mobx-react/native";
 import {StyleSheet, View} from "react-native";
 
 import {
@@ -12,30 +10,33 @@ import {
 } from "../components";
 
 import MusicAPI from "./api";
-import {Playlist, Album, withPlayer, type PlayerProps} from "./components";
+import {PlayerProvider, Playlist, Album, withPlayer, type PlayerProps} from "./components";
 
-@observer
-class Profile extends React.Component<PlayerProps & NavigationProps<>> {
+type ProfileState = {
+  selectedIndex: number
+};
 
-    @observable selectedIndex = 0;
+class Profile extends React.Component<PlayerProps & NavigationProps<>, ProfileState> {
 
-    @autobind @action
-    onChange(index: number) {
-        this.selectedIndex = index;
-    }
+    state = {
+        selectedIndex: 0
+    };
 
-    @autobind
-    async onPress(): Promise<void> {
-        const {navigation, player} = this.props;
-        if (player.sound) {
-            await player.sound.unloadAsync();
+    onChange = (selectedIndex: number) => this.setState({ selectedIndex });
+
+    onPress = async (): Promise<void> => {
+        const playerProvider = PlayerProvider.getInstance();
+        const {navigation} = this.props;
+        if (PlayerProvider.sound) {
+            await playerProvider.sound.unloadAsync();
         }
         navigation.navigate("Welcome");
     }
 
     render(): React.Node {
-        const {onPress, selectedIndex, onChange} = this;
+        const {onPress, onChange} = this;
         const {navigation} = this.props;
+        const {selectedIndex} = this.state;
         const {me, playlists, albums} = MusicAPI;
         const from = "profile";
         return (

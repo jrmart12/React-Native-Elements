@@ -1,12 +1,11 @@
 // @flow
-import autobind from "autobind-decorator";
+
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
-import {observer} from "mobx-react/native";
 
 import {Button, StyleGuide, Text, Image} from "../../components";
 
-import {withPlayer, type PlayerProps} from "./Player";
+import PlayerProvider, {withPlayer, type PlayerProps} from "./Player";
 import PlaylistThumbnail from "./PlaylistThumbnail";
 
 import {type Playlist} from "../api";
@@ -15,24 +14,23 @@ type AlbumHeaderProps = PlayerProps & {
     playlist: Playlist
 };
 
-@observer
 class PlaylistHeader extends React.Component<AlbumHeaderProps> {
 
-    @autobind
-    toggle() {
-        const {playlist, player} = this.props;
+    toggle = () => {
+        const playerProvider = PlayerProvider.getInstance();
+        const {playlist} = this.props;
         const playlistEntry = playlist.entries[0];
-        if (player.isSongPlaying(playlist, playlistEntry)) {
-            player.toggle();
+        if (playerProvider.isSongPlaying(playlist, playlistEntry)) {
+            playerProvider.toggle();
         } else {
-            player.play(playlist, playlistEntry);
+            playerProvider.play(playlist, playlistEntry);
         }
     }
 
-    @autobind
-    shuffle() {
-        const {playlist, player} = this.props;
-        player.shuffle(playlist);
+    shuffle = () => {
+        const playerProvider = PlayerProvider.getInstance();
+        const {playlist} = this.props;
+        playerProvider.shuffle(playlist);
     }
 
     render(): React.Node {

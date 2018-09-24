@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet} from "react-native";
 import {MapView} from "expo";
@@ -29,8 +28,7 @@ export default class PhotoMap extends React.Component<PhotoMapProps> {
 
     map: ClusteredMapView;
 
-    @autobind
-    setMapRef(map: ClusteredMapView | null) {
+    setMapRef = (map: ClusteredMapView | null) => {
         this.map = map;
     }
 
@@ -57,8 +55,7 @@ export default class PhotoMap extends React.Component<PhotoMapProps> {
         navigation.navigate("Place", { photos });
     }
 
-    @autobind
-    renderMarker(dp: { location: Location, photo: Photo }): React.Node {
+    renderMarker = (dp: { location: Location, photo: Photo }): React.Node => {
         const {navigation} = this.props;
         const {photo} = dp;
         return (
@@ -68,8 +65,7 @@ export default class PhotoMap extends React.Component<PhotoMapProps> {
         );
     }
 
-    @autobind
-    renderCluster(cluster: Cluster): React.Node {
+    renderCluster = (cluster: Cluster): React.Node => {
         const {navigation} = this.props;
         const {pointCount: count, clusterId, coordinate} = cluster;
         const clusteredPoints = this.map.getClusteringEngine().getLeaves(clusterId, 100);

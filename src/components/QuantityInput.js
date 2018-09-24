@@ -1,9 +1,7 @@
 // @flow
-import autobind from "autobind-decorator";
+
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
-import {action, observable} from "mobx";
-import {observer} from "mobx-react/native";
 
 import Button from "./Button";
 import Text from "./Text";
@@ -18,30 +16,37 @@ type QuantityInputProps = ThemeProps & {
     to: number
 };
 
-@observer
-class QuantityInput extends React.Component<QuantityInputProps> {
+type QuantityInputState = {
+    quantity: number
+};
 
-    @observable quantity: number = 1;
-    @autobind @action increment() { this.quantity += 1; }
-    @autobind @action decrement() { this.quantity -= 1; }
+class QuantityInput extends React.Component<QuantityInputProps, QuantityInputState> {
+
+    state = {
+        quantity: 1
+    };
+
+    increment = () => this.setState({ quantity: this.state.quantity + 1 });
+    decrement = () => this.setState({ quantity: this.state.quantity - 1 });
 
     render(): React.Node {
         const {singular, plural, from, to, theme} = this.props;
+        const {quantity} = this.state;
         return (
             <View style={[styles.container, { backgroundColor: theme.palette.secondary }]}>
                 <Button
                     icon="minus"
                     secondary
                     style={styles.leftButton}
-                    disabled={this.quantity === from}
+                    disabled={quantity === from}
                     onPress={this.decrement}
                 />
-                <Text primary>{`${this.quantity} ${this.quantity > 1 ? plural : singular}`}</Text>
+                <Text primary>{`${quantity} ${quantity > 1 ? plural : singular}`}</Text>
                 <Button
                     icon="plus"
                     secondary
                     style={styles.rightButton}
-                    disabled={this.quantity === to}
+                    disabled={quantity === to}
                     onPress={this.increment}
                 />
             </View>

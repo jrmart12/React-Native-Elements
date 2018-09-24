@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {Dimensions} from "react-native";
 
@@ -20,8 +19,7 @@ export default class PlaylistComp extends React.Component<PlaylistProps> {
         from: "discovery"
     };
 
-    @autobind
-    playlist() {
+    playlist = () => {
         const {playlist, navigation, from} = this.props;
         const key = from === "discovery" ? "Playlist" : "ProfilePlaylist";
         const back = from === "discovery" ? "Discovery" : "Profile";

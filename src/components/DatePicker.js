@@ -1,10 +1,7 @@
 // @flow
-import autobind from "autobind-decorator";
 import moment from "moment";
 import * as React from "react";
 import {View} from "react-native";
-import {observable, action} from "mobx";
-import {observer} from "mobx-react/native";
 import RNDatePicker from "react-native-datepicker";
 
 import {withStyles, StyleGuide} from "./theme";
@@ -43,14 +40,22 @@ const themedStyles = (theme: Theme): StyleSheet<StyleNames> => ({
     }
 });
 
-@observer
-class DatePicker extends React.Component<StylesProps<StyleNames>> {
+type DatePickerState = {
+    date: string
+};
 
-    @observable date: string = moment().format("MMMM Do");
-    @autobind @action onDateChange(date: string) { this.date = date; }
+class DatePicker extends React.Component<StylesProps<StyleNames>, DatePickerState> {
+
+    state = {
+        date: moment().format("MMMM Do")
+    };
+
+    onDateChange = (date: string) => this.setState({ date });
 
     render(): React.Node {
+        const {onDateChange} = this;
         const {styles} = this.props;
+        const {date} = this.state;
         return (
             <View style={styles.button}>
                 <RNDatePicker
@@ -61,8 +66,7 @@ class DatePicker extends React.Component<StylesProps<StyleNames>> {
                     cancelBtnText="Cancel"
                     format="MMMM Do"
                     showIcon={false}
-                    date={this.date}
-                    onDateChange={this.onDateChange}
+                    {...{date, onDateChange}}
                 />
             </View>
         );

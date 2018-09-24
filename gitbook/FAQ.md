@@ -12,16 +12,18 @@ Companies that have substantial budgets for their mobile development teams might
 
 * [Why Discord is Sticking with React Native](https://blog.discordapp.com/why-discord-is-sticking-with-react-native-ccc34be0d427)
 * [React Native at Airbnb](https://medium.com/airbnb-engineering/react-native-at-airbnb-f95aa460be1c)
- 
+
 ## Is Expo the right technology for me?
 
 Yes.
 
-But again, more seriously 😀, if you are building a React Native project, Expo is a must have tool. It packages the best native modules from the community such as [react-native-maps](https://github.com/react-community/react-native-maps) and [react-native-svg](https://github.com/react-native-community/react-native-svg) as well as contributing high quality libraries that can only be found in ExpoKit: [Filesystem API](https://docs.expo.io/versions/latest/sdk/filesystem), [Video API](https://docs.expo.io/versions/latest/sdk/video), and [Audio API](https://docs.expo.io/versions/v29.0.0/sdk/audio) just to name a few.
+If you are building a React Native project, Expo is a must have tool. It packages the best native modules from the community such as [react-native-maps](https://github.com/react-community/react-native-maps) and [react-native-svg](https://github.com/react-native-community/react-native-svg) as well as contributing high quality libraries that can only be found in ExpoKit: [Filesystem API](https://docs.expo.io/versions/latest/sdk/filesystem), [Video API](https://docs.expo.io/versions/latest/sdk/video), and [Audio API](https://docs.expo.io/versions/v29.0.0/sdk/audio) just to name a few.
 
 If your app dependencies just depend on ExpoKit, you can have your entire development process done from start to App Store publication without even opening XCode or Android Studio. [Expo will build the app binaries for you](https://docs.expo.io/versions/latest/guides/building-standalone-apps.html).
 
 If you do have other native dependencies in your app, Expo is still incredibly useful. First of all, you will benefit from all the high quality modules that we mentioned above. Secondly, expo  provide a convenient way to distribute [updates over the air](https://docs.expo.io/versions/latest/guides/configuring-ota-updates) as well a way to setup [different distribution channels](https://docs.expo.io/versions/latest/distribution/release-channels).
+
+You can also checkout this [great article](https://medium.com/appandflow/yes-you-should-start-your-react-native-project-with-expo-9fbfb20d1f99) on the topic.
 
 ## I love this starter kit but I'm not very pro-efficient with React Native. How should I train my React Native skills?
 

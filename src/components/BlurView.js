@@ -1,12 +1,13 @@
 // @flow
 import * as React from "react";
 import {Animated, Platform} from "react-native";
+import AnimatedInterpolation from "react-native/Libraries/Animated/src/nodes/AnimatedInterpolation";
 import {BlurView as ExpoBlurView} from "expo";
 
 import {StyleGuide, type StyleProps} from "./theme";
 
 type BlurViewProps = StyleProps & {
-    intensity: Animated.Value
+    intensity: Animated.Value | AnimatedInterpolation
 };
 
 export default class BlurView extends React.PureComponent<BlurViewProps> {

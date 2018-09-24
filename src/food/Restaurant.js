@@ -1,5 +1,5 @@
 // @flow
-import autobind from "autobind-decorator";
+
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
@@ -15,6 +15,7 @@ import type {Restaurant} from "./api";
 
 export default class RestaurantComp extends React.Component<NavigationProps<{ restaurant: Restaurant }>> {
 
+    // TODO: use createRef()
     reservation: ActionSheet;
 
     render(): React.Node {
@@ -68,13 +69,11 @@ export default class RestaurantComp extends React.Component<NavigationProps<{ re
         );
     }
 
-    @autobind
-    makeReservation() {
+    makeReservation = () => {
         this.reservation.toggle();
     }
 
-    @autobind
-    setReservationRef(reservation: ?ActionSheet) {
+    setReservationRef = (reservation: ?ActionSheet) => {
         if (reservation) {
             this.reservation = reservation;
         }

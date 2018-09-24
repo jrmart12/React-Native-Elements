@@ -1,54 +1,53 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
-import {StyleSheet, View, ActivityIndicator, SafeAreaView, TouchableOpacity, Dimensions} from "react-native";
+import {StyleSheet, View, ActivityIndicator, TouchableOpacity, Dimensions} from "react-native";
 import {Camera, Permissions} from "expo";
-import {observable, action} from "mobx";
-import {observer} from "mobx-react/native";
 
 import {
-    IconButton, Icon, StyleGuide, notImplementedYet, withTheme, type ThemeProps, type NavigationProps
+    IconButton, Icon, StyleGuide, notImplementedYet, withTheme, SafeAreaView, type ThemeProps, type NavigationProps
 } from "../components";
 
 import {EnableCameraPermission} from "./components";
 
 type PermissionStatus = 'undetermined' | 'granted' | 'denied';
 type CameraProps = NavigationProps<> & ThemeProps;
+type CameraState = {
+  hasCameraPermission: null | boolean,
+  type: number,
+  flashMode: number,
+  showGrid: boolean
+};
 
-@observer
-class CameraScreen extends React.Component<CameraProps> {
+class CameraScreen extends React.Component<CameraProps, CameraState> {
 
-    @observable hasCameraPermission: null | boolean = null;
-    @observable type: number = Camera.Constants.Type.back;
-    @observable flashMode: number = Camera.Constants.FlashMode.off;
-    @observable showGrid = false;
+    state = {
+        hasCameraPermission: null,
+        type: Camera.Constants.Type.back,
+        flashMode: Camera.Constants.FlashMode.off,
+        showGrid: false
+    };
 
-    @action
     setCameraPermission(status: PermissionStatus) {
-        this.hasCameraPermission = status === "granted";
+        this.setState({ hasCameraPermission: status === "granted" });
     }
 
-    @autobind @action
-    toggleFlash() {
-        const {flashMode} = this;
+    toggleFlash = () => {
+        const {flashMode} = this.state;
         const {on, off} = Camera.Constants.FlashMode;
-        this.flashMode = flashMode === on ? off : on;
+        this.setState({ flashMode: flashMode === on ? off : on });
     }
 
-    @autobind @action
-    toggleGrid() {
-        this.showGrid = !this.showGrid;
+    toggleGrid = () => {
+        this.setState({ showGrid: !this.state.showGrid });
     }
 
-    @autobind @action
-    toggleCamera() {
-        const {type} = this;
+    toggleCamera = () => {
+        const {type} = this.state;
         const {front, back} = Camera.Constants.Type;
-        this.type = type === back ? front : back;
+        this.setState({ type: type === back ? front : back });
     }
 
-    @autobind
-    goBack() {
+    goBack = () => {
         this.props.navigation.goBack();
     }
 
@@ -58,7 +57,8 @@ class CameraScreen extends React.Component<CameraProps> {
     }
 
     render(): React.Node {
-        const {hasCameraPermission, type, flashMode, toggleFlash, toggleCamera, goBack, toggleGrid, showGrid} = this;
+        const {toggleFlash, toggleCamera, goBack, toggleGrid} = this;
+        const {hasCameraPermission, type, flashMode, showGrid} = this.state;
         const {theme} = this.props;
         if (hasCameraPermission === null) {
             return (
@@ -71,7 +71,7 @@ class CameraScreen extends React.Component<CameraProps> {
         }
         return (
             <Camera style={styles.camera} {...{type, flashMode}}>
-                <SafeAreaView style={styles.cameraSafeArea}>
+                <SafeAreaView style={styles.cameraSafeArea} top>
                     <View style={styles.header}>
                         <IconButton name="grid" onPress={toggleGrid} />
                         <IconButton

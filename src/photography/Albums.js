@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as _ from "lodash";
 import * as React from "react";
 import {View, StyleSheet, TouchableOpacity} from "react-native";
@@ -16,8 +15,7 @@ export default class Albums extends React.PureComponent<NavigationProps<>> {
         navigation.navigate("Album", { album });
     }
 
-    @autobind
-    renderItem(group: { id: string, photos: Photo[] }): React.Node {
+    renderItem = (group: { id: string, photos: Photo[] }): React.Node => {
         const {navigation} = this.props;
         return (
             <View>

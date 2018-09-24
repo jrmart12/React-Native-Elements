@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View, TouchableOpacity} from "react-native";
 
@@ -26,8 +25,7 @@ export default class IngredientComp extends React.Component<IngredientProps, Ing
         return { checked };
     }
 
-    @autobind
-    toggle() {
+    toggle = () => {
         const {checked} = this.state;
         this.setState({ checked: !checked });
     }

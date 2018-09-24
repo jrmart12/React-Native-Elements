@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
@@ -12,15 +11,13 @@ import {type City} from "./api";
 
 export default class CityScreen extends React.PureComponent<NavigationProps<{ city: City }>> {
 
-    @autobind
-    goToRestaurant() {
+    goToRestaurant = () => {
         const {navigation} = this.props;
         const {city} = navigation.state.params;
         navigation.navigate("Restaurants", { city });
     }
 
-    @autobind
-    goToHotels() {
+    goToHotels = () => {
         const {navigation} = this.props;
         const {city} = navigation.state.params;
         navigation.navigate("Hotels", { city });

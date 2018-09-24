@@ -1,7 +1,13 @@
 # Changelog
 
+# 2.0.0
+* Upgrade to Expo 30
+* Remove `autobind` dependency
+* Remove `mobx` dependency in favor of the new React context API.
+* Improve status bar management
+
 # 1.0.10
-* Upgrade to 29
+* Upgrade to Expo 29
 * Minor bug fix with the scrollable header
 
 # 1.0.9

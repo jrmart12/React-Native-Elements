@@ -1,45 +1,42 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {View, StyleSheet, ActivityIndicator, Animated, Dimensions, TouchableWithoutFeedback} from "react-native";
-import {observer} from "mobx-react/native";
 import {LinearGradient} from "expo";
 
-import {IconButton, Text, Image} from "../../components";
+import {IconButton, Text, Image, withTheme} from "../../components";
 import {StyleGuide, type ThemeProps} from "../../components/theme";
 
 import PlayerActionSheet from "./PlayerActionSheet";
-import {withPlayerAndTheme, type PlayerProps} from "./Player";
+import PlayerProvider, {withPlayer, type PlayerProps} from "./Player";
 
 type PlayerControlsProps = PlayerProps & ThemeProps;
 
-@observer
 class PlayerControls extends React.Component<PlayerControlsProps> {
 
     playerActionSheet: PlayerActionSheet;
 
-    @autobind
-    setPlayerActionSheet(playerActionSheet: ?PlayerActionSheet) {
+    setPlayerActionSheet = (playerActionSheet: ?PlayerActionSheet) => {
         if (playerActionSheet) {
             this.playerActionSheet = playerActionSheet;
         }
     }
 
-    @autobind
-    toggle() {
+    toggle = () => {
         const {player} = this.props;
-        if (player.playlistEntry) {
-            this.playerActionSheet.toggle(player.playlistEntry.track);
+        if (player.playlistEntry && player.playlist) {
+            this.playerActionSheet.toggle(player.playlist, player.playlistEntry.track);
         }
     }
 
     render(): React.Node {
-        const {player, theme} = this.props;
-        const translateY = player.sliding.interpolate({
+        const {theme, player} = this.props;
+        const {isLoaded, sliding, progress, playlistEntry, isPlaying, playlist} = player;
+        const playerProvider = PlayerProvider.getInstance();
+        const translateY = sliding.interpolate({
             inputRange: [0, 64],
             outputRange: [-64, 64]
         });
-        const translateX = player.progress.interpolate({
+        const translateX = progress.interpolate({
             inputRange: [0, width],
             outputRange: [-width, 0]
         });
@@ -53,39 +50,39 @@ class PlayerControls extends React.Component<PlayerControlsProps> {
                 <TouchableWithoutFeedback onPress={this.toggle}>
                     <View style={styles.controls}>
                         {
-                            !player.isLoaded && (
+                            !isLoaded && (
                                 <ActivityIndicator color={theme.palette.primary} />
                             )
                         }
                         {
-                            player.isLoaded && (
+                            isLoaded && (
                                 <View style={styles.item}>
                                     <IconButton
-                                        name={player.isPlaying ? "pause" : "play"}
+                                        name={isPlaying ? "pause" : "play"}
                                         color={theme.palette.primary}
-                                        onPress={player.toggle}
+                                        onPress={playerProvider.toggle}
                                     />
                                 </View>
                             )
                         }
                         {
-                            player.playlistEntry && (
+                            playlistEntry && (
                                 <View style={styles.item}>
-                                    <Text type="headline" primary>{player.playlistEntry.track.name}</Text>
-                                    <Text type="footnote" primary>{player.playlistEntry.album.artist}</Text>
+                                    <Text type="headline" primary>{playlistEntry.track.name}</Text>
+                                    <Text type="footnote" primary>{playlistEntry.album.artist}</Text>
                                 </View>
                             )
                         }
                         {
-                            player.playlistEntry && (
-                                <Image style={styles.cover} {...player.playlistEntry.album.picture} />
+                            playlistEntry && (
+                                <Image style={styles.cover} {...playlistEntry.album.picture} />
                             )
                         }
                     </View>
                 </TouchableWithoutFeedback>
                 {
-                    player.playlist && (
-                        <PlayerActionSheet ref={this.setPlayerActionSheet} playlist={player.playlist} />
+                    playlist && (
+                        <PlayerActionSheet ref={this.setPlayerActionSheet} playlist={playlist} />
                     )
                 }
             </Animated.View>
@@ -127,4 +124,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default withPlayerAndTheme(PlayerControls);
+export default withTheme(withPlayer(PlayerControls));

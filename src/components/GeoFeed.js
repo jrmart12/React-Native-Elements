@@ -1,8 +1,6 @@
 // @flow
 import * as React from "react";
 import {ScrollView, StyleSheet, View, Animated} from "react-native";
-import {observable} from "mobx";
-import {observer} from "mobx-react/native";
 
 import NavigationBar from "./NavigationBar";
 import Text from "./Text";
@@ -21,14 +19,19 @@ type GeoFeedProps<T: Marker> = ThemeProps & NavigationProps<*> & {
     defaultCoordinates?: Location
 };
 
-@observer
-class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
+type GeoState = {
+    scrollAnimation: Animated.Value
+};
 
-    @observable scrollAnimation = new Animated.Value(0);
+class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>, GeoState> {
+
+    state = {
+        scrollAnimation: new Animated.Value(0)
+    };
 
     listHeaderComponent(): React.Node {
-        const {scrollAnimation} = this;
         const {title, theme, markers, defaultCoordinates} = this.props;
+        const {scrollAnimation} = this.state;
         const translateY = scrollAnimation.interpolate({
             inputRange: [-1, 0, 1],
             outputRange: [-1, 0, 0]
@@ -47,8 +50,8 @@ class GeoFeed<T: Marker> extends React.Component<GeoFeedProps<T>> {
     }
 
     render(): React.Node {
-        const {scrollAnimation} = this;
         const {markers, renderItem, title, navigation, back} = this.props;
+        const {scrollAnimation} = this.state;
         const textTranslation = scrollAnimation.interpolate({
             inputRange: [0, 55, 56, 57],
             outputRange: [55, 55, 0, 0]

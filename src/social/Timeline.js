@@ -1,5 +1,5 @@
 // @flow
-import autobind from "autobind-decorator";
+
 import * as React from "react";
 import {View, StyleSheet} from "react-native";
 
@@ -15,15 +15,12 @@ const renderItem = (post: PostModel): React.Node => <Post {...{post}} />;
 
 export default class Timeline extends React.Component<NavigationProps<>> {
 
-    @autobind
-    onPress() {
-        this.newPost.toggle();
-    }
+    onPress = () => this.newPost.toggle();
 
+    // TODO: createRef()
     newPost: ActionSheet;
 
-    @autobind
-    newPostRef(newPost: ActionSheet | null) {
+    newPostRef = (newPost: ActionSheet | null) => {
         if (newPost) {
             this.newPost = newPost;
         }

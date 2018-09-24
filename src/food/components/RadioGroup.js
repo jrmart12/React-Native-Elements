@@ -1,7 +1,5 @@
 // @flow
 import * as React from "react";
-import {observable, action} from "mobx";
-import {observer} from "mobx-react/native";
 import {View, StyleSheet} from "react-native";
 
 import {Button} from "../../components";
@@ -10,22 +8,29 @@ type RadioGroupProps = {
     options: string[]
 };
 
-@observer
-export default class RadioGroup extends React.Component<RadioGroupProps> {
+type RadioGroupState = {
+    selected: number
+};
 
-    @observable selected: number = 0;
-    @action select(index: number) { this.selected = index; }
+export default class RadioGroup extends React.Component<RadioGroupProps, RadioGroupState> {
+
+    state = {
+        selected: 0
+    };
+
+    select = (selected: number) => this.setState({ selected });
 
     render(): React.Node {
         const {options} = this.props;
+        const {selected} = this.state;
         return (
             <View style={styles.container}>
                 {
                     options.map((label, key) => (
                         <Button
                             style={styles.button}
-                            primary={this.selected === key}
-                            secondary={this.selected !== key}
+                            primary={selected === key}
+                            secondary={selected !== key}
                             onPress={() => this.select(key)}
                             {...{label, key}}
                         />

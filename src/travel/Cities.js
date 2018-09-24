@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 
 import {Card, Feed} from "../components";
@@ -10,8 +9,7 @@ import type {NavigationProps} from "../components";
 
 export default class Cities extends React.Component<NavigationProps<>> {
 
-    @autobind
-    renderItem(city: City): React.Node {
+    renderItem = (city: City): React.Node => {
         const {navigation} = this.props;
         return (
             <Card

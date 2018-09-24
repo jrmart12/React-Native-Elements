@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View, TouchableWithoutFeedback} from "react-native";
 
@@ -19,8 +18,7 @@ export default class AlbumComp extends React.Component<AlbumProps> {
         from: "library"
     }
 
-    @autobind
-    onPress() {
+    onPress = () => {
         const {navigation, album, from} = this.props;
         const key = from === "library" ? "Album" : "ProfileAlbum";
         const back = from === "library" ? "Library" : "Profile";

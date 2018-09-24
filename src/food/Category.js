@@ -1,5 +1,5 @@
 // @flow
-import autobind from "autobind-decorator";
+
 import * as React from "react";
 
 import {Card, Feed} from "../components";
@@ -10,8 +10,7 @@ import type {NavigationProps} from "../components";
 
 export default class CategoryComp extends React.Component<NavigationProps<{ categoryId: string }>> {
 
-    @autobind
-    renderItem(recipe: Recipe): React.Node {
+    renderItem = (recipe: Recipe): React.Node => {
         const {navigation} = this.props;
         const {categoryId} = navigation.state.params;
         const description = `${recipe.people} ${recipe.people > 1 ? "people" : "person"} · ${recipe.minutes} minutes`;

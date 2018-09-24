@@ -1,10 +1,8 @@
 // @flow
 import * as _ from "lodash";
-import autobind from "autobind-decorator";
+
 import * as React from "react";
 import {StyleSheet} from "react-native";
-import {observable, action} from "mobx";
-import {observer} from "mobx-react/native";
 
 import {ActionSheet, Image, StyleGuide} from "../../components";
 import ExpandedPlayerControls from "./ExpandedPlayerControls";
@@ -12,51 +10,39 @@ import ExpandedPlayerControls from "./ExpandedPlayerControls";
 import {type Playlist, type Track} from "../api";
 
 type PlayerActionSheetProps = {
-    playlist: Playlist
 };
 
-@observer
-export default class PlayerActionSheet extends React.Component<PlayerActionSheetProps> {
+type PlayerActionSheetState = {
+    playlist: Playlist | null,
+    track: Track | null
+};
 
-    actionSheet: ActionSheet;
+export default class PlayerActionSheet extends React.Component<PlayerActionSheetProps, PlayerActionSheetState> {
 
-    @observable track: Track;
+    // $FlowFixMe
+    actionSheet = React.createRef();
 
-    @action
-    componentDidMount() {
-        const {playlist} = this.props;
-        this.track = playlist.entries[0].track;
+    state: $Shape<PlayerActionSheetState> = {};
+
+    toggle(playlist: Playlist, track: Track) {
+        this.setState({ playlist, track }, () => this.actionSheet.current.toggle());
     }
 
-    @autobind
-    setActionSheet(actionSheet: ?ActionSheet) {
-        if (actionSheet) {
-            this.actionSheet = actionSheet;
-        }
-    }
-
-    @action
-    toggle(track: Track) {
-        this.track = track;
-        this.actionSheet.toggle();
-    }
-
-    @autobind @action
-    switchTrack(track: Track) {
-        this.track = track;
+    switchTrack = (track: Track) => {
+        this.setState({ track });
     }
 
     render(): React.Node {
-        const {track, switchTrack, setActionSheet} = this;
-        if (!track) {
+        const {switchTrack} = this;
+        const {playlist, track} = this.state;
+        if (!playlist || !track) {
             return null;
         }
-        const {playlist} = this.props;
-        const title = this.track ? this.track.name : "";
+        const title = track ? track.name : "";
         const {album} = _.find(playlist.entries, entry => entry.track.uri === track.uri);
         const subtitle = `${album.artist} - ${album.name}`;
         return (
-            <ActionSheet ref={setActionSheet} {...{title, subtitle}} noSafeArea>
+            <ActionSheet ref={this.actionSheet} {...{title, subtitle}} noSafeArea>
                 <Image style={styles.image} {...album.picture} />
                 <ExpandedPlayerControls {...{playlist, track, switchTrack}} />
             </ActionSheet>

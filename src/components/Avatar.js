@@ -2,8 +2,6 @@
 import * as React from "react";
 import {Image as NativeImage, StyleSheet} from "react-native";
 import {Svg} from "expo";
-import {observable, computed} from "mobx";
-import {observer} from "mobx-react/native";
 
 import CacheManager from "./CacheManager";
 import type {StyleProps} from "./theme";
@@ -16,30 +14,32 @@ type AvatarProps = StyleProps & {
     stacked: boolean
 };
 
-@observer
-export default class Avatar extends React.Component<AvatarProps> {
+type AvatarState = {
+  uri: ?string
+};
+
+export default class Avatar extends React.Component<AvatarProps, AvatarState> {
 
     static defaultProps = {
         size: 36,
         stacked: false
     };
 
-    @observable _uri: string;
-
-    @computed get uri(): string { return this._uri; }
-    set uri(uri: string) { this._uri = uri; }
+    state = {
+        uri: undefined
+    };
 
     async componentDidMount(): Promise<void> {
         const {uri} = this.props;
         const newURI = await CacheManager.get(uri).getPath();
         if (newURI) {
-            this.uri = newURI;
+            this.setState({ uri: newURI });
         }
     }
 
     render(): React.Node {
-        const {uri} = this;
         const {stacked, size, style} = this.props;
+        const {uri} = this.state;
         const width = stacked ? 27 : size;
         const height = size;
         if (!stacked) {

@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet} from "react-native";
 
@@ -9,8 +8,7 @@ import {type Photo} from "./api";
 
 export default class Place extends React.PureComponent<NavigationProps<{ photos: Photo[] }>> {
 
-    @autobind
-    renderItem(photo: Photo): React.Node {
+    renderItem = (photo: Photo): React.Node => {
         const {navigation} = this.props;
         return <PhotoThumbnail from="Photos" {...{photo, navigation}} />;
     }

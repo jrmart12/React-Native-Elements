@@ -31,7 +31,8 @@ export {default as Images} from "./images";
 export {default as Avatar} from "./Avatar";
 export {default as Footer} from "./Footer";
 export {default as TransparentHeader} from "./TransparentHeader";
-export {createTheme, Colors, StyleGuide, withTheme, withStyles} from "./theme";
+export {default as SafeAreaView} from "./SafeAreaView";
+export {ThemeProvider, Colors, StyleGuide, withTheme, withStyles} from "./theme";
 export {notImplementedYet} from "./notImplementedYet";
 
 export type {NavigationProps} from "./Navigation";

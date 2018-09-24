@@ -1,18 +1,16 @@
 // @flow
 import * as _ from "lodash";
-import autobind from "autobind-decorator";
+
 import * as React from "react";
 import {StyleSheet, View, Dimensions, Animated, Slider, ActivityIndicator} from "react-native";
-import {observer} from "mobx-react/native";
-import {observable, action} from "mobx";
 import {LinearGradient} from "expo";
 import {SafeAreaView} from "react-navigation";
 
-import {IconButton, StyleGuide, type ThemeProps} from "../../components";
+import {IconButton, StyleGuide, withTheme, type ThemeProps} from "../../components";
 
 import type {Track, Playlist} from "../api";
 
-import {withPlayerAndTheme, type PlayerProps} from "./Player";
+import PlayerProvider, {withPlayer, type PlayerProps} from "./Player";
 
 type InjectedProps = ThemeProps & PlayerProps;
 type ExpandedPlayerControlsProps = InjectedProps & {
@@ -21,54 +19,59 @@ type ExpandedPlayerControlsProps = InjectedProps & {
     switchTrack: Track => mixed
 };
 
-@observer
-class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps> {
+type ExpandedPlayerControlsState = {
+    repeat: boolean,
+    shuffleMode: boolean
+};
 
-    @observable repeat = false;
-    @observable shuffleMode = false;
+class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps, ExpandedPlayerControlsState> {
 
-    @autobind @action
-    toggleRepeat() {
-        this.repeat = !this.repeat;
+    state = {
+        repeat: false,
+        shuffleMode: false
+    };
+
+    toggleRepeat = () => {
+        this.setState({ repeat: !this.state.repeat });
     }
 
-    @autobind @action
-    toggleShuffleMode() {
-        this.shuffleMode = !this.shuffleMode;
+    toggleShuffleMode = () => {
+        this.setState({ shuffleMode: !this.state.shuffleMode });
     }
 
-    @autobind
-    async shuffle(): Promise<void> {
-        const {playlist, player, switchTrack} = this.props;
-        const entry = await player.shuffle(playlist);
+    shuffle = async (): Promise<void> => {
+        const playerProvider = PlayerProvider.getInstance();
+        const {playlist, switchTrack} = this.props;
+        const entry = await playerProvider.shuffle(playlist);
         switchTrack(entry.track);
     }
 
-    @autobind
-    replay() {
-        const {player, playlist, track} = this.props;
+    replay = () => {
+        const playerProvider = PlayerProvider.getInstance();
+        const {playlist, track} = this.props;
         const entry = _.find(playlist.entries, e => e.track.uri === track.uri);
-        player.play(playlist, entry);
+        playerProvider.play(playlist, entry);
     }
 
-    @autobind
-    async play(): Promise<void> {
-        const {player, playlist, track, switchTrack} = this.props;
+    play = async (): Promise<void> => {
+        const playerProvider = PlayerProvider.getInstance();
+        const {playlist, track, switchTrack} = this.props;
         const entry = _.find(playlist.entries, e => e.track.uri === track.uri);
-        await player.play(playlist, entry);
+        await playerProvider.play(playlist, entry);
         switchTrack(track);
     }
 
-    @autobind
-    updateVolume(volume: number) {
-        const {player} = this.props;
-        player.sound.setVolumeAsync(volume);
+    updateVolume = (volume: number) => {
+        const playerProvider = PlayerProvider.getInstance();
+        playerProvider.sound.setVolumeAsync(volume);
     }
 
     render(): React.Node {
+        const playerProvider = PlayerProvider.getInstance();
         const {playlist, track, player, theme} = this.props;
+        const {repeat, shuffleMode} = this.state;
         const entry = _.find(playlist.entries, e => e.track.uri === track.uri);
-        const isSongPlaying = player.isSongPlaying(playlist, entry);
+        const isSongPlaying = playerProvider.isSongPlaying(playlist, entry);
         const translateX = isSongPlaying ? player.progress.interpolate({
             inputRange: [0, width],
             outputRange: [-width, 0]
@@ -85,8 +88,8 @@ class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps
                             name="repeat"
                             disabled={!isSongPlaying}
                             onPress={this.toggleRepeat}
-                            secondary={!this.repeat}
-                            primary={this.repeat}
+                            secondary={!repeat}
+                            primary={repeat}
                         />
                         <IconButton
                             name="previous"
@@ -95,16 +98,16 @@ class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps
                             primary
                         />
                         {
-                            (player.isLoaded || player.track === undefined) && (
+                            player.isLoaded && (
                                 <IconButton
                                     name={(isSongPlaying && player.isPlaying) ? "pause" : "play"}
-                                    onPress={isSongPlaying ? player.toggle : this.play}
+                                    onPress={isSongPlaying ? playerProvider.toggle : this.play}
                                     primary
                                 />
                             )
                         }
                         {
-                            (!player.isLoaded && player.track !== undefined) && (
+                            (!player.isLoaded) && (
                                 <ActivityIndicator color={theme.palette.primary} />
                             )
                         }
@@ -118,8 +121,8 @@ class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps
                             name="shuffle"
                             disabled={!isSongPlaying}
                             onPress={this.toggleShuffleMode}
-                            secondary={!this.shuffleMode}
-                            primary={this.shuffleMode}
+                            secondary={!shuffleMode}
+                            primary={shuffleMode}
                         />
                     </View>
                     <Slider
@@ -129,7 +132,7 @@ class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps
                         onValueChange={this.updateVolume}
                         minimumTrackTintColor={theme.palette.primary}
                         maximumTrackTintColor={theme.palette.secondary}
-                        disabled={!player.sound}
+                        disabled={!playerProvider.sound}
                         style={styles.slider}
                         thumbTintColor={theme.palette.primary}
                     />
@@ -167,4 +170,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default withPlayerAndTheme(ExpandedPlayerControls);
+export default withTheme(withPlayer(ExpandedPlayerControls));

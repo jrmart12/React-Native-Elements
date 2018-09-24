@@ -1,7 +1,6 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
-import {StyleSheet, View, TouchableOpacity, Platform, StatusBar} from "react-native";
+import {StyleSheet, View, TouchableOpacity, StatusBar} from "react-native";
 
 import {
     Image, StyleGuide, IconButton, ActionSheet, Content, TransparentHeader, Footer, notImplementedYet
@@ -17,46 +16,23 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
     comments: ActionSheet;
     newPost: ActionSheet;
 
-    @autobind
-    goBack() {
-        this.props.navigation.goBack();
-    }
+    goBack = () => this.props.navigation.goBack();
 
-    @autobind
-    toggleNewMessage() {
-        this.newPost.toggle();
-    }
+    toggleNewMessage = () => this.newPost.toggle();
 
-    @autobind
-    newPostRef(newPost: ?ActionSheet) {
+    newPostRef = (newPost: ?ActionSheet) => {
         if (newPost) {
             this.newPost = newPost;
         }
     }
 
-    @autobind
-    commentsRef(comments: ?ActionSheet) {
+    commentsRef = (comments: ?ActionSheet) => {
         if (comments) {
             this.comments = comments;
         }
     }
 
-    @autobind
-    toggleComments() {
-        this.comments.toggle();
-    }
-
-    componentDidMount() {
-        if (Platform.OS === "android") {
-            StatusBar.setHidden(true);
-        }
-    }
-
-    componentWillUnmount() {
-        if (Platform.OS === "android") {
-            StatusBar.setHidden(false);
-        }
-    }
+    toggleComments = () => this.comments.toggle();
 
     render(): React.Node {
         const {navigation} = this.props;
@@ -69,6 +45,7 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
         };
         return (
             <View style={styles.story}>
+                <StatusBar hidden />
                 <Image style={styles.image} {...story.picture} />
                 <View style={styles.content}>
                     <TransparentHeader>
@@ -101,7 +78,7 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
                         </Content>
                     </ActionSheet>
                     <ActionSheet title="New Post" ref={this.newPostRef} rightAction={postAction}>
-                        <NewMessage />
+                        <NewMessage enableOnAndroid />
                     </ActionSheet>
                 </View>
             </View>

@@ -1,9 +1,6 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, Animated, Dimensions} from "react-native";
-import {observer} from "mobx-react/native";
-import {observable, action} from "mobx";
 
 import {Sheet} from "../../components";
 
@@ -13,44 +10,45 @@ type PhotoActionSheetProps = {
     onClose: () => mixed
 };
 
-@observer
-export default class PhotoActionSheet extends React.Component<PhotoActionSheetProps> {
+type PhotoActionSheetState = {
+    animation: Animated.Value,
+    visible: boolean
+};
 
-    @observable animation: Animated.Value = new Animated.Value(0);
-    @observable visible = false;
+export default class PhotoActionSheet extends React.Component<PhotoActionSheetProps, PhotoActionSheetState> {
 
-    @action show() { this.visible = true; }
-    @action hide() { this.visible = false; }
+    state = {
+        animation: new Animated.Value(0),
+        visible: false
+    };
 
-    @autobind
-    toggle() {
+    setVisibility = (visible: boolean): Promise<void> => new Promise(r => this.setState({ visible }, r));
+
+    toggle = async () => {
         const {onClose} = this.props;
-        if (!this.visible) {
-            this.show();
-            Animated.timing(
-                this.animation,
-                {
-                    toValue: 1,
-                    duration,
-                    useNativeDriver
-                }
-            ).start();
-        } else {
-            onClose();
-            Animated.timing(
-                this.animation,
-                {
-                    toValue: 0,
-                    duration,
-                    useNativeDriver
-                }
-            ).start(() => this.hide());
+        const {animation, visible} = this.state;
+        if (!visible) {
+            await this.setVisibility(true);
         }
+        Animated.timing(
+            animation,
+            {
+                toValue: visible ? 0 : 1,
+                duration,
+                useNativeDriver
+            }
+        ).start(() => {
+            if (visible) {
+                this.setVisibility(false);
+                onClose();
+            }
+        });
     }
 
     render(): React.Node {
-        const {toggle, animation} = this;
+        const {toggle} = this;
         const {children, title} = this.props;
+        const {animation} = this.state;
         const translateY = animation.interpolate({
             inputRange: [0, 1],
             outputRange: [height, 0]

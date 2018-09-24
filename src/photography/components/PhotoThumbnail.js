@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, Dimensions, View, TouchableWithoutFeedback} from "react-native";
 
@@ -21,8 +20,7 @@ export default class PhotoThumbnail extends React.PureComponent<PhotoProps> {
         size: defaultSize
     };
 
-    @autobind
-    onPress() {
+    onPress = () => {
         const {navigation, photo, from} = this.props;
         navigation.navigate("Photo", { photo, from });
     }

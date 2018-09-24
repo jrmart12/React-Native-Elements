@@ -1,14 +1,12 @@
 // @flow
+/* eslint-disable react/no-unused-state */
 import * as _ from "lodash";
-import autobind from "autobind-decorator";
+
 import * as React from "react";
-import {observable, action} from "mobx";
-import {inject} from "mobx-react/native";
 import {Animated, Dimensions} from "react-native";
 import {Audio} from "expo";
 
 import type {PlaybackStatus} from "expo/src/av/AV";
-import type {ThemeProps} from "../../components";
 import type {Playlist, PlaylistEntry} from "../api";
 
 type CompositeAnimation = {
@@ -16,40 +14,74 @@ type CompositeAnimation = {
     stop: () => void
 };
 
-export default class Player {
+// $FlowFixMe
+const PlayerContext = React.createContext();
+
+type PlayerProviderProps = {
+    children: React.Node
+};
+
+type PlayerProviderState = {
+    sliding: Animated.Value,
+    progress: Animated.Value,
+    playlist: Playlist | null,
+    playlistEntry: PlaylistEntry | null,
+    isLoaded: boolean,
+    isPlaying: boolean,
+    locked: boolean,
+    volume: number
+};
+
+export default class PlayerProvider extends React.Component<PlayerProviderProps, PlayerProviderState> {
+
+  static instance: PlayerProvider | null = null;
 
     progressAnimation: CompositeAnimation;
     sound: Audio.Sound;
     durationLeftMillis = 0;
 
-    @observable sliding: Animated.Value = new Animated.Value(64);
-    @observable progress: Animated.Value = new Animated.Value(0);
+    state = {
+        sliding: new Animated.Value(64),
+        progress: new Animated.Value(0),
+        isLoaded: false,
+        isPlaying: false,
+        locked: false,
+        volume: 0,
+        playlist: null,
+        playlistEntry: null
+    };
 
-    @observable playlist: ?Playlist;
-    @observable playlistEntry: ?PlaylistEntry;
+    static getInstance(): PlayerProvider {
+        if (!PlayerProvider.instance) {
+            throw new Error("PlayerProvider is not mounted yet.");
+        }
+        return PlayerProvider.instance;
+    }
 
-    @observable isLoaded = false;
-    @observable isPlaying = false;
-    @observable locked = false;
-    @observable volume = 0;
+    componentDidMount() {
+        if (PlayerProvider.instance !== null) {
+            throw new Error("Only one PlayerProvider is allowed to be used.");
+        }
+        PlayerProvider.instance = this;
+    }
 
-    @action lock() { this.locked = true; }
-    @action unlock() { this.locked = false; }
-    @action resetProgress() { this.progress = new Animated.Value(0); }
+    lock() { this.setState({ locked: true }); }
+    unlock() { this.setState({ locked: false }); }
+    resetProgress() { this.setState({ progress: new Animated.Value(0) }); }
 
     async play(playlist: Playlist, playlistEntry: PlaylistEntry): Promise<void> {
-        if (!this.locked) {
+        const {locked} = this.state;
+        if (!locked) {
             this.load(playlist, playlistEntry);
         }
     }
 
-    @action
     async load(playlist: Playlist, playlistEntry: PlaylistEntry): Promise<void> {
+        const {sliding, progress} = this.state;
         this.lock();
         const {uri} = playlistEntry.track;
-        Animated.timing(this.sliding, { duration: 300, toValue: 0, useNativeDriver }).start();
-        this.playlist = playlist;
-        this.playlistEntry = playlistEntry;
+        Animated.timing(sliding, { duration: 300, toValue: 0, useNativeDriver }).start();
+        this.setState({ playlist, playlistEntry });
         if (this.sound) {
             this.resetProgress();
             await this.sound.unloadAsync();
@@ -58,7 +90,7 @@ export default class Player {
         this.sound = sound;
         if (status.durationMillis) {
             const duration = status.durationMillis;
-            this.progressAnimation = Animated.timing(this.progress, { duration, toValue: width, useNativeDriver });
+            this.progressAnimation = Animated.timing(progress, { duration, toValue: width, useNativeDriver });
             this.progressAnimation.start();
         }
     }
@@ -70,35 +102,34 @@ export default class Player {
     }
 
     isPlaylistPlaying(playlist: Playlist): boolean {
-        return this.isPlaying && this.playlist != null && this.playlist.id === playlist.id;
+        const {isPlaying} = this.state;
+        return isPlaying && this.state.playlist != null && this.state.playlist.id === playlist.id;
     }
 
     isSongPlaying(playlist: Playlist, playlistEntry: PlaylistEntry): boolean {
-        return this.playlist != null && this.playlistEntry != null && playlist.id === this.playlist.id &&
-         this.playlistEntry.track.uri === playlistEntry.track.uri;
+        return this.state.playlist != null && this.state.playlistEntry != null &&
+         playlist.id === this.state.playlist.id &&
+         this.state.playlistEntry.track.uri === playlistEntry.track.uri;
     }
 
-    @autobind
-    async toggle(): Promise<void> {
-        if (this.isPlaying) {
+    toggle = async (): Promise<void> => {
+        const {progress, isPlaying} = this.state;
+        if (isPlaying) {
             await this.sound.pauseAsync();
             this.progressAnimation.stop();
         } else {
             await this.sound.playAsync();
             const duration = this.durationLeftMillis;
-            this.progressAnimation = Animated.timing(this.progress, { duration, toValue: width, useNativeDriver });
+            this.progressAnimation = Animated.timing(progress, { duration, toValue: width, useNativeDriver });
             this.progressAnimation.start();
         }
     }
 
-    @autobind @action
-    statusUpdate(status: PlaybackStatus) {
-        this.isLoaded = status.isLoaded;
+    statusUpdate = (status: PlaybackStatus) => {
+        this.setState({ isLoaded: status.isLoaded });
         if (status.isLoaded) {
-            this.volume = status.volume;
-            this.isLoaded = !status.isBuffering;
-            this.isPlaying = status.isPlaying;
-            if (this.isLoaded && this.locked) {
+            this.setState({ volume: status.volume, isLoaded: !status.isBuffering, isPlaying: status.isPlaying });
+            if (this.state.isLoaded && this.state.locked) {
                 this.unlock();
             }
             if (status.durationMillis) {
@@ -106,26 +137,37 @@ export default class Player {
             }
             if (status.didJustFinish) {
                 this.resetProgress();
-                this.sliding = new Animated.Value(64);
-                this.playlist = undefined;
-                this.playlistEntry = undefined;
+                this.setState({
+                    sliding: new Animated.Value(64),
+                    playlist: null,
+                    playlistEntry: null
+                });
             }
         }
+    }
+
+    render(): React.Node {
+        const {children} = this.props;
+        return (
+            <PlayerContext.Provider value={this.state}>
+                {children}
+            </PlayerContext.Provider>
+
+        );
     }
 }
 
 export type PlayerProps = {
-    player: Player
+    player: PlayerProviderState
 };
 
 // eslint-disable-next-line max-len
 export function withPlayer<Props: {}, Comp: React.ComponentType<Props>>(C: Comp): React.ComponentType<$Diff<React.ElementConfig<Comp>, PlayerProps>> {
-    return inject("player")(C);
-}
-
-// eslint-disable-next-line max-len
-export function withPlayerAndTheme<Props: {}, Comp: React.ComponentType<Props>>(C: Comp): React.ComponentType<$Diff<React.ElementConfig<Comp>, PlayerProps & ThemeProps>> {
-    return inject("player", "theme")(C);
+    return props => (
+        <PlayerContext.Consumer>
+            {player => <C {...{ player }} {...props} />}
+        </PlayerContext.Consumer>
+    );
 }
 
 const useNativeDriver = true;

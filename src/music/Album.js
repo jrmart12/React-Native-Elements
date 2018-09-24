@@ -1,29 +1,28 @@
 // @flow
-import autobind from "autobind-decorator";
+
 import * as React from "react";
 import {StyleSheet} from "react-native";
 
 import {Container, NavigationBar, Content, List, StyleGuide} from "../components";
 
-import MusicAPI, {type Album, type Track as TrackModel} from "./api";
+import MusicAPI, {type Album, type Playlist as PlaylistModel, type Track as TrackModel} from "./api";
 import {Track, PlaylistHeader, PlayerActionSheet} from "./components";
 
 import type {NavigationProps} from "../components";
 
 export default class AlbumScreen extends React.PureComponent<NavigationProps<{ album: Album, back: string }>> {
 
+    // TODO: createRef()
     playerActionSheet: PlayerActionSheet;
 
-    @autobind
-    setPlayerActionSheet(playerActionSheet: ?PlayerActionSheet) {
+    setPlayerActionSheet = (playerActionSheet: ?PlayerActionSheet) => {
         if (playerActionSheet) {
             this.playerActionSheet = playerActionSheet;
         }
     }
 
-    @autobind
-    toggle(track: TrackModel) {
-        this.playerActionSheet.toggle(track);
+    toggle = (playlist: PlaylistModel, track: TrackModel) => {
+        this.playerActionSheet.toggle(playlist, track);
     }
 
     render(): React.Node {
@@ -38,7 +37,7 @@ export default class AlbumScreen extends React.PureComponent<NavigationProps<{ a
                 <Content style={styles.gutter}>
                     <List
                         rows={tracks}
-                        renderRow={(track, i) => <Track index={i + 1} onPress={this.toggle} {...{track}} />}
+                        renderRow={(track, i) => <Track index={i + 1} onPress={this.toggle} {...{playlist, track}} />}
                     />
                 </Content>
                 <PlayerActionSheet ref={this.setPlayerActionSheet} {...{playlist}} />

@@ -1,5 +1,4 @@
 // @flow
-import autobind from "autobind-decorator";
 import * as React from "react";
 import {StyleSheet, View, TouchableOpacity} from "react-native";
 
@@ -17,8 +16,7 @@ type StoryProps = NavigationProps<> & {
 
 export default class Story extends React.Component<StoryProps> {
 
-    @autobind
-    onPress() {
+    onPress = () => {
         const {navigation, id} = this.props;
         navigation.navigate("Story", { id });
     }
