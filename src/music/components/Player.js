@@ -32,6 +32,15 @@ type PlayerProviderState = {
     volume: number
 };
 
+Audio.setAudioModeAsync({
+    playsInSilentModeIOS: true,
+    allowsRecordingIOS: false,
+    interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+    shouldDuckAndroid: false,
+    interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+    playThroughEarpieceAndroid: true
+});
+
 export default class PlayerProvider extends React.Component<PlayerProviderProps, PlayerProviderState> {
 
   static instance: PlayerProvider | null = null;
@@ -128,7 +137,7 @@ export default class PlayerProvider extends React.Component<PlayerProviderProps,
     statusUpdate = (status: PlaybackStatus) => {
         this.setState({ isLoaded: status.isLoaded });
         if (status.isLoaded) {
-            this.setState({ volume: status.volume, isLoaded: !status.isBuffering, isPlaying: status.isPlaying });
+            this.setState({ volume: status.volume, isPlaying: status.isPlaying || status.isBuffering });
             if (this.state.isLoaded && this.state.locked) {
                 this.unlock();
             }

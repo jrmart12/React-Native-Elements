@@ -1,7 +1,7 @@
 {
     "expo": {
         "name": "react-native-elements",
-        "version": "2.0.0",
+        "version": "2.0.1",
         "description": "Sketch Elements for React Native: https://react-native.shop/elements",
         "sdkVersion": "30.0.0",
         "orientation": "portrait",
@@ -14,7 +14,7 @@
             "backgroundColor": "#ffffff"
         },
         "packagerOpts": {
-            "assetExts": ["otf"]
+            "assetExts": ["otf", "ttf"]
         },
         "androidStatusBar": {
             "backgroundColor": "#ffffff",
@@ -22,6 +22,14 @@
         },
         "ios": {
             "bundleIdentifier": "com.wcandillon.reactnativeelements"
-        }
+        },
+        "android": {
+            "package": "com.wcandillon.reactnativeelements"
+        },
+        "assetBundlePatterns": [
+            "**/*.ttf",
+            "**/*.otf",
+            "**/*.png"
+        ]
     }
 }

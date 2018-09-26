@@ -55,8 +55,7 @@ export default class TabBar extends React.Component<TabBarProps> {
 
 const styles = StyleSheet.create({
     root: {
-        ...StyleGuide.styles.shadow,
-        elevation: 0
+        ...StyleGuide.styles.shadow
     },
     tabs: {
         flexDirection: "row",

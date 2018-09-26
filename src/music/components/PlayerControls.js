@@ -13,6 +13,7 @@ type PlayerControlsProps = PlayerProps & ThemeProps;
 
 class PlayerControls extends React.Component<PlayerControlsProps> {
 
+    // TODO: use creareRef()
     playerActionSheet: PlayerActionSheet;
 
     setPlayerActionSheet = (playerActionSheet: ?PlayerActionSheet) => {

@@ -49,30 +49,35 @@ export default class App extends React.Component<AppProps, AppState> {
         });
         const images = Images.downloadAsync();
         const icons = loadIcons();
-        await Promise.all([fonts, ...images, icons]);
+        try {
+            await Promise.all([fonts, ...images, icons]);
+        } catch (e) {
+            // Do nothing
+        }
         this.ready();
     }
 
     render(): React.Node {
         const {isReady} = this.state;
-        const statusBar = (
-            <StatusBar
-                translucent
-                backgroundColor="transparent"
-                barStyle="light-content"
-            />
-        );
         if (!isReady) {
             return (
                 <React.Fragment>
-                    {statusBar}
+                    <StatusBar
+                        translucent
+                        backgroundColor="transparent"
+                        barStyle="dark-content"
+                    />
                     <AppLoading />
                 </React.Fragment>
             );
         }
         return (
             <React.Fragment>
-                {statusBar}
+                <StatusBar
+                    translucent
+                    backgroundColor="transparent"
+                    barStyle="light-content"
+                />
                 <ThemeProvider>
                     <PlayerProvider>
                         <ModalHost>

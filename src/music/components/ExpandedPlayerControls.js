@@ -1,6 +1,5 @@
 // @flow
 import * as _ from "lodash";
-
 import * as React from "react";
 import {StyleSheet, View, Dimensions, Animated, Slider, ActivityIndicator} from "react-native";
 import {LinearGradient} from "expo";
@@ -61,10 +60,10 @@ class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps
         switchTrack(track);
     }
 
-    updateVolume = (volume: number) => {
+    updateVolume = _.throttle((volume: number) => {
         const playerProvider = PlayerProvider.getInstance();
         playerProvider.sound.setVolumeAsync(volume);
-    }
+    }, 100);
 
     render(): React.Node {
         const playerProvider = PlayerProvider.getInstance();
@@ -98,7 +97,7 @@ class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps
                             primary
                         />
                         {
-                            player.isLoaded && (
+                            (player.isLoaded || !isSongPlaying) && (
                                 <IconButton
                                     name={(isSongPlaying && player.isPlaying) ? "pause" : "play"}
                                     onPress={isSongPlaying ? playerProvider.toggle : this.play}
@@ -107,7 +106,7 @@ class ExpandedPlayerControls extends React.Component<ExpandedPlayerControlsProps
                             )
                         }
                         {
-                            (!player.isLoaded) && (
+                            (!player.isLoaded && isSongPlaying) && (
                                 <ActivityIndicator color={theme.palette.primary} />
                             )
                         }

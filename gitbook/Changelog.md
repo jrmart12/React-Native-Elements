@@ -1,5 +1,8 @@
 # Changelog
 
+# 2.0.1
+* Minor bug fix in the build
+
 # 2.0.0
 * Upgrade to Expo 30
 * Remove `autobind` dependency

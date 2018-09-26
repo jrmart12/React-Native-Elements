@@ -3,7 +3,7 @@
 ```json
 {
     "name": "react-native-elements",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "private": true,
     "devDependencies": {
         "babel-eslint": "^8.2.1",
@@ -14,7 +14,6 @@
         "eslint-plugin-jsx-a11y": "^6.0.2",
         "eslint-plugin-react": "^7.4.0",
         "eslint-plugin-react-native": "^3.2.1",
-        "exp": "55.0.5",
         "flow-bin": "0.63.1",
         "flow-result-checker": "^0.3.0",
         "jest-expo": "^30.0.0",
@@ -31,8 +30,11 @@
         "test:watch": "node node_modules/jest/bin/jest.js --watch",
         "flow": "flow check --show-all-errors | flow-result-checker",
         "lint": "eslint App.js src/",
-        "deploy:expo": "exp publish",
-        "deploy": "yarn deploy:expo"
+        "deploy:expo": "expo-cli publish",
+        "deploy": "yarn deploy:expo",
+        "build:ios": "expo-cli build:ios",
+        "build:android": "expo-cli build:android",
+        "build": "yarn build:ios && yarn build:android"
     },
     "jest": {
         "preset": "jest-expo",
