@@ -1,5 +1,8 @@
 # Changelog
 
+# 2.0.2
+* Fix bug in the photo rotation component
+
 # 2.0.1
 * Minor bug fix in the build
 
