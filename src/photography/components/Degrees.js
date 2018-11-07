@@ -15,6 +15,8 @@ type DegreesState = {
 
 export default class Degrees extends React.Component<DegreesProps, DegreesState> {
 
+    listener: string;
+
     state = {
         degrees: -25
     }
@@ -24,7 +26,11 @@ export default class Degrees extends React.Component<DegreesProps, DegreesState>
     }
 
     componentDidMount() {
-        this.props.rotation.addListener(this.setDegrees);
+        this.listener = this.props.rotation.addListener(this.setDegrees);
+    }
+
+    componentWillUnmount() {
+        this.props.rotation.removeListener(this.listener);
     }
 
     render(): React.Node {

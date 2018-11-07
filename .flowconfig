@@ -1,5 +1,6 @@
 [ignore]
 .*/*[.]android.js
+.*babel\.config\.js
 
 [include]
 

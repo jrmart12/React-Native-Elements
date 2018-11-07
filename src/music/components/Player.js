@@ -6,8 +6,40 @@ import * as React from "react";
 import {Animated, Dimensions} from "react-native";
 import {Audio} from "expo";
 
-import type {PlaybackStatus} from "expo/src/av/AV";
 import type {Playlist, PlaylistEntry} from "../api";
+
+type PlaybackStatus =
+  | {
+      isLoaded: false,
+      androidImplementation?: string,
+      error?: string // populated exactly once when an error forces the object to unload
+    }
+  | {
+      isLoaded: true,
+      androidImplementation?: string,
+
+      uri: string,
+
+      progressUpdateIntervalMillis: number,
+      durationMillis?: number,
+      positionMillis: number,
+      playableDurationMillis?: number,
+      seekMillisToleranceBefore?: number,
+      seekMillisToleranceAfter?: number,
+
+      shouldPlay: boolean,
+      isPlaying: boolean,
+      isBuffering: boolean,
+
+      rate: number,
+      shouldCorrectPitch: boolean,
+      volume: number,
+      isMuted: boolean,
+      isLooping: boolean,
+
+      didJustFinish: boolean // true exactly once when the track plays to finish
+    };
+
 
 type CompositeAnimation = {
     start: () => void,
@@ -95,7 +127,7 @@ export default class PlayerProvider extends React.Component<PlayerProviderProps,
             this.resetProgress();
             await this.sound.unloadAsync();
         }
-        const {sound, status} = await Audio.Sound.create({ uri }, { shouldPlay: true }, this.statusUpdate, false);
+        const {sound, status} = await Audio.Sound.createAsync({ uri }, { shouldPlay: true }, this.statusUpdate, false);
         this.sound = sound;
         if (status.durationMillis) {
             const duration = status.durationMillis;

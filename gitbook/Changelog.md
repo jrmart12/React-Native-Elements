@@ -1,5 +1,8 @@
 # Changelog
 
+# 2.0.3
+* Upgrade to Expo 31
+
 # 2.0.2
 * Fix bug in the photo rotation component
 

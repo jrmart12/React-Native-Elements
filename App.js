@@ -1,9 +1,8 @@
 // @flow
 import * as React from "react";
 import {StatusBar, Platform} from "react-native";
-import {createSwitchNavigator} from "react-navigation";
+import {createSwitchNavigator, createAppContainer} from "react-navigation";
 import {Font, AppLoading} from "expo";
-import ModalHost from "expo/src/modal/ModalHost";
 
 import {Images, loadIcons, ThemeProvider} from "./src/components";
 
@@ -80,9 +79,7 @@ export default class App extends React.Component<AppProps, AppState> {
                 />
                 <ThemeProvider>
                     <PlayerProvider>
-                        <ModalHost>
-                            <MainNavigator {...{onNavigationStateChange}} />
-                        </ModalHost>
+                        <AppNavigator {...{onNavigationStateChange}} />
                     </PlayerProvider>
                 </ThemeProvider>
             </React.Fragment>
@@ -98,3 +95,5 @@ const MainNavigator = createSwitchNavigator({
     Photography: { screen: PhotographyNavigator },
     Travel: { screen: TravelNavigator }
 });
+
+const AppNavigator = createAppContainer(MainNavigator);

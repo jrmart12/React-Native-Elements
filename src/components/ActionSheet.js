@@ -1,8 +1,7 @@
 // @flow
 import * as React from "react";
-import {StyleSheet, View, TouchableOpacity, Animated, Dimensions, Platform} from "react-native";
+import {StyleSheet, View, TouchableOpacity, Animated, Dimensions, Platform, Modal} from "react-native";
 import {BlurView} from "expo";
-import Modal from "expo/src/modal/Modal";
 
 import {StyleGuide} from "./theme";
 import Sheet from "./Sheet";
