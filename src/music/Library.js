@@ -4,8 +4,9 @@ import {StyleSheet} from "react-native";
 
 import {Feed, StyleGuide, type NavigationProps} from "../components";
 
-import MusicAPI, {type Album as AlbumModel} from "./api";
-import {PlayerProvider, Album, withPlayer, type PlayerProps} from "./components";
+import MusicAPI from "./api";
+import type {Album as AlbumModel} from "../components/music/Model";
+import {PlayerProvider, Album, withPlayer, type PlayerProps} from "../components/music";
 
 class Library extends React.Component<PlayerProps & NavigationProps<>> {
 

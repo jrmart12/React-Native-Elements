@@ -4,7 +4,7 @@ import {StyleSheet, View} from "react-native";
 
 import {Text, StyleGuide, Avatar} from "../../components";
 
-import type {User} from "../api";
+import type {User} from "./Model";
 
 type HandleProps = {
     user: User,

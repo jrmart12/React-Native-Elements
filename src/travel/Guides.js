@@ -4,10 +4,11 @@ import {View, StyleSheet} from "react-native";
 
 import {Card, Feed} from "../components";
 
-import TravelAPI, {type Guide} from "./api";
+import TravelAPI from "./api";
 
 import type {NavigationProps} from "../components";
 import type {Action} from "../components/Model";
+import type {Guide} from "../components/travel/Model";
 
 type Chunk = {
     id: string,

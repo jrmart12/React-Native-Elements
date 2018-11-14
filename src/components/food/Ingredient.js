@@ -4,7 +4,7 @@ import {StyleSheet, View, TouchableOpacity} from "react-native";
 
 import {Text, StyleGuide, Icon} from "../../components";
 
-import type {Ingredient} from "../api";
+import type {Ingredient} from "../../components/food/Model";
 
 type IngredientProps = {
     ingredient: Ingredient
@@ -16,13 +16,12 @@ type IngredientState = {
 
 export default class IngredientComp extends React.Component<IngredientProps, IngredientState> {
 
-    state = {
-        checked: false
-    };
-
-    static getDerivedStateFromProps({ ingredient }: IngredientProps): IngredientState {
-        const {checked} = ingredient;
-        return { checked };
+    constructor(props: IngredientProps) {
+        super(props);
+        const {checked} = props.ingredient;
+        this.state = {
+            checked
+        };
     }
 
     toggle = () => {

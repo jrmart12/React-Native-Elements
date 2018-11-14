@@ -5,7 +5,7 @@ import {MapView} from "expo";
 import ClusteredMapView from "react-native-maps-super-cluster";
 
 import {type NavigationProps} from "../../components";
-import {type Photo} from "../api";
+import {type Photo} from "./Model";
 import PhotoThumbnail from "./PhotoThumbnail";
 import PhotoCluster from "./PhotoCluster";
 

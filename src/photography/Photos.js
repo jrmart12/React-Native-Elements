@@ -4,8 +4,9 @@ import {StyleSheet} from "react-native";
 
 import {Feed, StyleGuide, type NavigationProps} from "../components";
 
-import PhotograhyAPI, {type Photo} from "./api";
-import {PhotoThumbnail} from "./components";
+import PhotograhyAPI from "./api";
+import {PhotoThumbnail} from "../components/photography";
+import type {Photo} from "../components/photography/Model";
 
 export default class Photos extends React.Component<NavigationProps<>> {
 

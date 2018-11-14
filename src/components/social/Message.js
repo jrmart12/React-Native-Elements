@@ -3,14 +3,14 @@ import * as React from "react";
 import {StyleSheet} from "react-native";
 
 import {StyleGuide, Text, BaseCard} from "../../components";
-import SocialAPI from "../api";
 
 import Header from "./Header";
 
 import type {OptionalNavigationProps} from "../../components/Navigation";
+import type {User} from "./Model";
 
 type MessageProps = OptionalNavigationProps & {
-    user: string,
+    user: User,
     message: string,
     timestamp: number,
     id?: string
@@ -19,8 +19,7 @@ type MessageProps = OptionalNavigationProps & {
 export default class Message extends React.PureComponent<MessageProps> {
 
     render(): React.Node {
-        const {message, timestamp, navigation, id} = this.props;
-        const user = SocialAPI.user(this.props.user);
+        const {message, timestamp, navigation, id, user} = this.props;
         return (
             <BaseCard onPress={() => navigation && navigation.navigate("Message", { id })}>
                 <Header {...{user, timestamp}} />

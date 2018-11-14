@@ -5,10 +5,11 @@ import {StyleSheet} from "react-native";
 
 import {Container, NavigationBar, Content, List, StyleGuide} from "../components";
 
-import MusicAPI, {type Album, type Playlist as PlaylistModel, type Track as TrackModel} from "./api";
-import {Track, PlaylistHeader, PlayerActionSheet} from "./components";
-
+import {type Album, type Playlist as PlaylistModel, type Track as TrackModel} from "../components/music/Model";
+import {Track, PlaylistHeader, PlayerActionSheet} from "../components/music";
 import type {NavigationProps} from "../components";
+
+import MusicAPI from "./api";
 
 export default class AlbumScreen extends React.PureComponent<NavigationProps<{ album: Album, back: string }>> {
 

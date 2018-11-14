@@ -4,7 +4,7 @@ import * as React from "react";
 import {Card, Feed} from "../components";
 
 import FoodAPI from "./api";
-import type {Category} from "./api";
+import type {Category} from "../components/food/Model";
 
 import type {NavigationProps} from "../components";
 

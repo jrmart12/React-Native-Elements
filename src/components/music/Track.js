@@ -4,7 +4,7 @@ import {StyleSheet, View} from "react-native";
 
 import {Text, IconButton, StyleGuide} from "../../components";
 
-import type {Playlist, Track} from "../api";
+import type {Playlist, Track} from "./Model";
 
 type TrackProps = {
     index: number,

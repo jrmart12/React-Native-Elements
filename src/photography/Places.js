@@ -4,7 +4,7 @@ import * as React from "react";
 import {NavigationBar, Container, type NavigationProps} from "../components";
 
 import PhotoAPI from "./api";
-import {PhotoMap} from "./components";
+import {PhotoMap} from "../components/photography";
 
 export default class Places extends React.PureComponent<NavigationProps<>> {
 

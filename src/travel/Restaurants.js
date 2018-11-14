@@ -2,7 +2,7 @@
 import * as React from "react";
 
 import {GeoFeed, Activity, notImplementedYet, type NavigationProps} from "../components";
-import {type City, type Restaurant} from "./api";
+import {type City, type Restaurant} from "../components/travel/Model";
 
 export default class Restaurants extends React.PureComponent<NavigationProps<{ city: City }>> {
 

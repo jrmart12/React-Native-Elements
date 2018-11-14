@@ -7,7 +7,7 @@ import {SafeAreaView} from "react-navigation";
 
 import {IconButton, StyleGuide, withTheme, type ThemeProps} from "../../components";
 
-import type {Track, Playlist} from "../api";
+import type {Track, Playlist} from "./Model";
 
 import PlayerProvider, {withPlayer, type PlayerProps} from "./Player";
 

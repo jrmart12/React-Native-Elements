@@ -7,7 +7,7 @@ import {Text, StyleGuide} from "../../components";
 
 import Handle from "./Handle";
 
-import type {User} from "../api";
+import type {User} from "./Model";
 
 type HeaderProps = {
     user: User,

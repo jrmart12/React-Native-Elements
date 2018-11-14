@@ -5,8 +5,10 @@ import {View, StyleSheet, TouchableOpacity} from "react-native";
 
 import {Feed, Text, Icon, StyleGuide, type NavigationProps} from "../components";
 
-import PhotoAPI, {type Photo} from "./api";
-import {PhotoThumbnail} from "./components";
+import PhotoAPI from "./api";
+import {PhotoThumbnail} from "../components/photography";
+import type {Photo} from "../components/photography/Model";
+
 
 export default class Albums extends React.PureComponent<NavigationProps<>> {
 

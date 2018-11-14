@@ -3,24 +3,25 @@ import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
 import {BaseCard, Text, Avatar, StyleGuide} from "../../components";
-import SocialAPI from "../api";
 
-import type {Message} from "../api";
+import type {Message, User} from "./Model";
 
 type ChatMessageProps = {
-    id: string,
-    message: Message
+    message: Message,
+    messages: Message[],
+    user: User
 };
 
 export default class ChatMessage extends React.PureComponent<ChatMessageProps> {
 
     render(): React.Node {
-        const {id, message} = this.props;
-        const {messages} = SocialAPI.messageThread(id);
+        const {message, messages, user} = this.props;
         const nextMessage = messages.filter((m, i) => i - 1 >= 0 && messages[i - 1].id === message.id)[0];
         const flexDirection = message.me ? "row-reverse" : "row";
         const showAvatar = !nextMessage || (message.me ? !nextMessage.me : nextMessage.me);
-        const user = message.me ? SocialAPI.me() : SocialAPI.user(SocialAPI.messageThread(id).user);
+        if (!user) {
+            return null;
+        }
         return (
             <View style={{ flexDirection, marginBottom: StyleGuide.spacing.small }}>
                 <View style={styles.user}>

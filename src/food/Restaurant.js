@@ -8,10 +8,10 @@ import {
     Ratings, QuantityInput, PayButton, DatePicker
 } from "../components";
 
-import {RestaurantAddress, RadioGroup} from "./components";
+import {RestaurantAddress, RadioGroup} from "../components/food";
 
 import type {NavigationProps} from "../components";
-import type {Restaurant} from "./api";
+import type {Restaurant} from "../components/food/Model";
 
 export default class RestaurantComp extends React.Component<NavigationProps<{ restaurant: Restaurant }>> {
 

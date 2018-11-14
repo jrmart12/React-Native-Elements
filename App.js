@@ -12,7 +12,7 @@ import {SocialNavigator} from "./src/social";
 import {MusicNavigator} from "./src/music";
 import {PhotographyNavigator} from "./src/photography";
 import {TravelNavigator} from "./src/travel";
-import {PlayerProvider} from "./src/music/components";
+import {PlayerProvider} from "./src/components/music";
 
 // $FlowFixMe
 const SFProTextBold = require("./fonts/SF-Pro-Text-Bold.otf");

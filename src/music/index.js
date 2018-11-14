@@ -4,7 +4,7 @@ import {createStackNavigator, createBottomTabNavigator} from "react-navigation";
 
 import {StackNavigatorOptions, animationEnabled} from "../components/Navigation";
 
-import {MusicTabBar} from "./components";
+import {MusicTabBar} from "../components/music";
 
 import Library from "./Library";
 import Album from "./Album";

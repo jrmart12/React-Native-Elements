@@ -4,7 +4,7 @@ import {View, StyleSheet} from "react-native";
 
 import {Text, Image, StyleGuide} from "../../components";
 
-import type {Restaurant} from "../api";
+import type {Restaurant} from "../../components/food/Model";
 
 export default class RestaurantAddress extends React.PureComponent<{ restaurant: Restaurant }> {
 

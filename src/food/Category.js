@@ -5,7 +5,7 @@ import * as React from "react";
 import {Card, Feed} from "../components";
 import FoodAPI from "./api";
 
-import type {Recipe} from "./api";
+import type {Recipe} from "../components/food/Model";
 import type {NavigationProps} from "../components";
 
 export default class CategoryComp extends React.Component<NavigationProps<{ categoryId: string }>> {

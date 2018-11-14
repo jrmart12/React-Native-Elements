@@ -7,8 +7,8 @@ import {
 
 import {NavigationBar, Image, BlurView, IconButton, Footer, type NavigationProps} from "../components";
 
-import {Filters, Filter, PhotoActionSheet, Rotation, Crop, type FilterName} from "./components";
-import type {Photo} from "./api";
+import {Filters, Filter, PhotoActionSheet, Rotation, Crop, type FilterName} from "../components/photography";
+import type {Photo} from "../components/photography/Model";
 
 type PhotoScreenProps = NavigationProps<{ photo: Photo, from: string }>;
 type PhotoScreenState = {

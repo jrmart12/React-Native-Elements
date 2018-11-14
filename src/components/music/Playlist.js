@@ -4,7 +4,7 @@ import {Dimensions} from "react-native";
 
 import {StyleGuide, Card, type NavigationProps} from "../../components";
 
-import {type Playlist} from "../api";
+import {type Playlist} from "./Model";
 
 import PlaylistThumbnail from "./PlaylistThumbnail";
 

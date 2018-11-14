@@ -1,7 +1,8 @@
 {
     "name": "react-native-elements",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "private": true,
+    "license": "https://wcandillon.github.io/react-native-elements/License.html",
     "devDependencies": {
         "babel-eslint": "^8.2.1",
         "babel-preset-expo": "^5.0.0",

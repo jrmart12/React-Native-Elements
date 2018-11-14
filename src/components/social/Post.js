@@ -3,21 +3,18 @@ import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
 import {StyleGuide, Image, Text, BaseCard} from "../../components";
-
-import SocialAPI from "../api";
+import type {User, Post} from "./Model";
 
 import Header from "./Header";
 import LikeButton from "./LikeButton";
 import Comments from "./Comments";
 
-import type {Post} from "../api";
-
-export default class PostComp extends React.PureComponent<{ post: Post }> {
+export default class PostComp extends React.PureComponent<{ user: User, post: Post, users: User[] }> {
 
     render(): React.Node {
-        const {post} = this.props;
-        const user = SocialAPI.user(post.user);
+        const {post, user, users: allUsers} = this.props;
         const {timestamp, comments} = post;
+        const users = allUsers.filter(u => comments.find(comment => comment === u.id));
         return (
             <BaseCard style={styles.card}>
                 <Header {...{user, timestamp}} />
@@ -26,7 +23,7 @@ export default class PostComp extends React.PureComponent<{ post: Post }> {
                 }
                 <Text style={styles.caption}>{post.caption}</Text>
                 <View style={styles.footer}>
-                    <Comments {...{ comments }} />
+                    <Comments {...{ comments, users }} />
                     <LikeButton />
                 </View>
             </BaseCard>

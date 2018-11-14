@@ -6,7 +6,7 @@ import * as React from "react";
 import {Animated, Dimensions} from "react-native";
 import {Audio} from "expo";
 
-import type {Playlist, PlaylistEntry} from "../api";
+import type {Playlist, PlaylistEntry} from "./Model";
 
 type PlaybackStatus =
   | {

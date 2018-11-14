@@ -7,7 +7,7 @@ import {
 } from "../components";
 
 import SocialAPI from "./api";
-import {Comments, Handle, Message, NewMessage} from "./components";
+import {Comments, Handle, Message, NewMessage} from "../components/social";
 
 import type {NavigationProps} from "../components";
 
@@ -37,6 +37,7 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
     render(): React.Node {
         const {navigation} = this.props;
         const {id} = navigation.state.params;
+        const {users} = SocialAPI;
         const story = SocialAPI.story(id);
         const user = SocialAPI.user(story.user);
         const postAction = {
@@ -57,6 +58,7 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
                             <Comments
                                 comments={story.comments.map(comment => comment.user)}
                                 showLabel={false}
+                                users={users.filter(u => story.comments.find(comment => comment.user === u.id))}
                             />
                         </TouchableOpacity>
                     </TransparentHeader>
@@ -68,7 +70,7 @@ export default class Story extends React.Component<NavigationProps<{ id: string 
                             {
                                 story.comments.map((msg, key) => (
                                     <Message
-                                        user={msg.user}
+                                        user={SocialAPI.user(msg.user)}
                                         timestamp={msg.timestamp}
                                         message={msg.comment}
                                         {...{key}}

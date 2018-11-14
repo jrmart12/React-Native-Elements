@@ -6,8 +6,9 @@ import {
     ActionSheet, Container, DetailsBar, Header, NavigationBar, Button, Content, StyleGuide, DatePicker,
     QuantityInput, PayButton, type NavigationProps
 } from "../components";
-import {type Guide} from "./api";
-import {Visit} from "./components";
+
+import type {Guide} from "../components/travel/Model";
+import {Visit} from "../components/travel";
 
 export default class GuideScreen extends React.PureComponent<NavigationProps<{ guide: Guide }>> {
 

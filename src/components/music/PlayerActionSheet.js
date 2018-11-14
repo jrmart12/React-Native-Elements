@@ -7,7 +7,7 @@ import {StyleSheet} from "react-native";
 import {ActionSheet, Image, StyleGuide} from "../../components";
 import ExpandedPlayerControls from "./ExpandedPlayerControls";
 
-import {type Playlist, type Track} from "../api";
+import {type Playlist, type Track} from "./Model";
 
 type PlayerActionSheetProps = {
 };

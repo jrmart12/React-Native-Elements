@@ -1,5 +1,9 @@
 # Changelog
 
+# 2.0.4
+* Fix camera bug with Android devices that support another aspect ratio than `4:3`
+* Refactor UI components to enable better reusability
+
 # 2.0.3
 * Upgrade to Expo 31
 

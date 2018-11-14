@@ -3,7 +3,7 @@
 ```json
 {
     "name": "react-native-elements",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "private": true,
     "devDependencies": {
         "babel-eslint": "^8.2.1",

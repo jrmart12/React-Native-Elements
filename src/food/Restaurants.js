@@ -5,7 +5,7 @@ import {GeoFeed, Activity} from "../components";
 import FoodAPI from "./api";
 
 import type {NavigationProps} from "../components";
-import type {Restaurant} from "./api";
+import type {Restaurant} from "../components/food/Model";
 
 export default class Restaurants extends React.Component<NavigationProps<>> {
 

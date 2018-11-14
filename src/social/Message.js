@@ -6,10 +6,10 @@ import {StyleSheet, SafeAreaView, TextInput, View} from "react-native";
 
 import {Feed, Container, IconButton, KeyboardSpacer, StyleGuide} from "../components";
 import SocialAPI from "./api";
-import {ChatMessage} from "./components";
+import {ChatMessage} from "../components/social";
 
 import type {NavigationProps} from "../components/Navigation";
-import type {Message as MessageModel} from "./api";
+import type {Message as MessageModel} from "../components/social/Model";
 
 type MessageState = {
     message: string,
@@ -46,7 +46,10 @@ export default class Message extends React.Component<NavigationProps<{ id: strin
     renderItem = (message: MessageModel): React.Node => {
         const {navigation} = this.props;
         const {id} = navigation.state.params;
-        return <ChatMessage {...{id, message}} />;
+        const thread = SocialAPI.messageThread(id);
+        const {messages} = thread;
+        const user = message.me ? SocialAPI.me() : SocialAPI.user(thread.user);
+        return <ChatMessage {...{messages, message, user}} />;
     }
 
     render(): React.Node {

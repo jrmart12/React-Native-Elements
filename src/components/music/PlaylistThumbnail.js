@@ -5,7 +5,7 @@ import {StyleSheet, View} from "react-native";
 
 import {StyleGuide, Image, type StyleProps} from "../../components";
 
-import {type Playlist} from "../api";
+import {type Playlist} from "./Model";
 
 type PlaylistThumbnailProps = StyleProps & {
     playlist: Playlist,

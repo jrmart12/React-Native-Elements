@@ -7,9 +7,11 @@ import {
 } from "../components";
 
 import SocialAPI from "./api";
-import {Post} from "./components";
+import {Post} from "../components/social";
 
 import type {NavigationProps} from "../components";
+
+const {users} = SocialAPI;
 
 type ProfileState = {
     selectedIndex: number
@@ -51,7 +53,8 @@ export default class Profile extends React.Component<NavigationProps<>, ProfileS
                 </Header>
                 <Content style={styles.content}>
                     {
-                        myPosts.map((post, key) => <Post {...{post, key}} />)
+                        myPosts.map((post, key) => (
+                            <Post {...{post, key, user: SocialAPI.user(post.user), users}} />))
                     }
                 </Content>
             </Container>

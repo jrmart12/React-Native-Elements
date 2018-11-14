@@ -3,7 +3,7 @@ import * as React from "react";
 import {StyleSheet, Dimensions, View, TouchableWithoutFeedback} from "react-native";
 
 import {Image, StyleGuide, type NavigationProps} from "../../components";
-import {type Photo} from "../api";
+import {type Photo} from "./Model";
 
 type PhotoProps = NavigationProps<*> & {
     photo: Photo,

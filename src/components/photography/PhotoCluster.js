@@ -3,7 +3,7 @@ import * as React from "react";
 import {StyleSheet, View} from "react-native";
 
 import {Image, Text, StyleGuide} from "../../components";
-import {type Photo} from "../api";
+import {type Photo} from "./Model";
 
 type PhotoClusterProps = {
     photos: Photo[],

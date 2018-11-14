@@ -10,7 +10,7 @@ import {
 } from "../components";
 
 import MusicAPI from "./api";
-import {PlayerProvider, Playlist, Album, withPlayer, type PlayerProps} from "./components";
+import {PlayerProvider, Playlist, Album, withPlayer, type PlayerProps} from "../components/music";
 
 type ProfileState = {
   selectedIndex: number

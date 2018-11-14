@@ -4,8 +4,8 @@ import {StyleSheet} from "react-native";
 
 import {StyleGuide, Container, NavigationBar, Content, List, type NavigationProps} from "../components";
 
-import {type Playlist, type Track} from "./api";
-import {PlaylistEntry, PlaylistHeader, PlayerActionSheet} from "./components";
+import {type Playlist, type Track} from "../components/music/Model";
+import {PlaylistEntry, PlaylistHeader, PlayerActionSheet} from "../components/music";
 
 type PlaylistScreenParams = { playlist: Playlist, back: string };
 

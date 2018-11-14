@@ -5,7 +5,7 @@ import {StyleSheet, View, TouchableWithoutFeedback} from "react-native";
 import {StyleGuide, Image, Text} from "../../components";
 
 import type {NavigationProps} from "../../components";
-import type {Album} from "../api";
+import type {Album} from "./Model";
 
 type AlbumProps = NavigationProps<> & {
     album: Album,

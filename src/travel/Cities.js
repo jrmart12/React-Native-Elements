@@ -4,7 +4,7 @@ import * as React from "react";
 import {Card, Feed} from "../components";
 import TravelAPI from "./api";
 
-import type {City} from "./api";
+import type {City} from "../components/travel/Model";
 import type {NavigationProps} from "../components";
 
 export default class Cities extends React.Component<NavigationProps<>> {

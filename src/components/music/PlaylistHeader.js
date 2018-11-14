@@ -8,7 +8,7 @@ import {Button, StyleGuide, Text, Image} from "../../components";
 import PlayerProvider, {withPlayer, type PlayerProps} from "./Player";
 import PlaylistThumbnail from "./PlaylistThumbnail";
 
-import {type Playlist} from "../api";
+import {type Playlist} from "./Model";
 
 type AlbumHeaderProps = PlayerProps & {
     playlist: Playlist

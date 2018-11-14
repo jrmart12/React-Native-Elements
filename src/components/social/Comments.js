@@ -4,19 +4,22 @@ import {StyleSheet, View} from "react-native";
 
 import {Text, StyleGuide, Avatar} from "../../components";
 
-import SocialAPI from "../api";
+import type {User} from "./Model";
 
-import type {User} from "../api";
+type CommentsProps = {
+    users: User[],
+    comments: string[],
+    showLabel: boolean
+};
 
-export default class Comments extends React.Component<{ comments: string[], showLabel: boolean }> {
+export default class Comments extends React.Component<CommentsProps> {
 
     static defaultProps = {
         showLabel: true
     }
 
     render(): React.Node {
-        const {comments, showLabel} = this.props;
-        const users: User[] = comments.slice(0, 3).map(id => SocialAPI.user(id));
+        const {comments, showLabel, users} = this.props;
         const left = users.length === 0 ? 0 : ((-5 * (users.length - 1)) + StyleGuide.spacing.tiny);
         return (
             <View style={styles.comments}>

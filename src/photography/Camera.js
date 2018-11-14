@@ -1,13 +1,13 @@
 // @flow
 import * as React from "react";
-import {StyleSheet, View, ActivityIndicator, TouchableOpacity, Dimensions} from "react-native";
+import {StyleSheet, View, ActivityIndicator, TouchableOpacity, Dimensions, Platform} from "react-native";
 import {Camera, Permissions} from "expo";
 
 import {
     IconButton, Icon, StyleGuide, notImplementedYet, withTheme, SafeAreaView, type ThemeProps, type NavigationProps
 } from "../components";
 
-import {EnableCameraPermission} from "./components";
+import {EnableCameraPermission} from "../components/photography";
 
 type PermissionStatus = 'undetermined' | 'granted' | 'denied';
 type CameraProps = NavigationProps<> & ThemeProps;
@@ -15,16 +15,21 @@ type CameraState = {
   hasCameraPermission: null | boolean,
   type: number,
   flashMode: number,
-  showGrid: boolean
+  showGrid: boolean,
+  ratio: string | void
 };
 
 class CameraScreen extends React.Component<CameraProps, CameraState> {
+
+    // $FlowFixMe
+    camera = React.createRef();
 
     state = {
         hasCameraPermission: null,
         type: Camera.Constants.Type.back,
         flashMode: Camera.Constants.FlashMode.off,
-        showGrid: false
+        showGrid: false,
+        ratio: undefined
     };
 
     setCameraPermission(status: PermissionStatus) {
@@ -51,14 +56,23 @@ class CameraScreen extends React.Component<CameraProps, CameraState> {
         this.props.navigation.goBack();
     }
 
+    onCameraReady = async () => {
+        if (Platform.OS === "android") {
+            const DESIRED_RATIO = "16:9";
+            const ratios = await this.camera.current.getSupportedRatiosAsync();
+            const ratio = ratios.find(r => r === DESIRED_RATIO) || ratios[ratios.length - 1];
+            this.setState({ ratio });
+        }
+    }
+
     async componentDidMount(): Promise<void> {
         const {status} = await Permissions.askAsync(Permissions.CAMERA);
         this.setCameraPermission(status);
     }
 
     render(): React.Node {
-        const {toggleFlash, toggleCamera, goBack, toggleGrid} = this;
-        const {hasCameraPermission, type, flashMode, showGrid} = this.state;
+        const {toggleFlash, toggleCamera, goBack, toggleGrid, onCameraReady} = this;
+        const {hasCameraPermission, type, flashMode, showGrid, ratio} = this.state;
         const {theme} = this.props;
         if (hasCameraPermission === null) {
             return (
@@ -70,7 +84,11 @@ class CameraScreen extends React.Component<CameraProps, CameraState> {
             return <EnableCameraPermission />;
         }
         return (
-            <Camera style={styles.camera} {...{type, flashMode}}>
+            <Camera
+                ref={this.camera}
+                style={styles.camera}
+                {...{type, flashMode, onCameraReady, ratio}}
+            >
                 <SafeAreaView style={styles.cameraSafeArea} top>
                     <View style={styles.header}>
                         <IconButton name="grid" onPress={toggleGrid} />

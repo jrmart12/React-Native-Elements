@@ -7,7 +7,7 @@ import {
 } from "../components";
 
 import FoodAPI from "./api";
-import {Ingredient, Step} from "./components";
+import {Ingredient, Step} from "../components/food";
 
 import type {NavigationProps} from "../components/";
 

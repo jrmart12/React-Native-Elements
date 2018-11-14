@@ -7,7 +7,7 @@ import {
     type NavigationProps
 } from "../components";
 
-import {type City} from "./api";
+import type {City} from "../components/travel/Model";
 
 export default class CityScreen extends React.PureComponent<NavigationProps<{ city: City }>> {
 
