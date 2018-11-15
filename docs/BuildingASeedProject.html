@@ -253,6 +253,8 @@
                                 
                                 <h1 id="building-a-seed-project">Building a seed project</h1>
 <p>You just acquired React Native Elements. Congratulations &#x1F64C;&#x1F3FB;. You followed the installation steps and you are able to run the project locally. Now, it&apos;s time to get started. What are the next steps?</p>
+<iframe width="770" height="431" src="https://www.youtube.com/embed/EYcQ4ClYXDQ?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 <p>Elements has a main entry point that can lead to five different demo apps (music, food, social, travel, and photography). But you are building a single app so you need to make some changes into the file structure, navigation tree, and the app providers.</p>
 <h2 id="understanding-the-file-structure">Understanding the file structure</h2>
 <p>Below is how the project file structure looks like.</p>
@@ -265,29 +267,24 @@
     - Recipe.js
 App.js
 </code></pre><p><code>App.js</code> is the entry point of the application, it defines the root navigation three.</p>
-<p><code>src/components</code> contains all the UI components that are horizontal to each screens of the application.</p>
-<p>Then we created one folder per application (<code>src/food</code>, <code>src/social</code>, and so on). In your case, you have only one application so you don&apos;t need this extra level of depth.</p>
+<p><code>src/components</code> contains all the UI components. The components which are orthogonal to all app themes are in the root of the folder and the ones which are specific to an app theme are in a associated folder. For instance: <code>src/components/social</code>.</p>
+<p>Then we created one folder per application (<code>src/food</code>, <code>src/social</code>, and so on). In your case, you have only one application so you don&apos;t need this extra level of depth. These folder only contain the screen definitions.</p>
 <p>There is an <code>api</code> folder that contains all the data used by the screens. Right now, it&apos;s just some JSON files with dummy data. We recommend you create a <code>src/api</code> folder where you wire your own backend. If you are using Firebase, <a href="Faq.md">we have some YouTube tutorials available</a>. If you are consuming a Rest API with something like Swagger or Thrift, this folder will client contain client-side-generated-code from these tools.</p>
-<p>Finally, you might have some components which are only used for a particular screen and don&apos;t fit in <code>src/components</code>. Assume your screen name is <code>Home</code>, then your file structure should look like below.</p>
-<pre><code>src/
-  - Home/
-    - index.js
-    - Home.js
-    - components/
-</code></pre><p>We create a folder named <code>Home</code> with a file of the same name inside that contains the screen implementation. Inside the folder we also create a <code>components</code> folder that contains all the screen specific UI components.</p>
 <h2 id="navigation">Navigation</h2>
 <p>The app navigation tree, defined with <a href="https://reactnavigation.org/" target="_blank">react-navigation</a> need to also be symmetric with your project file structure. We use three kind of navigators: Switch, Tab, and Stack. There are some other navigator available like the Drawer navigator that might be of interest to you.</p>
 <p>The <a href="https://reactnavigation.org/docs/en/switch-navigator.html" target="_blank">Switch Navigator</a> is used for same level screens that should only be mounted once at a time. The typical use case of this navigator is authentication. You can use it to navigate from a public screen like <code>Login</code> or <code>Sign-Up</code> to a private screen like <code>Home</code>.</p>
 <p>The <a href="https://reactnavigation.org/docs/en/bottom-tab-navigator.html" target="_blank">Tab Navigator</a> is self-explanatory, we use it for application tabs. </p>
 <p>Finally, the <a href="https://reactnavigation.org/docs/en/stack-navigator.html" target="_blank">Stack Navigator</a> is used to organize screens that have a hierarchical relationship with each others. For instance <code>Users -&gt; User</code>.</p>
 <h2 id="app-providers">App providers</h2>
-<p>In Elements, we use MobX to provide global states for the app. We define two providers: <code>Theme</code> that defines the primary and secondary color of the app and <code>Player</code> that is used in the music app in order to reflect the state of the audio player consistently across the whole application. These are defined in <code>App.js</code> as below.</p>
-<pre><code>&lt;Provider theme={createTheme()} player={new Player()}&gt;
-  ...
-&lt;/Provider&gt;
+<p>In Elements, we use the React Context API to provide global states for the app. We define two providers: <code>Theme</code> that defines the primary and secondary color of the app and <code>Player</code> that is used in the music app in order to reflect the state of the audio player consistently across the whole application. These are defined in <code>App.js</code> as below.</p>
+<pre><code>&lt;ThemeProvider&gt;
+    &lt;PlayerProvider&gt;
+        &lt;AppNavigator {...{onNavigationStateChange}} /&gt;
+    &lt;/PlayerProvider&gt;
+&lt;/ThemeProvider&gt;
 </code></pre><p>If you don&apos;t plan on using an Audio player in your project, you can remove the <code>player</code> property from <code>Provider</code>.</p>
 <p>You might also not need the theme values of your app to change dynamically the same way we do in Elements. There you could remove this property as well. Beware that some component do require the <code>theme</code> injected into them via <code>withTheme()</code> and you would need to refactor these components as well.</p>
-<p>Whether you are using these providers or not, your app is likely to need one, Internalization is an example, user session information is another one. For these cases, <code>theme</code> and <code>players</code> are great examples to look at. </p>
+<p>Whether you are using these providers or not, your app is likely to need some, Internalization is an example, user session information is another one. For these cases, <code>theme</code> and <code>players</code> are great examples to look at. </p>
 <h2 id="reach-out-for-help">Reach out for help</h2>
 <p>If you are struggling to get started please post a new issue on the Github repository, or <a href="mailto:wcandillon@gmail.com" target="_blank">contact us</a>.</p>
 
@@ -333,7 +330,7 @@ App.js
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Building A Seed Project","level":"1.8","depth":1,"next":{"title":"Frequently Asked Questions","level":"1.9","depth":1,"path":"FAQ.md","ref":"FAQ.md","articles":[]},"previous":{"title":"License","level":"1.7","depth":1,"path":"License.md","ref":"License.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React Native Elements","gitbook":"*"},"file":{"path":"BuildingASeedProject.md","mtime":"2018-09-26T04:54:12.046Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-14T15:10:10.846Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Building A Seed Project","level":"1.8","depth":1,"next":{"title":"Frequently Asked Questions","level":"1.9","depth":1,"path":"FAQ.md","ref":"FAQ.md","articles":[]},"previous":{"title":"License","level":"1.7","depth":1,"path":"License.md","ref":"License.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React Native Elements","gitbook":"*"},"file":{"path":"BuildingASeedProject.md","mtime":"2018-11-15T15:33:26.200Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-15T15:33:37.413Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
