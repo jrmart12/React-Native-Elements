@@ -65,8 +65,8 @@ export default class ThemeProvider extends React.Component<ThemeProviderProps, T
     state = {
         theme: {
             palette: {
-                primary: "white",
-                secondary: "#e6e6e6",
+                primary: "#00A5FF",
+                secondary: "#e3f7ff",
                 ...styleGuide.palette
             },
             typography: { ...styleGuide.typography },
