@@ -24,7 +24,7 @@ export default class Photos extends React.Component<NavigationProps<>> {
         const {renderItem, onPress} = this;
         const {navigation} = this.props;
         const data = PhotograhyAPI.photos;
-        const title = "Library";
+        const title = "Fotos";
         const rightAction = {
             icon: "sign-out",
             onPress

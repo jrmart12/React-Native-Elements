@@ -87,5 +87,11 @@ export default class App extends React.Component<AppProps, AppState> {
     }
 }
 
-
-const AppNavigator = createAppContainer(TravelNavigator);
+const MainNavigator = createSwitchNavigator({
+    Welcome: { screen: Welcome },
+    Food: { screen: FoodNavigator },
+    Social: { screen: SocialNavigator },
+    Music: { screen: MusicNavigator },
+    Photography: { screen: PhotographyNavigator }
+});
+const AppNavigator = createAppContainer(MainNavigator);

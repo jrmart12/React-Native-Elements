@@ -33,8 +33,8 @@ export default class PhotoThumbnail extends React.PureComponent<PhotoProps> {
                 <View>
                     <Image
                         style={[styles.photo, { width: size, height: size }]}
-                        uri={photo.urls.small}
-                        preview={photo.urls.preview}
+                        uri={photo}
+                        preview={photo}
                     />
                 </View>
             </TouchableWithoutFeedback>
@@ -44,10 +44,9 @@ export default class PhotoThumbnail extends React.PureComponent<PhotoProps> {
 
 const styles = StyleSheet.create({
     photo: {
-        borderWidth: 3,
-        borderColor: StyleGuide.palette.white,
-        borderRadius: 2,
-        marginLeft: StyleGuide.spacing.small,
-        ...StyleGuide.styles.shadow
+        borderWidth: 8,
+        borderColor: StyleGuide.palette.green,
+        borderRadius: 0,
+        marginLeft: StyleGuide.spacing.small
     }
 });

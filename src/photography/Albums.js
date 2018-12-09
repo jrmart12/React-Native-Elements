@@ -35,7 +35,7 @@ export default class Albums extends React.PureComponent<NavigationProps<>> {
                 <View style={styles.thumbnail}>
                     {
                         group.photos.slice(0, 3).map(photo => (
-                            <PhotoThumbnail key={photo.id} from={photo.album} {...{photo, navigation}} />
+                            <PhotoThumbnail key={photo} from={photo} {...{photo, navigation}} />
                         ))
                     }
                 </View>
