@@ -8,16 +8,13 @@ import Photo from "./Photo";
 
 const tabs = [
     { key: "Photos", label: "Photos", icon: "photos" },
-    //{ key: "Albums", label: "Albums", icon: "albums" },
-    //{ key: "Places", label: "Places", icon: "map" }
+
 ];
 
 
 
 const PhotosTabNavigator = createBottomTabNavigator({
-    Photos: { screen: Photos },
-    //Albums: { screen: AlbumsNavigator },
-    //Places: { screen: PlacesNavigator }
+    Photos: { screen: Photos }
 }, TabNavigatorOptions(tabs));
 
 export const PhotographyNavigator = createStackNavigator({

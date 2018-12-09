@@ -11,7 +11,9 @@ import {Ingredient, Step} from "../components/food";
 
 import type {NavigationProps} from "../components/";
 
+
 export default class RecipeComp extends React.Component<NavigationProps<{ categoryId: string, recipeId: string }>> {
+
 
     // TODO: use createRef()
     ingredientList: ActionSheet;

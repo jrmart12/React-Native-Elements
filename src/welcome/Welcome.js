@@ -100,6 +100,6 @@ const styles = StyleSheet.create({
         padding: StyleGuide.spacing.small
     },
     content: {
-        paddingVertical: StyleGuide.spacing.small
+        paddingVertical: StyleGuide.spacing.large
     }
 });

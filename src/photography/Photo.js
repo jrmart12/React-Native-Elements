@@ -109,37 +109,15 @@ export default class PhotoScreen extends React.Component<PhotoScreenProps, Photo
          return (
              <View style={styles.container}>
                  <StatusBar hidden />
+                 {
+		                      <NavigationBar
+                      back={from}
+                      withGradient
+                      largeTitle
+                      {...{navigation, title, subtitle}}
+                  />
+                 }
                  <Image preview={photo} uri={photo} style={styles.image} />
-                 <BlurView style={StyleSheet.absoluteFill} {...{intensity}} />
-                 {
-                     <Animated.View style={{ opacity, ...StyleSheet.absoluteFillObject, transform: [{ rotate }] }}>
-                         <Crop style={styles.filter}>
-                             <Filter
-                                 style={StyleSheet.absoluteFill}
-                                 uri={photo}
-                                 onDraw={setFiltersAsReady}
-                                 {...{name}}
-                             />
-                         </Crop>
-                     </Animated.View>
-                 }
-                 {
-                     !areFiltersReady && <View />
-                 }
-                 {
-                     areFiltersReady && (
-                         <NavigationBar
-                             type="transparent"
-                             back={from}
-                             withGradient
-                             largeTitle
-                             {...{navigation, title, subtitle}}
-                         />
-                     )
-                 }
-                 {
-
-                 }
              </View>
          );
      }
@@ -155,13 +133,15 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     image: {
-        ...StyleSheet.absoluteFillObject
+        top: 220,
+        position: "absolute",
+    width: viewport, height: viewport * 0.75
     },
     filter: {
         position: "absolute",
         top: 50,
-        left: (viewport - (width * 0.63)) / 2,
+        left: (viewport - (width * 0.63)) / 3,
         width: width * 0.63,
-        height: width * 0.63 * 1.65
+        height: width * 0.63 
     }
 });
