@@ -23,6 +23,9 @@ export default class Welcome extends React.Component<NavigationProps<>> {
     
     food = () => this.navigate("Food");
     photography = () => this.navigate("Photography");
+    social = () => this.navigate("Social");
+     music = () => this.navigate("Music");
+     travel = () => this.navigate("Travel");
 
     state = {
         postsData: []
@@ -31,7 +34,7 @@ export default class Welcome extends React.Component<NavigationProps<>> {
     async componentDidMount(): Promise<void> {
         let info = [];
         axios
-            .get("https://public-api.wordpress.com/rest/v1.1/sites/rutacincohn.com/posts/")
+            .get("https://public-api.wordpress.com/rest/v1.1/sites/rutacincohn.com/posts/?fields=ID,title,date,modified,author,URL,content,featured_image&number=50")
             .then(res => {
                 const post = res.data.posts;
                 for (let index = 0; index < post.length; index++) {
@@ -78,6 +81,14 @@ export default class Welcome extends React.Component<NavigationProps<>> {
                                 backgroundColor={Colors.Photography.primary}
                                 onPress={this.photography}
                             />
+                            <Kit
+
+                                 uri={images.social.uri}
+                                 preview={images.social.preview}
+                                 title="Bio"
+                                 backgroundColor={Colors.Social.primary}
+                                 onPress={this.social}
+                             />
                         </SafeAreaView>
                     </ScrollView>
                 </View>

@@ -30,7 +30,7 @@ export default class CategoryComp extends React.Component<NavigationProps<{ cate
         const {categoryId} = navigation.state.params;
         const data = FoodAPI.recipes[categoryId];
         const {title} = FoodAPI.categories.filter(category => category.id === categoryId)[0];
-        const back = "Recipes";
+        const back = "Welcome";
         return (
             <Feed {...{data, renderItem, title, navigation, back}} />
         );
