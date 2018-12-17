@@ -101,7 +101,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
     
 
-<View style={{flexDirection: "row",      backgroundColor: 'lightblue'
+<View style={{flexDirection: "row",      backgroundColor: 'lightgrey'
   , justifyContent: 'space-evenly'
 }}>
 
@@ -138,9 +138,7 @@ export default class App extends React.Component<AppProps, AppState> {
         style={styles.button}
         source={require('./youtube.png')}
       />
-    </TouchableHighlight>
-
-               
+    </TouchableHighlight>      
        </View>
 
 
@@ -159,7 +157,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly'
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: 'lightgrey',
     width: 40,
     height: 40
   }
