@@ -1,4 +1,4 @@
-// @flow
+// @f
 import * as React from "react";
 
 import {Card, Feed} from "../components";
@@ -6,12 +6,12 @@ import {Card, Feed} from "../components";
 import FoodAPI from "./api";
 import type {Category} from "../components/food/Model";
 
-import type {NavigationProps} from "../components";
+import {F, type NavigationProps} from "../components";
 import axios from "axios";
 import Post from "./post";
 
  const images = require("./../welcome/images");
-import {ScrollView, StyleSheet, View, Image, StatusBar} from "react-native";
+import {ScrollView, StyleSheet, View, Image, StatusBar, TouchableHighlight, Linking} from "react-native";
  import {ThemeProvider, Colors, StyleGuide, Images, Text, SafeAreaView} from "../components";
 export default class Recipes extends React.Component<NavigationProps<>> {
 
@@ -54,12 +54,22 @@ export default class Recipes extends React.Component<NavigationProps<>> {
          return (
              <React.Fragment>
                  <View style={styles.container}>
-                     <SafeAreaView style={styles.safeHeader} top>
+                     <SafeAreaView style={styles.safeHeader}  top>
                          <View style={styles.header}>
 
                              <View {...{rightAction}}>
                                  <Text type="title3">Entrevistas</Text>
+
+                                  <TouchableHighlight onPress={() => onPress()}>
+                            <Image
+                              style={styles.button}
+                               source={require('./back.png')}
+                              />
+                            </TouchableHighlight>
                              </View>
+
+                            
+
                          </View>
                      </SafeAreaView>
                      <ScrollView contentContainerStyle={styles.content}>
@@ -80,12 +90,16 @@ export default class Recipes extends React.Component<NavigationProps<>> {
              </React.Fragment>
              );
      }
+
+
 }
 
 const styles = StyleSheet.create({
 
      safeHeader: {
-         ...StyleGuide.styles.shadow
+         ...StyleGuide.styles.shadow,
+             backgroundColor: Colors.Food.primary,
+
      },
      header: {
          flexDirection: "row",
@@ -95,5 +109,11 @@ const styles = StyleSheet.create({
      },
      content: {
          paddingVertical: StyleGuide.spacing.large
-     }
+     },
+
+     button: {
+             backgroundColor: Colors.Food.primary,
+    width: 40,
+    height: 40
+  }
  });

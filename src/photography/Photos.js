@@ -19,6 +19,7 @@ export default class Photos extends React.Component<NavigationProps<>> {
         const {navigation} = this.props;
         navigation.navigate("Welcome");
     }
+    
 
     render(): React.Node {
         const {renderItem, onPress} = this;
