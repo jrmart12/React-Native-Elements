@@ -20,7 +20,7 @@ export default class Recipes extends React.Component<NavigationProps<>> {
         return <Card {...category} onPress={() => navigation.navigate("Category", { categoryId: category.id })} />;
     }
 
-    onPress = () => {
+    onPress = async (): Promise<void> => {
         const {navigation} = this.props;
         navigation.navigate("Welcome");
     }
@@ -46,17 +46,18 @@ export default class Recipes extends React.Component<NavigationProps<>> {
      }
 
      render(): React.Node {
+        const {renderItem, onPress} = this;
+        const rightAction = {
+            icon: "sign-out",
+            onPress
+        };
          return (
              <React.Fragment>
-                 <StatusBar
-                     translucent
-                     backgroundColor="transparent"
-                     barStyle="dark-content"
-                 />
                  <View style={styles.container}>
                      <SafeAreaView style={styles.safeHeader} top>
                          <View style={styles.header}>
-                             <View>
+
+                             <View {...{rightAction}}>
                                  <Text type="title3">Entrevistas</Text>
                              </View>
                          </View>

@@ -6,10 +6,10 @@
         "sdkVersion": "31.0.0",
         "orientation": "portrait",
         "privacy": "public",
-        "icon": "./app.png",
+        "icon": "./icon.png",
         "primaryColor": "#00AAFF",
         "splash": {
-            "image": "./splash.png",
+            "image": "./app.png",
             "resizeMode": "cover",
             "backgroundColor": "#ffffff"
         },
