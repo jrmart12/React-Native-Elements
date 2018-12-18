@@ -1,8 +1,7 @@
 // @flow
 import * as React from "react";
-import {ScrollView, StyleSheet, View, Image, StatusBar} from "react-native";
+import {ScrollView, StyleSheet, View, Image, StatusBar,TouchableOpacity, Button, Platform , Share} from "react-native";
 import axios from "axios";
-
 import {ThemeProvider, Colors, StyleGuide, Images, Text, SafeAreaView} from "../components";
 
 import Kit from "./Kit";
@@ -24,7 +23,6 @@ export default class Welcome extends React.Component<NavigationProps<>> {
     food = () => this.navigate("Food");
     photography = () => this.navigate("Photography");
     social = () => this.navigate("Social");
-     music = () => this.navigate("Music");
      travel = () => this.navigate("Travel");
 
     state = {
@@ -49,6 +47,7 @@ export default class Welcome extends React.Component<NavigationProps<>> {
     }
 
     render(): React.Node {
+
         return (
             <React.Fragment>
                 <StatusBar
@@ -73,7 +72,7 @@ export default class Welcome extends React.Component<NavigationProps<>> {
                                 title="Entrevistas"
                                 backgroundColor={Colors.Food.primary}
                                 onPress={this.food}
-                            />
+                            />                            
                             <Kit
                                 uri={images.photography.uri}
                                 preview={images.photography.preview}
@@ -91,6 +90,7 @@ export default class Welcome extends React.Component<NavigationProps<>> {
                              />
                         </SafeAreaView>
                     </ScrollView>
+                    
                 </View>
             </React.Fragment>
         );

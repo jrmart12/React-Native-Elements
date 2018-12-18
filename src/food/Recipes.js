@@ -1,7 +1,7 @@
 // @f
 import * as React from "react";
 
-import {Card, Feed} from "../components";
+import {Card, Feed,NavigationBar} from "../components";
 
 import FoodAPI from "./api";
 import type {Category} from "../components/food/Model";
@@ -20,7 +20,9 @@ export default class Recipes extends React.Component<NavigationProps<>> {
         return <Card {...category} onPress={() => navigation.navigate("Category", { categoryId: category.id })} />;
     }
 
-    onPress = async (): Promise<void> => {
+
+
+    onPress = () => {
         const {navigation} = this.props;
         navigation.navigate("Welcome");
     }
@@ -47,29 +49,17 @@ export default class Recipes extends React.Component<NavigationProps<>> {
 
      render(): React.Node {
         const {renderItem, onPress} = this;
-        const rightAction = {
-            icon: "sign-out",
-            onPress
-        };
+        const {navigation} = this.props;
          return (
              <React.Fragment>
                  <View style={styles.container}>
+                 
                      <SafeAreaView style={styles.safeHeader}  top>
+                     <NavigationBar type="transparent" rightAction={{ icon: "sign-out", onPress }} />
                          <View style={styles.header}>
-
-                             <View {...{rightAction}}>
-                                 <Text type="title3">Entrevistas</Text>
-
-                                  <TouchableHighlight onPress={() => onPress()}>
-                            <Image
-                              style={styles.button}
-                               source={require('./back.png')}
-                              />
-                            </TouchableHighlight>
+                             <View >
+                                 <Text color="white" type="title1">Entrevistas</Text>
                              </View>
-
-                            
-
                          </View>
                      </SafeAreaView>
                      <ScrollView contentContainerStyle={styles.content}>
@@ -98,14 +88,14 @@ const styles = StyleSheet.create({
 
      safeHeader: {
          ...StyleGuide.styles.shadow,
-             backgroundColor: Colors.Food.primary,
+             backgroundColor: Colors.Food.primary
 
      },
      header: {
          flexDirection: "row",
          justifyContent: "space-between",
          alignItems: "center",
-         padding: StyleGuide.spacing.large
+         padding: StyleGuide.spacing.small
      },
      content: {
          paddingVertical: StyleGuide.spacing.large

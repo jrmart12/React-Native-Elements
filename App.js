@@ -9,7 +9,6 @@ import {Images, loadIcons, ThemeProvider} from "./src/components";
 import {Welcome} from "./src/welcome";
 import {FoodNavigator} from "./src/food";
 import {SocialNavigator} from "./src/social";
-import {MusicNavigator} from "./src/music";
 import {PhotographyNavigator} from "./src/photography";
 import {TravelNavigator} from "./src/travel";
 import {PlayerProvider} from "./src/components/music";
@@ -168,7 +167,6 @@ const MainNavigator = createSwitchNavigator({
     Welcome: { screen: Welcome },
     Food: { screen: FoodNavigator },
     Social: { screen: SocialNavigator },
-    Music: { screen: MusicNavigator },
     Photography: { screen: PhotographyNavigator }
 });
 const AppNavigator = createAppContainer(MainNavigator);
