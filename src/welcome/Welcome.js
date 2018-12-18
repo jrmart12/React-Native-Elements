@@ -1,10 +1,7 @@
 // @flow
 import * as React from "react";
-<<<<<<< HEAD
-import {ScrollView, StyleSheet, View, Image, StatusBar,TouchableOpacity, Button, Platform , Share} from "react-native";
-=======
-import {ScrollView, StyleSheet, View, Image, StatusBar, TouchableHighlight,Linking} from "react-native";
->>>>>>> d9b62dbdf9109e4e1e6c137b0c0fc8c06267f5bb
+import {ScrollView, StyleSheet, View, Image, StatusBar,TouchableOpacity,TouchableHighlight,Linking, Button, Platform , Share} from "react-native";
+
 import axios from "axios";
 import {ThemeProvider, Colors, StyleGuide, Images, Text, SafeAreaView} from "../components";
 
@@ -132,11 +129,6 @@ export default class Welcome extends React.Component<NavigationProps<>> {
        </View>
 
                     </ScrollView>
-<<<<<<< HEAD
-                    
-=======
-                        
->>>>>>> d9b62dbdf9109e4e1e6c137b0c0fc8c06267f5bb
                 </View>
 
             </React.Fragment>
