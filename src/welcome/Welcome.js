@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react";
-import {ScrollView, StyleSheet, View, Image, StatusBar} from "react-native";
+import {ScrollView, StyleSheet, View, Image, StatusBar, TouchableHighlight,Linking} from "react-native";
 import axios from "axios";
 
 import {ThemeProvider, Colors, StyleGuide, Images, Text, SafeAreaView} from "../components";
@@ -90,9 +90,50 @@ export default class Welcome extends React.Component<NavigationProps<>> {
                                  onPress={this.social}
                              />
                         </SafeAreaView>
+                        <View style={{flexDirection: "row", marginTop: 40,  backgroundColor: 'white', justifyContent: 'space-evenly'}}>
+
+    <TouchableHighlight onPress={() => Linking.openURL("https://www.facebook.com/RutaCincoHn/")}>
+      <Image
+        style={styles.button}
+        source={require('./facebook.png')}
+      />
+    </TouchableHighlight>
+
+    <TouchableHighlight onPress={() => Linking.openURL("https://mobile.twitter.com/ruta5hn")}>
+      <Image
+        style={styles.button}
+        source={require('./twitter.png')}
+      />
+    </TouchableHighlight>
+
+     <TouchableHighlight onPress={() => Linking.openURL("https://www.instagram.com/ruta5hn/")}>
+      <Image
+        style={styles.button}
+        source={require('./instagram.png')}
+      />
+    </TouchableHighlight>
+
+     <TouchableHighlight onPress={() => Linking.openURL("https://www.linskedin.com/in/ruta5hn/")}>
+      <Image
+        style={styles.button}
+        source={require('./link.png')}
+      />
+    </TouchableHighlight>
+
+     <TouchableHighlight onPress={() => Linking.openURL("https://www.youtube.com/channel/UCk_-JJq-7Pv7W-IfqiyWnvg/featured")}>
+      <Image
+        style={styles.button}
+        source={require('./youtube.png')}
+      />
+    </TouchableHighlight>      
+       </View>
+
                     </ScrollView>
+                        
                 </View>
+
             </React.Fragment>
+
         );
     }
 }
@@ -112,5 +153,10 @@ const styles = StyleSheet.create({
     },
     content: {
         paddingVertical: StyleGuide.spacing.large
-    }
+    },
+    button: {
+    backgroundColor: 'white',
+    width: 40,
+    height: 40
+  }
 });
