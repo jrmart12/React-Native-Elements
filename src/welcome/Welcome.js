@@ -1,6 +1,10 @@
 // @flow
 import * as React from "react";
+<<<<<<< HEAD
 import {ScrollView, StyleSheet, View, Image, StatusBar,TouchableOpacity, Button, Platform , Share} from "react-native";
+=======
+import {ScrollView, StyleSheet, View, Image, StatusBar, TouchableHighlight,Linking} from "react-native";
+>>>>>>> d9b62dbdf9109e4e1e6c137b0c0fc8c06267f5bb
 import axios from "axios";
 import {ThemeProvider, Colors, StyleGuide, Images, Text, SafeAreaView} from "../components";
 
@@ -89,10 +93,54 @@ export default class Welcome extends React.Component<NavigationProps<>> {
                                  onPress={this.social}
                              />
                         </SafeAreaView>
+                        <View style={{flexDirection: "row", marginTop: 40,  backgroundColor: 'white', justifyContent: 'space-evenly'}}>
+
+    <TouchableHighlight onPress={() => Linking.openURL("https://www.facebook.com/RutaCincoHn/")}>
+      <Image
+        style={styles.button}
+        source={require('./facebook.png')}
+      />
+    </TouchableHighlight>
+
+    <TouchableHighlight onPress={() => Linking.openURL("https://mobile.twitter.com/ruta5hn")}>
+      <Image
+        style={styles.button}
+        source={require('./twitter.png')}
+      />
+    </TouchableHighlight>
+
+     <TouchableHighlight onPress={() => Linking.openURL("https://www.instagram.com/ruta5hn/")}>
+      <Image
+        style={styles.button}
+        source={require('./instagram.png')}
+      />
+    </TouchableHighlight>
+
+     <TouchableHighlight onPress={() => Linking.openURL("https://www.linskedin.com/in/ruta5hn/")}>
+      <Image
+        style={styles.button}
+        source={require('./link.png')}
+      />
+    </TouchableHighlight>
+
+     <TouchableHighlight onPress={() => Linking.openURL("https://www.youtube.com/channel/UCk_-JJq-7Pv7W-IfqiyWnvg/featured")}>
+      <Image
+        style={styles.button}
+        source={require('./youtube.png')}
+      />
+    </TouchableHighlight>      
+       </View>
+
                     </ScrollView>
+<<<<<<< HEAD
                     
+=======
+                        
+>>>>>>> d9b62dbdf9109e4e1e6c137b0c0fc8c06267f5bb
                 </View>
+
             </React.Fragment>
+
         );
     }
 }
@@ -112,5 +160,10 @@ const styles = StyleSheet.create({
     },
     content: {
         paddingVertical: StyleGuide.spacing.large
-    }
+    },
+    button: {
+    backgroundColor: 'white',
+    width: 40,
+    height: 40
+  }
 });

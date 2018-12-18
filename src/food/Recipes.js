@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
      button: {
              backgroundColor: Colors.Food.primary,
     width: 40,
-    height: 40
+    height: 40,
+    top: 100
   }
  });
